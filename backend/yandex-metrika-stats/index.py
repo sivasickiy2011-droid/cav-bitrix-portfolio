@@ -43,6 +43,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         else:
             body_data = json.loads(body_str)
         counter_id = body_data.get('counter_id')
+        oauth_token = body_data.get('token')
         
         if not counter_id:
             return {
@@ -55,16 +56,14 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 'isBase64Encoded': False
             }
         
-        oauth_token = os.environ.get('YANDEX_METRIKA_TOKEN')
-        
         if not oauth_token:
             return {
-                'statusCode': 500,
+                'statusCode': 400,
                 'headers': {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
                 },
-                'body': json.dumps({'error': 'YANDEX_METRIKA_TOKEN not configured'}),
+                'body': json.dumps({'error': 'token is required'}),
                 'isBase64Encoded': False
             }
         

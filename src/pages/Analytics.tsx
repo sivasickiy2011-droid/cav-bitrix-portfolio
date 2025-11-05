@@ -11,6 +11,7 @@ interface AnalyticsSettings {
   google_analytics_id: string;
   yandex_metrika_id: string;
   yandex_webmaster_user_id: string;
+  yandex_metrika_token: string;
   ai_seo_enabled: boolean;
 }
 
@@ -31,6 +32,7 @@ export default function Analytics() {
     google_analytics_id: '',
     yandex_metrika_id: '',
     yandex_webmaster_user_id: '',
+    yandex_metrika_token: '',
     ai_seo_enabled: false
   });
   const [loading, setLoading] = useState(true);
@@ -45,10 +47,10 @@ export default function Analytics() {
   }, []);
 
   useEffect(() => {
-    if (settings.yandex_metrika_id) {
+    if (settings.yandex_metrika_id && settings.yandex_metrika_token) {
       loadVisitData();
     }
-  }, [settings.yandex_metrika_id]);
+  }, [settings.yandex_metrika_id, settings.yandex_metrika_token]);
 
   useEffect(() => {
     loadWebmasterIssues();
@@ -63,7 +65,7 @@ export default function Analytics() {
   };
 
   const loadVisitData = async () => {
-    if (!settings.yandex_metrika_id) {
+    if (!settings.yandex_metrika_id || !settings.yandex_metrika_token) {
       setVisitData([]);
       return;
     }
@@ -73,7 +75,10 @@ export default function Analytics() {
       const response = await fetch('https://functions.poehali.dev/40804d39-8296-462b-abc2-78ee1f80f0dd', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ counter_id: settings.yandex_metrika_id })
+        body: JSON.stringify({ 
+          counter_id: settings.yandex_metrika_id,
+          token: settings.yandex_metrika_token
+        })
       });
 
       if (response.ok) {
@@ -115,7 +120,7 @@ export default function Analytics() {
     setSaving(true);
     localStorage.setItem('analytics_settings', JSON.stringify(settings));
     
-    if (settings.yandex_metrika_id) {
+    if (settings.yandex_metrika_id && settings.yandex_metrika_token) {
       await loadVisitData();
     }
     
@@ -126,6 +131,13 @@ export default function Analytics() {
     setTimeout(() => {
       setSaving(false);
     }, 1000);
+  };
+
+  const handleSaveToken = async () => {
+    localStorage.setItem('analytics_settings', JSON.stringify(settings));
+    if (settings.yandex_metrika_id && settings.yandex_metrika_token) {
+      await loadVisitData();
+    }
   };
 
   if (loading) {
@@ -180,8 +192,10 @@ export default function Analytics() {
 
           <StatsTab 
             settings={settings}
+            setSettings={setSettings}
             visitData={visitData}
             loadingVisits={loadingVisits}
+            onSaveToken={handleSaveToken}
           />
 
           <WebmasterTab 
