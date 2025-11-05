@@ -31,11 +31,24 @@ interface StatsTabProps {
 export default function StatsTab({ settings, setSettings, visitData, loadingVisits, onSaveToken }: StatsTabProps) {
   const [showInstructions, setShowInstructions] = useState(false);
   const [savingToken, setSavingToken] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveError, setSaveError] = useState('');
 
   const handleSaveToken = async () => {
     setSavingToken(true);
-    await onSaveToken();
-    setTimeout(() => setSavingToken(false), 1000);
+    setSaveSuccess(false);
+    setSaveError('');
+    
+    try {
+      await onSaveToken();
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3000);
+    } catch (error) {
+      setSaveError('Ошибка подключения. Проверьте токен.');
+      setTimeout(() => setSaveError(''), 5000);
+    } finally {
+      setSavingToken(false);
+    }
   };
 
   return (
@@ -159,6 +172,26 @@ export default function StatsTab({ settings, setSettings, visitData, loadingVisi
               </div>
             </div>
 
+            {saveSuccess && (
+              <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 flex items-start gap-3">
+                <Icon name="CheckCircle2" size={20} className="text-green-400 mt-0.5" />
+                <div>
+                  <h4 className="text-sm font-semibold text-green-300 mb-1">Токен успешно сохранен!</h4>
+                  <p className="text-xs text-green-400/80">Подключение к Яндекс.Метрике установлено. Загружаем данные...</p>
+                </div>
+              </div>
+            )}
+
+            {saveError && (
+              <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 flex items-start gap-3">
+                <Icon name="AlertCircle" size={20} className="text-red-400 mt-0.5" />
+                <div>
+                  <h4 className="text-sm font-semibold text-red-300 mb-1">Ошибка подключения</h4>
+                  <p className="text-xs text-red-400/80">{saveError}</p>
+                </div>
+              </div>
+            )}
+
             <Button
               onClick={handleSaveToken}
               disabled={!settings.yandex_metrika_token || savingToken}
@@ -167,7 +200,7 @@ export default function StatsTab({ settings, setSettings, visitData, loadingVisi
               {savingToken ? (
                 <>
                   <Icon name="Loader2" size={16} className="mr-2 animate-spin" />
-                  Сохранение...
+                  Проверка токена...
                 </>
               ) : (
                 <>
@@ -186,7 +219,13 @@ export default function StatsTab({ settings, setSettings, visitData, loadingVisi
               Посещаемость сайта
             </CardTitle>
             <CardDescription className="text-gray-400 flex items-center justify-between">
-              <span>Статистика посещений за последние 14 дней</span>
+              <div className="flex items-center gap-3">
+                <span>Статистика посещений за последние 14 дней</span>
+                <div className="flex items-center gap-1.5 text-xs text-green-400">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  Подключено
+                </div>
+              </div>
               <Button
                 variant="ghost"
                 size="sm"

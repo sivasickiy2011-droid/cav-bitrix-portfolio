@@ -137,6 +137,10 @@ export default function Analytics() {
     localStorage.setItem('analytics_settings', JSON.stringify(settings));
     if (settings.yandex_metrika_id && settings.yandex_metrika_token) {
       await loadVisitData();
+      
+      if (visitData.length === 0) {
+        throw new Error('Не удалось получить данные');
+      }
     }
   };
 
