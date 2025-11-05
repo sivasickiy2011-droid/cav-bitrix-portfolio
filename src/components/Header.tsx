@@ -64,7 +64,7 @@ const Header = () => {
       <nav 
         className={`navigation flex justify-between items-center z-[9999999] transition-all duration-300 ${
           isSticky 
-            ? 'fixed top-0 left-0 right-0 bg-white/90 dark:bg-gray-800/70 backdrop-blur-xl shadow-lg border-b border-gradient-start/10 dark:border-gray-700/30 py-3 px-[50px] animate-fade-in' 
+            ? 'fixed top-0 left-0 right-0 backdrop-blur-xl shadow-lg py-3 px-[50px] animate-fade-in' 
             : 'relative'
         }`}
       >
