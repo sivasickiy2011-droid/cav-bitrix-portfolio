@@ -53,8 +53,10 @@ export default function Analytics() {
   }, [settings.yandex_metrika_id, settings.yandex_metrika_token]);
 
   useEffect(() => {
-    loadWebmasterIssues();
-  }, []);
+    if (settings.yandex_webmaster_user_id) {
+      loadWebmasterIssues();
+    }
+  }, [settings.yandex_webmaster_user_id]);
 
   const loadSettings = async () => {
     const savedSettings = localStorage.getItem('analytics_settings');
