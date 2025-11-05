@@ -264,10 +264,10 @@ const CalcModal = ({ open, onOpenChange }: CalcModalProps) => {
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-6xl max-h-[90vh] sm:max-h-[85vh] overflow-y-auto p-4 sm:p-6">
           <DialogHeader>
-            <DialogTitle className="text-3xl font-bold">Калькулятор проектов</DialogTitle>
-            <p className="text-muted-foreground">
+            <DialogTitle className="text-2xl sm:text-3xl font-bold">Калькулятор проектов</DialogTitle>
+            <p className="text-sm sm:text-base text-muted-foreground">
               Выберите нужные услуги и рассчитайте стоимость проекта
             </p>
           </DialogHeader>
@@ -280,19 +280,19 @@ const CalcModal = ({ open, onOpenChange }: CalcModalProps) => {
             <>
               <Accordion type="multiple" className="space-y-4" value={openSections} onValueChange={setOpenSections}>
                 <AccordionItem value="development" className="border rounded-lg bg-white dark:bg-gray-900">
-                  <AccordionTrigger className="px-6 hover:no-underline">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                        <Icon name="Code" className="text-primary" size={24} />
+                  <AccordionTrigger className="px-3 sm:px-6 hover:no-underline">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                        <Icon name="Code" className="text-primary" size={20} />
                       </div>
                       <div className="text-left">
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Разработка</h2>
-                        <p className="text-sm text-muted-foreground font-normal">Создание сайтов под ключ</p>
+                        <h2 className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-white">Разработка</h2>
+                        <p className="text-xs sm:text-sm text-muted-foreground font-normal">Создание сайтов под ключ</p>
                       </div>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-6">
-                    <div className="grid md:grid-cols-2 gap-6 mb-8">
+                  <AccordionContent className="px-3 sm:px-6 pb-4 sm:pb-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
                       {developmentServices.map(service => (
                         <ServiceCard
                           key={service.id}
@@ -328,19 +328,19 @@ const CalcModal = ({ open, onOpenChange }: CalcModalProps) => {
                 </AccordionItem>
 
                 <AccordionItem value="promotion" className="border rounded-lg bg-white dark:bg-gray-900">
-                  <AccordionTrigger className="px-6 hover:no-underline">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center">
-                        <Icon name="TrendingUp" className="text-secondary" size={24} />
+                  <AccordionTrigger className="px-3 sm:px-6 hover:no-underline">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-secondary/10 rounded-full flex items-center justify-center shrink-0">
+                        <Icon name="TrendingUp" className="text-secondary" size={20} />
                       </div>
                       <div className="text-left">
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Продвижение</h2>
-                        <p className="text-sm text-muted-foreground font-normal">SEO и маркетинг</p>
+                        <h2 className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-white">Продвижение</h2>
+                        <p className="text-xs sm:text-sm text-muted-foreground font-normal">SEO и маркетинг</p>
                       </div>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-6">
-                    <div className="grid md:grid-cols-2 gap-6">
+                  <AccordionContent className="px-3 sm:px-6 pb-4 sm:pb-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                       {promotionServices.map(service => (
                         <ServiceCard
                           key={service.id}
@@ -354,19 +354,19 @@ const CalcModal = ({ open, onOpenChange }: CalcModalProps) => {
                 </AccordionItem>
 
                 <AccordionItem value="additional" className="border rounded-lg bg-white dark:bg-gray-900">
-                  <AccordionTrigger className="px-6 hover:no-underline">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center">
-                        <Icon name="Sparkles" className="text-accent" size={24} />
+                  <AccordionTrigger className="px-3 sm:px-6 hover:no-underline">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-accent/10 rounded-full flex items-center justify-center shrink-0">
+                        <Icon name="Sparkles" className="text-accent" size={20} />
                       </div>
                       <div className="text-left">
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Дополнительно</h2>
-                        <p className="text-sm text-muted-foreground font-normal">Сопровождение и поддержка</p>
+                        <h2 className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-white">Дополнительно</h2>
+                        <p className="text-xs sm:text-sm text-muted-foreground font-normal">Сопровождение и поддержка</p>
                       </div>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-6">
-                    <div className="grid md:grid-cols-2 gap-6">
+                  <AccordionContent className="px-3 sm:px-6 pb-4 sm:pb-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                       {additionalServices.map(service => (
                         <ServiceCard
                           key={service.id}
@@ -380,17 +380,17 @@ const CalcModal = ({ open, onOpenChange }: CalcModalProps) => {
                 </AccordionItem>
               </Accordion>
 
-              <div className="sticky bottom-0 bg-white dark:bg-gray-900 border-t pt-6 mt-6">
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-1">Итого</p>
-                    <p className="text-3xl font-bold text-primary">{formatPrice(totalPrice)} ₽</p>
+              <div className="sticky bottom-0 bg-white dark:bg-gray-900 border-t pt-4 sm:pt-6 mt-4 sm:mt-6 -mx-4 sm:-mx-6 px-4 sm:px-6">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+                  <div className="w-full sm:w-auto text-center sm:text-left">
+                    <p className="text-xs sm:text-sm text-muted-foreground mb-1">Итого</p>
+                    <p className="text-2xl sm:text-3xl font-bold text-primary">{formatPrice(totalPrice)} ₽</p>
                   </div>
                   <Button
                     size="lg"
                     onClick={() => setIsOrderModalOpen(true)}
                     disabled={totalPrice === 0}
-                    className="bg-gradient-to-r from-gradient-start to-gradient-mid"
+                    className="bg-gradient-to-r from-gradient-start to-gradient-mid w-full sm:w-auto text-sm sm:text-base"
                   >
                     Оформить заказ
                   </Button>

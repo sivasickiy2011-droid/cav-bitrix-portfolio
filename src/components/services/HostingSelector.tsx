@@ -38,13 +38,13 @@ const HostingSelector = ({
   onPeriodChange
 }: HostingSelectorProps) => {
   return (
-    <div className="mt-12">
-      <h3 className="text-2xl font-bold mb-6">Хостинг</h3>
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div className="mt-8 sm:mt-12">
+      <h3 className="text-lg sm:text-2xl font-bold mb-4 sm:mb-6">Хостинг</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
         {hostingOptions.map(option => (
           <Card
             key={option.id}
-            className={`p-6 cursor-pointer transition-all hover:shadow-lg ${
+            className={`p-4 sm:p-6 cursor-pointer transition-all hover:shadow-lg ${
               selectedHosting === option.id ? 'border-primary border-2 bg-primary/5' : ''
             } ${option.id === 'poehali' ? 'relative overflow-hidden' : ''} ${
               option.id === 'vps' ? 'relative overflow-hidden border-primary border-2 bg-gradient-to-br from-primary/5 to-primary/10' : ''
@@ -55,31 +55,31 @@ const HostingSelector = ({
           >
             {option.id === 'poehali' && (
               <div className="absolute top-2 right-2">
-                <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full font-bold">
+                <span className="bg-green-500 text-white text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full font-bold">
                   ⭐ Рекомендуем
                 </span>
               </div>
             )}
             {option.id === 'vps' && (
               <div className="absolute top-2 right-2">
-                <span className="bg-primary text-white text-xs px-3 py-1 rounded-full font-bold">
+                <span className="bg-primary text-white text-[10px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full font-bold">
                   VPS PIXEL
                 </span>
               </div>
             )}
             {option.id === 'beget' && (
               <div className="absolute top-2 right-2">
-                <span className="bg-amber-600 text-white text-xs px-3 py-1 rounded-full font-bold flex items-center gap-1 shadow-md">
-                  <Icon name="ShieldCheck" size={12} />
+                <span className="bg-amber-600 text-white text-[10px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full font-bold flex items-center gap-1 shadow-md">
+                  <Icon name="ShieldCheck" size={10} />
                   Проверенный
                 </span>
               </div>
             )}
-            <div className="flex items-center gap-3 mb-3">
-              <Checkbox checked={selectedHosting === option.id} />
-              <div>
-                <h4 className={`font-semibold text-lg ${option.id === 'beget' ? 'text-gray-900 dark:text-white' : ''}`}>{option.title}</h4>
-                <p className={`text-sm ${option.id === 'beget' ? 'text-gray-700 dark:text-gray-200' : 'text-muted-foreground'}`}>{option.description}</p>
+            <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+              <Checkbox checked={selectedHosting === option.id} className="shrink-0" />
+              <div className="min-w-0">
+                <h4 className={`font-semibold text-sm sm:text-lg ${option.id === 'beget' ? 'text-gray-900 dark:text-white' : ''}`}>{option.title}</h4>
+                <p className={`text-xs sm:text-sm line-clamp-2 ${option.id === 'beget' ? 'text-gray-700 dark:text-gray-200' : 'text-muted-foreground'}`}>{option.description}</p>
               </div>
             </div>
             {option.id === 'own' && (
