@@ -80,8 +80,8 @@ const CookieConsent = () => {
   const canSubmit = cookies && (!privacy || fullName.trim());
 
   return (
-    <div className="fixed inset-0 z-[99999] flex items-end justify-center p-3 sm:p-4 bg-black/40 dark:bg-black/60 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white dark:bg-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl max-w-2xl w-full p-4 sm:p-6 md:p-8 animate-slide-up border border-gradient-start/20 dark:border-gradient-start/30 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-[99999] flex items-end justify-center px-4 py-4 sm:p-4 md:p-6 bg-black/40 dark:bg-black/60 backdrop-blur-sm animate-fade-in">
+      <div className="bg-white dark:bg-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl max-w-2xl w-full p-4 sm:p-6 md:p-8 animate-slide-up border border-gradient-start/20 dark:border-gradient-start/30 max-h-[85vh] overflow-y-auto">
         <div className="flex items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
           <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-gradient-start to-gradient-mid rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0">
             <Icon name="Cookie" size={20} className="text-white sm:w-6 sm:h-6" />
