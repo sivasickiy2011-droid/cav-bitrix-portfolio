@@ -108,13 +108,13 @@ const Hero = () => {
                           <div
                             className={isColored 
                               ? "w-full h-full rounded-[2px] shadow-lg dark:shadow-none transition-all duration-500" 
-                              : "w-full h-full rounded-[2px] dark:opacity-[0.08] transition-all duration-500"
+                              : "w-full h-full rounded-[2px] border dark:border-white/5 transition-all duration-500"
                             }
                             style={{
                               background: isColored 
                                 ? `linear-gradient(135deg, hsl(${hue}, 90%, 65%) 0%, hsl(${hue + 20}, 85%, 55%) 100%)`
-                                : 'linear-gradient(135deg, rgba(240, 244, 255, 0.8) 0%, rgba(220, 225, 240, 0.5) 100%)',
-                              opacity: isColored ? 0.95 : 0.4,
+                                : 'transparent',
+                              opacity: isColored ? 0.95 : 1,
                               boxShadow: isColored ? '0 4px 15px rgba(99, 102, 241, 0.3)' : 'none'
                             }}
                           />
