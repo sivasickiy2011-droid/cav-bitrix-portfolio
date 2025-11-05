@@ -59,17 +59,30 @@ export default function Analytics() {
   const loadSettings = async () => {
     const savedSettings = localStorage.getItem('analytics_settings');
     if (savedSettings) {
-      setSettings(JSON.parse(savedSettings));
+      const parsed = JSON.parse(savedSettings);
+      console.log('Loaded analytics settings:', {
+        hasMetrikaId: !!parsed.yandex_metrika_id,
+        hasToken: !!parsed.yandex_metrika_token,
+        metrikaId: parsed.yandex_metrika_id
+      });
+      setSettings(parsed);
+    } else {
+      console.log('No saved analytics settings found');
     }
     setLoading(false);
   };
 
   const loadVisitData = async () => {
     if (!settings.yandex_metrika_id || !settings.yandex_metrika_token) {
+      console.log('Skipping visit data load - missing ID or token', {
+        hasId: !!settings.yandex_metrika_id,
+        hasToken: !!settings.yandex_metrika_token
+      });
       setVisitData([]);
       return;
     }
 
+    console.log('Loading visit data for counter:', settings.yandex_metrika_id);
     setLoadingVisits(true);
     try {
       const response = await fetch('https://functions.poehali.dev/40804d39-8296-462b-abc2-78ee1f80f0dd', {
@@ -81,10 +94,15 @@ export default function Analytics() {
         })
       });
 
+      console.log('Visit data response:', response.status);
+
       if (response.ok) {
         const data = await response.json();
+        console.log('Visit data loaded:', data.visits?.length || 0, 'days');
         setVisitData(data.visits || []);
       } else {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Failed to load visit data:', response.status, errorData);
         setVisitData([]);
       }
     } catch (error) {
