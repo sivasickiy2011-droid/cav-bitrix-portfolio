@@ -59,8 +59,6 @@ const Header = () => {
 
   return (
     <>
-      <div className="h-[80px] hidden lg:block"></div>
-      
       <nav 
         className={`navigation flex justify-between items-center z-[9999999] transition-all duration-300 ${
           isSticky 
