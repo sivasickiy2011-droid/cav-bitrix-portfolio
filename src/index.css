@@ -473,3 +473,7 @@ section:hover {
   color: #9ca3af;
   font-weight: 400;
 }
+
+section[aria-label*="Notifications"] {
+  display: none !important;
+}
