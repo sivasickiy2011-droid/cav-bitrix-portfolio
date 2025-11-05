@@ -256,15 +256,19 @@ const Portfolio = () => {
               >
                 Закрыть
               </button>
-              <a
-                href={selectedProject.website_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-2 rounded-full bg-gradient-to-r from-gradient-start to-gradient-mid text-white font-semibold hover:shadow-lg transition-all duration-300 flex items-center gap-2"
-              >
-                Открыть сайт
-                <Icon name="ExternalLink" size={16} />
-              </a>
+              {selectedProject.website_url && 
+               selectedProject.website_url !== 'https://example.com' && 
+               !selectedProject.website_url.includes('example.com') && (
+                <a
+                  href={selectedProject.website_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-2 rounded-full bg-gradient-to-r from-gradient-start to-gradient-mid text-white font-semibold hover:shadow-lg transition-all duration-300 flex items-center gap-2"
+                >
+                  Открыть сайт
+                  <Icon name="ExternalLink" size={16} />
+                </a>
+              )}
             </div>
           </div>
         </div>
