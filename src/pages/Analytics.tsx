@@ -52,11 +52,12 @@ export default function Analytics() {
     }
   }, [settings.yandex_metrika_id, settings.yandex_metrika_token]);
 
-  useEffect(() => {
-    if (settings.yandex_webmaster_user_id) {
-      loadWebmasterIssues();
-    }
-  }, [settings.yandex_webmaster_user_id]);
+  // Временно отключено из-за проблем с бэкендом
+  // useEffect(() => {
+  //   if (settings.yandex_webmaster_user_id) {
+  //     loadWebmasterIssues();
+  //   }
+  // }, [settings.yandex_webmaster_user_id]);
 
   const loadSettings = async () => {
     const savedSettings = localStorage.getItem('analytics_settings');
@@ -129,7 +130,6 @@ export default function Analytics() {
         setWebmasterIssues([]);
       }
     } catch (error) {
-      console.error('Failed to load webmaster issues:', error);
       setWebmasterIssues([]);
     } finally {
       setLoadingIssues(false);
