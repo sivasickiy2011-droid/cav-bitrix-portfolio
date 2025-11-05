@@ -127,7 +127,7 @@ export default function StatsTab({ settings, setSettings, visitData, loadingVisi
                         <li>
                           Перейдите по ссылке:{' '}
                           <a 
-                            href="https://oauth.yandex.ru/authorize?response_type=token&client_id=e560f9bd55604d5c841ddc04be7ffbaf"
+                            href="https://oauth.yandex.ru/authorize?response_type=token&client_id=6c6f8f0e8fb540f3bd90a0aa3e9ffb75"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-400 hover:text-blue-300 underline"
