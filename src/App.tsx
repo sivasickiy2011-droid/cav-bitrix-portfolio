@@ -1,6 +1,7 @@
 
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "sonner";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { PartnerProvider } from "@/contexts/PartnerContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
@@ -32,6 +33,7 @@ const App = () => (
     <ThemeProvider>
       <TooltipProvider>
         <PartnerProvider>
+          <Toaster position="top-right" richColors />
           <BotProtection />
           <BrowserRouter>
           <Routes>

@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Icon from '@/components/ui/icon';
 import { usePartner } from '@/contexts/PartnerContext';
+import { toast } from 'sonner';
 
 interface ContactModalProps {
   open: boolean;
@@ -27,7 +28,7 @@ export default function ContactModal({ open, onOpenChange }: ContactModalProps) 
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://functions.poehali.dev/4dbcd084-f89e-4737-be41-9371059c6e4d', {
+      const response = await fetch('https://functions.poehali.dev/003b9991-d7d8-4f5d-8257-dee42fad0f91', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,14 +44,24 @@ export default function ContactModal({ open, onOpenChange }: ContactModalProps) 
 
       if (response.ok) {
         setSubmitted(true);
+        toast.success('Заявка отправлена!', {
+          description: 'Мы свяжемся с вами в ближайшее время'
+        });
         setTimeout(() => {
           onOpenChange(false);
           setSubmitted(false);
           setFormData({ name: '', phone: '', email: '', message: '' });
         }, 2000);
+      } else {
+        toast.error('Ошибка отправки', {
+          description: 'Попробуйте еще раз'
+        });
       }
     } catch (error) {
       console.error('Ошибка отправки:', error);
+      toast.error('Ошибка отправки', {
+        description: 'Проверьте интернет-соединение'
+      });
     } finally {
       setIsSubmitting(false);
     }

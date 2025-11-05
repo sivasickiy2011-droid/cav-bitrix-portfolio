@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
+import { toast } from 'sonner';
 
 const ContactInfo = () => {
   const [activeTab, setActiveTab] = useState<'contacts' | 'details'>('contacts');
@@ -153,7 +154,7 @@ const Contacts = () => {
     setSubmitStatus('idle');
 
     try {
-      const response = await fetch('https://functions.poehali.dev/80536dd3-4799-47a9-893a-a756a259460e', {
+      const response = await fetch('https://functions.poehali.dev/003b9991-d7d8-4f5d-8257-dee42fad0f91', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -169,10 +170,16 @@ const Contacts = () => {
 
       setSubmitStatus('success');
       setFormData({ name: '', phone: '' });
+      toast.success('Заявка отправлена!', {
+        description: 'Мы свяжемся с вами в ближайшее время'
+      });
       setTimeout(() => setSubmitStatus('idle'), 3000);
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitStatus('error');
+      toast.error('Ошибка отправки', {
+        description: 'Попробуйте еще раз или свяжитесь с нами по телефону'
+      });
       setTimeout(() => setSubmitStatus('idle'), 3000);
     } finally {
       setIsSubmitting(false);
