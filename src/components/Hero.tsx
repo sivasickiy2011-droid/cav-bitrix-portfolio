@@ -12,7 +12,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <header className="header relative overflow-hidden min-h-screen flex flex-col -mt-[1px] rounded-b-[30px]">
+    <header className="header relative overflow-hidden min-h-screen flex flex-col -mt-[1px] bg-white dark:bg-gray-800 rounded-b-[30px]">
       <div className="absolute inset-0 animated-gradient-bg" />
       
       <div className="absolute inset-0 opacity-20 dark:opacity-15">
