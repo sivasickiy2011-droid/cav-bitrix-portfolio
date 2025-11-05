@@ -140,18 +140,59 @@ const ContactInfo = () => {
 };
 
 const Contacts = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('https://functions.poehali.dev/80536dd3-4799-47a9-893a-a756a259460e', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'contact_form',
+          ...formData,
+          timestamp: new Date().toISOString()
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Ошибка отправки');
+      }
+
+      setSubmitStatus('success');
+      setFormData({ name: '', phone: '' });
+      setTimeout(() => setSubmitStatus('idle'), 3000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus('idle'), 3000);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section id="contacts" className="contacts relative bg-gray-50 dark:bg-gray-700">
       <div className="max-w-[1500px] w-full lg:px-[50px] px-4 mx-auto">
         <div className="grid lg:grid-cols-2 gap-[76px] lg:gap-[76px] gap-12 items-center min-h-[600px]">
           <div className="contacts-content min-h-full z-[1] lg:p-5 p-0 content-center">
             <h2 className="section-title dark:[text-shadow:0_3px_12px_rgba(0,0,0,0.5)]">Контакты</h2>
-            <form className="flex flex-col gap-12">
+            <form className="flex flex-col gap-12" onSubmit={handleSubmit}>
               <div className="relative group">
                 <input
                   type="text"
                   placeholder="Ваше имя"
                   className="form-input-custom peer"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
                 />
                 <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-gradient-start to-gradient-mid scale-x-0 peer-focus:scale-x-100 transition-transform duration-300" />
@@ -162,6 +203,8 @@ const Contacts = () => {
                   type="tel"
                   placeholder="Телефон"
                   className="form-input-custom peer"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   required
                 />
                 <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-gradient-mid to-gradient-end scale-x-0 peer-focus:scale-x-100 transition-transform duration-300" />
@@ -169,9 +212,14 @@ const Contacts = () => {
               
               <button 
                 type="submit" 
-                className="btn bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end text-white py-6 lg:px-[132px] px-8 rounded-full lg:text-xl text-lg max-w-[521px] w-full min-h-[68px] font-semibold group relative overflow-hidden bg-[length:200%_auto] animate-gradient-shift"
+                className="btn bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end text-white py-6 lg:px-[132px] px-8 rounded-full lg:text-xl text-lg max-w-[521px] w-full min-h-[68px] font-semibold group relative overflow-hidden bg-[length:200%_auto] animate-gradient-shift disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isSubmitting}
               >
-                <span className="relative z-10">Оставить заявку</span>
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  {isSubmitting ? 'Отправка...' : submitStatus === 'success' ? 'Заявка отправлена!' : submitStatus === 'error' ? 'Ошибка отправки' : 'Оставить заявку'}
+                  {!isSubmitting && submitStatus === 'success' && <Icon name="Check" size={24} />}
+                  {!isSubmitting && submitStatus === 'error' && <Icon name="X" size={24} />}
+                </span>
               </button>
             </form>
           </div>
