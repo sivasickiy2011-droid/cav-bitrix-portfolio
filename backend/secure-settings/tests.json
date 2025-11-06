@@ -1,0 +1,19 @@
+{
+  "tests": [
+    {
+      "name": "GET all settings - unauthorized",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 401,
+      "expectedBody": {
+        "error": "Unauthorized"
+      }
+    },
+    {
+      "name": "OPTIONS preflight request",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    }
+  ]
+}

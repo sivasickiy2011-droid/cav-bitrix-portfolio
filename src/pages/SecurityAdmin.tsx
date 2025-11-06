@@ -4,9 +4,10 @@ import AdminLayout from '@/components/AdminLayout';
 import BotAdmin from './BotAdmin';
 import LoginHistory from './LoginHistory';
 import ChangePassword from './ChangePassword';
+import SecretsVault from './SecretsVault';
 
 const SecurityAdmin = () => {
-  const [activeTab, setActiveTab] = useState('bot-protection');
+  const [activeTab, setActiveTab] = useState('secrets-vault');
 
   return (
     <AdminLayout>
@@ -15,11 +16,17 @@ const SecurityAdmin = () => {
           <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
             Безопасность
           </h1>
-          <p className="text-gray-400">Защита от ботов, история входов и управление паролем</p>
+          <p className="text-gray-400">Хранилище секретов, защита от ботов и управление доступом</p>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full max-w-2xl grid-cols-3 bg-gray-800/50 border border-gray-700">
+          <TabsList className="grid w-full max-w-3xl grid-cols-4 bg-gray-800/50 border border-gray-700">
+            <TabsTrigger 
+              value="secrets-vault"
+              className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+            >
+              Хранилище секретов
+            </TabsTrigger>
             <TabsTrigger 
               value="bot-protection"
               className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
@@ -39,6 +46,10 @@ const SecurityAdmin = () => {
               Сменить пароль
             </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="secrets-vault" className="mt-6">
+            <SecretsVault isEmbedded={true} />
+          </TabsContent>
 
           <TabsContent value="bot-protection" className="mt-6">
             <BotAdmin isEmbedded={true} />
