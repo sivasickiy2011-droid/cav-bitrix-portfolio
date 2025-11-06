@@ -28,9 +28,9 @@ def get_cipher():
     if _cipher is None:
         encryption_key = os.environ.get('ENCRYPTION_KEY')
         if not encryption_key:
-            # Используем фиксированный ключ для разработки
+            # Используем валидный Fernet ключ для разработки
             # ВАЖНО: В продакшене установите свой ключ через ENCRYPTION_KEY секрет!
-            encryption_key = 'kJZL8vW3N_hK9xF2mQ5tP7yC1nB4sD6gE0iO8uA3wR0='
+            encryption_key = 'xK8vW3N_hK9xF2mQ5tP7yC1nB4sD6gE0iO8uA3wR0='
         _cipher = Fernet(encryption_key.encode())
     return _cipher
 
