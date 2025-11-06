@@ -1,4 +1,5 @@
 {
+  "copy-secrets-to-db": "https://functions.poehali.dev/961bcfd3-a4a3-4d7e-b238-7d19be6f98e1",
   "secure-settings": "https://functions.poehali.dev/fa56bf24-1e0b-4d49-8511-6befcd962d6f",
   "contact-form": "https://functions.poehali.dev/003b9991-d7d8-4f5d-8257-dee42fad0f91",
   "upload-logo": "https://functions.poehali.dev/37a07387-34ec-4fe2-b5c7-882c960a3b40",

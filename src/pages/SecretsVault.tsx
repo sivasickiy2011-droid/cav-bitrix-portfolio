@@ -33,6 +33,7 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [showMigrationAlert, setShowMigrationAlert] = useState(false);
   const [migrating, setMigrating] = useState(false);
+  const [copyingSecrets, setCopyingSecrets] = useState(false);
   
   const [formData, setFormData] = useState({
     key: '',
@@ -105,6 +106,37 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
       alert(result.message);
     } else {
       alert('Ошибка миграции: ' + result.error);
+    }
+  };
+
+  const handleCopyProjectSecrets = async () => {
+    if (!confirm('Скопировать секреты из проектных переменных в хранилище базы данных? Это позволит редактировать их через админ-панель.')) {
+      return;
+    }
+
+    setCopyingSecrets(true);
+    try {
+      const token = localStorage.getItem('admin_auth');
+      const response = await fetch('https://functions.poehali.dev/961bcfd3-a4a3-4d7e-b238-7d19be6f98e1', {
+        method: 'POST',
+        headers: {
+          'X-Admin-Token': token || ''
+        }
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        await loadSettings();
+        alert(`✅ ${result.message}\n\nСкопировано: ${result.copied.join(', ')}\n${result.skipped.length > 0 ? `Пропущено: ${result.skipped.join(', ')}` : ''}`);
+      } else {
+        const error = await response.text();
+        alert('Ошибка копирования: ' + error);
+      }
+    } catch (error) {
+      console.error('Failed to copy secrets:', error);
+      alert('Ошибка копирования секретов');
+    } finally {
+      setCopyingSecrets(false);
     }
   };
 
@@ -203,17 +235,28 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
           </span>
         </div>
         
-        <Button
-          onClick={() => {
-            setShowAddForm(!showAddForm);
-            setEditingId(null);
-            setFormData({ key: '', value: '', category: 'webhooks', description: '' });
-          }}
-          className="bg-blue-600 hover:bg-blue-700"
-        >
-          <Icon name="Plus" className="h-4 w-4 mr-2" />
-          Добавить
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            onClick={handleCopyProjectSecrets}
+            disabled={copyingSecrets}
+            variant="outline"
+            className="border-purple-600 text-purple-400 hover:bg-purple-950/30"
+          >
+            <Icon name="Download" className="h-4 w-4 mr-2" />
+            {copyingSecrets ? 'Копирую...' : 'Импорт из секретов'}
+          </Button>
+          <Button
+            onClick={() => {
+              setShowAddForm(!showAddForm);
+              setEditingId(null);
+              setFormData({ key: '', value: '', category: 'webhooks', description: '' });
+            }}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
+            <Icon name="Plus" className="h-4 w-4 mr-2" />
+            Добавить
+          </Button>
+        </div>
       </div>
 
       {showAddForm && (
