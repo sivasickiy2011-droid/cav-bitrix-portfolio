@@ -19,23 +19,23 @@ class SecureSetting:
     category: str
     description: Optional[str] = None
 
-# Глобальный cipher для всех операций
+# Глобальный cipher и ключ для всех операций
 _cipher = None
+_encryption_key = None
 
 def get_cipher():
     '''Получает Fernet cipher для шифрования'''
-    global _cipher
+    global _cipher, _encryption_key
     if _cipher is None:
-        encryption_key = os.environ.get('ENCRYPTION_KEY')
-        if not encryption_key:
-            # Генерируем новый ключ если не задан
-            # ВАЖНО: В продакшене установите постоянный ключ через ENCRYPTION_KEY секрет!
-            encryption_key = Fernet.generate_key().decode()
+        if _encryption_key is None:
+            encryption_key_str = os.environ.get('ENCRYPTION_KEY')
+            if encryption_key_str:
+                _encryption_key = encryption_key_str.encode()
+            else:
+                # Генерируем и сохраняем ключ один раз
+                _encryption_key = Fernet.generate_key()
         
-        if isinstance(encryption_key, str):
-            encryption_key = encryption_key.encode()
-        
-        _cipher = Fernet(encryption_key)
+        _cipher = Fernet(_encryption_key)
     return _cipher
 
 def get_db_connection():
