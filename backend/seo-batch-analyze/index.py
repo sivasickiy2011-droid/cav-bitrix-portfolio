@@ -4,6 +4,35 @@ from typing import Dict, Any, List
 from pydantic import BaseModel, Field
 import openai
 import asyncio
+import psycopg2
+import base64
+
+_secret_cache = {}
+
+def get_secret(key: str) -> str:
+    '''Reads secret from database with caching'''
+    if key in _secret_cache:
+        return _secret_cache[key]
+    
+    try:
+        dsn = os.environ.get('DATABASE_URL')
+        conn = psycopg2.connect(dsn)
+        cur = conn.cursor()
+        cur.execute("SELECT encrypted_value FROM secure_settings WHERE key = %s", (key,))
+        row = cur.fetchone()
+        cur.close()
+        conn.close()
+        
+        if row:
+            value = base64.b64decode(row[0].encode()).decode()
+            _secret_cache[key] = value
+            return value
+    except Exception as e:
+        print(f'DB secret read error for {key}: {str(e)}')
+    
+    env_value = os.environ.get(key, '')
+    _secret_cache[key] = env_value
+    return env_value
 
 class PageData(BaseModel):
     url: str
@@ -120,7 +149,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             'isBase64Encoded': False
         }
     
-    api_key = os.environ.get('OPENAI_API_KEY')
+    api_key = get_secret('OPENAI_API_KEY')
     if not api_key:
         return {
             'statusCode': 500,
@@ -133,7 +162,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     request_data = BatchSeoRequest(**body_data)
     
     # Настраиваем endpoint и модель
-    api_base = os.environ.get('OPENAI_API_BASE', 'https://api.openai.com/v1')
+    api_base = get_secret('OPENAI_API_BASE') or 'https://api.openai.com/v1'
     is_openrouter = 'openrouter' in api_base.lower()
     model = 'openai/gpt-4o-mini' if is_openrouter else os.environ.get('OPENAI_MODEL', 'gpt-4o-mini')
     

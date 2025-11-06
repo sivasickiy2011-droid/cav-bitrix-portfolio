@@ -3,6 +3,35 @@ import os
 import urllib.request
 import urllib.parse
 from typing import Dict, Any, List
+import psycopg2
+import base64
+
+_secret_cache = {}
+
+def get_secret(key: str) -> str:
+    '''Reads secret from database with caching'''
+    if key in _secret_cache:
+        return _secret_cache[key]
+    
+    try:
+        dsn = os.environ.get('DATABASE_URL')
+        conn = psycopg2.connect(dsn)
+        cur = conn.cursor()
+        cur.execute("SELECT encrypted_value FROM secure_settings WHERE key = %s", (key,))
+        row = cur.fetchone()
+        cur.close()
+        conn.close()
+        
+        if row:
+            value = base64.b64decode(row[0].encode()).decode()
+            _secret_cache[key] = value
+            return value
+    except Exception as e:
+        print(f'DB secret read error for {key}: {str(e)}')
+    
+    env_value = os.environ.get(key, '')
+    _secret_cache[key] = env_value
+    return env_value
 
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
@@ -46,7 +75,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     contact_phone: str = body_data.get('phone', 'Не указано')
     contact_email: str = body_data.get('email', 'Не указано')
     
-    bitrix_webhook = 'https://itpood.ru/rest/1/ben0wm7xdr8zsore/'
+    bitrix_webhook = get_secret('BITRIX24_WEBHOOK_URL') or get_secret('bitrix24_webhook_url') or 'https://itpood.ru/rest/1/ben0wm7xdr8zsore/'
     
     services_text = '\n'.join([f'• {service}' for service in services])
     
@@ -76,8 +105,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         print(f'Bitrix24 error: {str(e)}')
     
     telegram_success = False
-    telegram_bot_token = os.environ.get('TELEGRAM_BOT_TOKEN', '')
-    telegram_chat_id = os.environ.get('TELEGRAM_CHAT_ID', '')
+    telegram_bot_token = get_secret('TELEGRAM_BOT_TOKEN') or ''
+    telegram_chat_id = get_secret('TELEGRAM_CHAT_ID') or ''
     
     if telegram_bot_token and telegram_chat_id:
         try:
