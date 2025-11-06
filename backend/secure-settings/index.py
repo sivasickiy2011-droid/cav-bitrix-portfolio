@@ -160,19 +160,33 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             'body': ''
         }
     
-    # Проверка токена администратора
+    # Проверка токена администратора (используем тот же механизм, что и для auth-admin)
     headers = event.get('headers', {})
     admin_token = headers.get('x-admin-token') or headers.get('X-Admin-Token')
-    expected_token = os.environ.get('ADMIN_PASSWORD_HASH')
     
-    if not admin_token or admin_token != expected_token:
+    if not admin_token:
         return {
             'statusCode': 401,
             'headers': {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
             },
-            'body': json.dumps({'error': 'Unauthorized'})
+            'body': json.dumps({'error': 'Unauthorized: No token provided'})
+        }
+    
+    # Проверяем токен через функцию auth-admin
+    import hashlib
+    expected_hash = os.environ.get('ADMIN_PASSWORD_HASH')
+    token_hash = hashlib.sha256(admin_token.encode()).hexdigest()
+    
+    if token_hash != expected_hash:
+        return {
+            'statusCode': 401,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps({'error': 'Unauthorized: Invalid token'})
         }
     
     # GET - получить все настройки или одну по ключу
