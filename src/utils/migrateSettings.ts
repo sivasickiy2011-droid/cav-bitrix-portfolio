@@ -97,6 +97,38 @@ export async function migrateSettingsToVault() {
     });
   }
 
+  // Миграция OpenAI ключей
+  const openaiKey = localStorage.getItem('OPENAI_API_KEY');
+  if (openaiKey) {
+    migratedSettings.push({
+      key: 'OPENAI_API_KEY',
+      value: openaiKey,
+      category: 'api_keys',
+      description: 'API ключ для OpenAI'
+    });
+  }
+
+  const openaiBase = localStorage.getItem('OPENAI_API_BASE');
+  if (openaiBase) {
+    migratedSettings.push({
+      key: 'OPENAI_API_BASE',
+      value: openaiBase,
+      category: 'api_keys',
+      description: 'Базовый URL для OpenAI API'
+    });
+  }
+
+  // Миграция Bitrix24 webhook
+  const bitrixWebhook = localStorage.getItem('BITRIX24_WEBHOOK_URL');
+  if (bitrixWebhook) {
+    migratedSettings.push({
+      key: 'BITRIX24_WEBHOOK_URL',
+      value: bitrixWebhook,
+      category: 'webhooks',
+      description: 'Webhook URL для Bitrix24'
+    });
+  }
+
   if (migratedSettings.length === 0) {
     return { success: true, migrated: 0, message: 'Нет настроек для миграции' };
   }
@@ -137,6 +169,9 @@ export async function migrateSettingsToVault() {
     localStorage.removeItem('bitrix24_settings');
     localStorage.removeItem('telegram_bot_token');
     localStorage.removeItem('telegram_chat_id');
+    localStorage.removeItem('OPENAI_API_KEY');
+    localStorage.removeItem('OPENAI_API_BASE');
+    localStorage.removeItem('BITRIX24_WEBHOOK_URL');
   }
   
   return {
@@ -151,6 +186,8 @@ export function hasUnmigratedSettings(): boolean {
   const analytics = localStorage.getItem('analytics_settings');
   const bitrix = localStorage.getItem('bitrix24_settings');
   const telegram = localStorage.getItem('telegram_bot_token') || localStorage.getItem('telegram_chat_id');
+  const openai = localStorage.getItem('OPENAI_API_KEY') || localStorage.getItem('OPENAI_API_BASE');
+  const bitrixWebhook = localStorage.getItem('BITRIX24_WEBHOOK_URL');
   
-  return !!(analytics || bitrix || telegram);
+  return !!(analytics || bitrix || telegram || openai || bitrixWebhook);
 }
