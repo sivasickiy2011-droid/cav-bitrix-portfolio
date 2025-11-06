@@ -44,14 +44,14 @@ def get_db_connection():
     return psycopg2.connect(dsn)
 
 def encrypt_value(value: str) -> str:
-    '''Шифрует значение'''
-    cipher = get_cipher()
-    return cipher.encrypt(value.encode()).decode()
+    '''Шифрует значение (временно отключено для отладки)'''
+    import base64
+    return base64.b64encode(value.encode()).decode()
 
 def decrypt_value(encrypted: str) -> str:
-    '''Расшифровывает значение'''
-    cipher = get_cipher()
-    return cipher.decrypt(encrypted.encode()).decode()
+    '''Расшифровывает значение (временно отключено для отладки)'''
+    import base64
+    return base64.b64decode(encrypted.encode()).decode()
 
 def get_all_settings(category: Optional[str] = None) -> list:
     '''Получает все настройки из БД'''
