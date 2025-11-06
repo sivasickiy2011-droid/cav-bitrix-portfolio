@@ -19,9 +19,13 @@ class SecureSetting:
     category: str
     description: Optional[str] = None
 
-# Генерация ключа шифрования из переменной окружения
-ENCRYPTION_KEY = os.environ.get('ENCRYPTION_KEY', Fernet.generate_key().decode())
-cipher = Fernet(ENCRYPTION_KEY.encode())
+def get_cipher():
+    '''Получает Fernet cipher для шифрования'''
+    encryption_key = os.environ.get('ENCRYPTION_KEY')
+    if not encryption_key:
+        # Генерируем новый ключ, если не задан
+        encryption_key = Fernet.generate_key().decode()
+    return Fernet(encryption_key.encode())
 
 def get_db_connection():
     '''Создает подключение к БД'''
@@ -30,10 +34,12 @@ def get_db_connection():
 
 def encrypt_value(value: str) -> str:
     '''Шифрует значение'''
+    cipher = get_cipher()
     return cipher.encrypt(value.encode()).decode()
 
 def decrypt_value(encrypted: str) -> str:
     '''Расшифровывает значение'''
+    cipher = get_cipher()
     return cipher.decrypt(encrypted.encode()).decode()
 
 def get_all_settings(category: Optional[str] = None) -> list:
@@ -160,7 +166,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             'body': ''
         }
     
-    # Проверка токена администратора (используем тот же механизм, что и для auth-admin)
+    # Проверка токена администратора через bcrypt
     headers = event.get('headers', {})
     admin_token = headers.get('x-admin-token') or headers.get('X-Admin-Token')
     
@@ -171,22 +177,48 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
             },
-            'body': json.dumps({'error': 'Unauthorized: No token provided'})
+            'body': json.dumps({'error': 'Unauthorized: No token provided'}),
+            'isBase64Encoded': False
         }
     
-    # Проверяем токен через функцию auth-admin
-    import hashlib
-    expected_hash = os.environ.get('ADMIN_PASSWORD_HASH')
-    token_hash = hashlib.sha256(admin_token.encode()).hexdigest()
+    # Проверяем токен через bcrypt (как в auth-admin)
+    import bcrypt
+    admin_password_hash = os.environ.get('ADMIN_PASSWORD_HASH')
     
-    if token_hash != expected_hash:
+    if not admin_password_hash:
+        return {
+            'statusCode': 500,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps({'error': 'Admin password not configured'}),
+            'isBase64Encoded': False
+        }
+    
+    password_bytes = admin_token.encode('utf-8')
+    hash_str = admin_password_hash.strip()
+    
+    if hash_str.startswith('$2a$'):
+        hash_str = '$2b$' + hash_str[4:]
+    
+    hash_bytes = hash_str.encode('utf-8')
+    
+    is_valid = False
+    try:
+        is_valid = bcrypt.checkpw(password_bytes, hash_bytes)
+    except Exception:
+        pass
+    
+    if not is_valid:
         return {
             'statusCode': 401,
             'headers': {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
             },
-            'body': json.dumps({'error': 'Unauthorized: Invalid token'})
+            'body': json.dumps({'error': 'Unauthorized: Invalid token'}),
+            'isBase64Encoded': False
         }
     
     # GET - получить все настройки или одну по ключу

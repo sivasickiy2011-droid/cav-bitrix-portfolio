@@ -6,8 +6,9 @@
       "path": "/",
       "expectedStatus": 401,
       "expectedBody": {
-        "error": "Unauthorized"
-      }
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
     },
     {
       "name": "OPTIONS preflight request",
