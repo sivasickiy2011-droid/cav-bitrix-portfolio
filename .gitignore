@@ -8,9 +8,28 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+server/node_modules
 dist
 dist-ssr
 *.local
+
+# Environment variables
+.env
+.env.production
+server/.env
+server/.env.production
+
+# Database dumps and backups
+*.sql
+db_export_*.sql
+backups/
+
+# Docker volumes
+postgres_data/
+minio_data/
+
+# SSL certificates
+certbot/
 
 # Editor directories and files
 .vscode/*
@@ -23,3 +42,7 @@ dist-ssr
 *.sln
 *.sw?
 builds
+
+# Secrets
+secrets.json
+credentials.json
