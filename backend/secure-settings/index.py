@@ -28,10 +28,14 @@ def get_cipher():
     if _cipher is None:
         encryption_key = os.environ.get('ENCRYPTION_KEY')
         if not encryption_key:
-            # Валидный Fernet ключ (base64-encoded 32 bytes)
-            # Сгенерирован через Fernet.generate_key()
-            encryption_key = 'K7J8_xM2nQ5tP9yC1vB4sD6hE0iO8uA3wR5gL7k9Zw0='
-        _cipher = Fernet(encryption_key.encode())
+            # Генерируем новый ключ если не задан
+            # ВАЖНО: В продакшене установите постоянный ключ через ENCRYPTION_KEY секрет!
+            encryption_key = Fernet.generate_key().decode()
+        
+        if isinstance(encryption_key, str):
+            encryption_key = encryption_key.encode()
+        
+        _cipher = Fernet(encryption_key)
     return _cipher
 
 def get_db_connection():
