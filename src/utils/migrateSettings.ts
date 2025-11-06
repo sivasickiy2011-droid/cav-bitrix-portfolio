@@ -103,25 +103,47 @@ export async function migrateSettingsToVault() {
 
   // Отправка настроек в хранилище
   const results = await Promise.allSettled(
-    migratedSettings.map(setting =>
-      fetch('https://functions.poehali.dev/fa56bf24-1e0b-4d49-8511-6befcd962d6f', {
+    migratedSettings.map(async setting => {
+      console.log(`Migrating: ${setting.key}`);
+      const response = await fetch('https://functions.poehali.dev/fa56bf24-1e0b-4d49-8511-6befcd962d6f', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'X-Admin-Token': adminToken
         },
         body: JSON.stringify(setting)
-      })
-    )
+      });
+      
+      if (!response.ok) {
+        console.error(`Failed to migrate ${setting.key}: HTTP ${response.status}`, await response.text());
+        throw new Error(`HTTP ${response.status}`);
+      }
+      
+      console.log(`Successfully migrated: ${setting.key}`);
+      return response;
+    })
   );
 
   const successful = results.filter(r => r.status === 'fulfilled').length;
+  const failed = results.filter(r => r.status === 'rejected');
+  
+  if (failed.length > 0) {
+    console.error('Failed migrations:', failed);
+  }
+  
+  // Удаляем старые настройки только если миграция успешна
+  if (successful === migratedSettings.length) {
+    localStorage.removeItem('analytics_settings');
+    localStorage.removeItem('bitrix24_settings');
+    localStorage.removeItem('telegram_bot_token');
+    localStorage.removeItem('telegram_chat_id');
+  }
   
   return {
-    success: true,
+    success: successful > 0,
     migrated: successful,
     total: migratedSettings.length,
-    message: `Перенесено ${successful} из ${migratedSettings.length} настроек`
+    message: `Перенесено ${successful} из ${migratedSettings.length} настроек${failed.length > 0 ? '. Некоторые настройки не удалось перенести - проверьте консоль.' : ''}`
   };
 }
 
