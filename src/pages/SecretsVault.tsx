@@ -34,6 +34,7 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
   const [showMigrationAlert, setShowMigrationAlert] = useState(false);
   const [migrating, setMigrating] = useState(false);
   const [copyingSecrets, setCopyingSecrets] = useState(false);
+  const [clearingCache, setClearingCache] = useState(false);
   
   const [formData, setFormData] = useState({
     key: '',
@@ -140,6 +141,36 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
     }
   };
 
+  const handleClearCache = async () => {
+    if (!confirm('Очистить кеш секретов в backend функциях? Это применит все изменения мгновенно.')) {
+      return;
+    }
+
+    setClearingCache(true);
+    try {
+      const token = localStorage.getItem('admin_auth');
+      const response = await fetch('https://functions.poehali.dev/f8daa3d3-22ba-4629-ac39-29eda98d18de', {
+        method: 'POST',
+        headers: {
+          'X-Admin-Token': token || ''
+        }
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        alert(`✅ ${result.message}\n\n${result.info}`);
+      } else {
+        const error = await response.text();
+        alert('Ошибка: ' + error);
+      }
+    } catch (error) {
+      console.error('Failed to clear cache:', error);
+      alert('Ошибка очистки кеша');
+    } finally {
+      setClearingCache(false);
+    }
+  };
+
   const handleSave = async () => {
     setSaving(true);
     try {
@@ -199,6 +230,14 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
 
   const content = (
     <div className="space-y-6">
+      <Alert className="bg-blue-900/20 border-blue-500/30">
+        <Icon name="Info" className="h-4 w-4 text-blue-400" />
+        <AlertDescription className="text-blue-200 text-sm">
+          <strong>Как это работает:</strong> Секреты хранятся в зашифрованной БД. Backend функции читают их оттуда (с кешированием). 
+          После изменения секрета нажмите <strong>"Очистить кеш"</strong> для мгновенного применения.
+        </AlertDescription>
+      </Alert>
+
       {showMigrationAlert && (
         <Alert className="bg-blue-900/30 border-blue-500/50">
           <Icon name="AlertCircle" className="h-4 w-4 text-blue-400" />
@@ -236,6 +275,17 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
         </div>
         
         <div className="flex gap-2">
+          <Button
+            onClick={handleClearCache}
+            disabled={clearingCache}
+            variant="outline"
+            size="sm"
+            className="border-orange-600 text-orange-400 hover:bg-orange-950/30"
+            title="Применить изменения секретов мгновенно"
+          >
+            <Icon name="RefreshCw" className="h-4 w-4 mr-2" />
+            {clearingCache ? 'Очистка...' : 'Очистить кеш'}
+          </Button>
           <Button
             onClick={handleCopyProjectSecrets}
             disabled={copyingSecrets}
