@@ -6,6 +6,7 @@ import MetricsTab from '@/components/analytics/MetricsTab';
 import SeoTab from '@/components/analytics/SeoTab';
 import StatsTab from '@/components/analytics/StatsTab';
 import WebmasterTab from '@/components/analytics/WebmasterTab';
+import { useSecureSettings } from '@/hooks/useSecureSettings';
 
 interface AnalyticsSettings {
   google_analytics_id: string;
@@ -28,6 +29,8 @@ interface WebmasterIssue {
 }
 
 export default function Analytics() {
+  const { settings: secureSettings, loading: secureLoading, setSetting } = useSecureSettings('analytics');
+  
   const [settings, setSettings] = useState<AnalyticsSettings>({
     google_analytics_id: '',
     yandex_metrika_id: '',
@@ -35,7 +38,6 @@ export default function Analytics() {
     yandex_metrika_token: '',
     ai_seo_enabled: false
   });
-  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [visitData, setVisitData] = useState<VisitData[]>([]);
   const [webmasterIssues, setWebmasterIssues] = useState<WebmasterIssue[]>([]);
@@ -43,8 +45,16 @@ export default function Analytics() {
   const [loadingIssues, setLoadingIssues] = useState(false);
 
   useEffect(() => {
-    loadSettings();
-  }, []);
+    if (!secureLoading) {
+      setSettings({
+        google_analytics_id: secureSettings['google_analytics_id'] || '',
+        yandex_metrika_id: secureSettings['yandex_metrika_id'] || '',
+        yandex_webmaster_user_id: secureSettings['yandex_webmaster_user_id'] || '',
+        yandex_metrika_token: secureSettings['yandex_metrika_token'] || '',
+        ai_seo_enabled: secureSettings['ai_seo_enabled'] === 'true'
+      });
+    }
+  }, [secureSettings, secureLoading]);
 
   useEffect(() => {
     if (settings.yandex_metrika_id && settings.yandex_metrika_token) {
@@ -59,21 +69,7 @@ export default function Analytics() {
   //   }
   // }, [settings.yandex_webmaster_user_id]);
 
-  const loadSettings = async () => {
-    const savedSettings = localStorage.getItem('analytics_settings');
-    if (savedSettings) {
-      const parsed = JSON.parse(savedSettings);
-      console.log('Loaded analytics settings:', {
-        hasMetrikaId: !!parsed.yandex_metrika_id,
-        hasToken: !!parsed.yandex_metrika_token,
-        metrikaId: parsed.yandex_metrika_id
-      });
-      setSettings(parsed);
-    } else {
-      console.log('No saved analytics settings found');
-    }
-    setLoading(false);
-  };
+
 
   const loadVisitData = async () => {
     if (!settings.yandex_metrika_id || !settings.yandex_metrika_token) {
@@ -138,7 +134,14 @@ export default function Analytics() {
 
   const handleSave = async () => {
     setSaving(true);
-    localStorage.setItem('analytics_settings', JSON.stringify(settings));
+    
+    await Promise.all([
+      settings.yandex_metrika_id && setSetting('yandex_metrika_id', settings.yandex_metrika_id, 'analytics', 'ID счётчика Яндекс.Метрики'),
+      settings.yandex_metrika_token && setSetting('yandex_metrika_token', settings.yandex_metrika_token, 'analytics', 'OAuth токен для Яндекс.Метрики API'),
+      settings.yandex_webmaster_user_id && setSetting('yandex_webmaster_user_id', settings.yandex_webmaster_user_id, 'analytics', 'User ID для Яндекс.Вебмастера'),
+      settings.google_analytics_id && setSetting('google_analytics_id', settings.google_analytics_id, 'analytics', 'ID счётчика Google Analytics'),
+      setSetting('ai_seo_enabled', String(settings.ai_seo_enabled), 'analytics', 'Включить ИИ SEO-оптимизацию')
+    ]);
     
     if (settings.yandex_metrika_id && settings.yandex_metrika_token) {
       await loadVisitData();
@@ -148,13 +151,15 @@ export default function Analytics() {
       await loadWebmasterIssues();
     }
     
-    setTimeout(() => {
-      setSaving(false);
-    }, 1000);
+    setSaving(false);
   };
 
   const handleSaveToken = async () => {
-    localStorage.setItem('analytics_settings', JSON.stringify(settings));
+    await Promise.all([
+      settings.yandex_metrika_id && setSetting('yandex_metrika_id', settings.yandex_metrika_id, 'analytics', 'ID счётчика Яндекс.Метрики'),
+      settings.yandex_metrika_token && setSetting('yandex_metrika_token', settings.yandex_metrika_token, 'analytics', 'OAuth токен для Яндекс.Метрики API')
+    ]);
+    
     if (settings.yandex_metrika_id && settings.yandex_metrika_token) {
       await loadVisitData();
       
@@ -164,7 +169,7 @@ export default function Analytics() {
     }
   };
 
-  if (loading) {
+  if (secureLoading) {
     return (
       <AdminLayout>
         <div className="flex items-center justify-center min-h-[400px]">
