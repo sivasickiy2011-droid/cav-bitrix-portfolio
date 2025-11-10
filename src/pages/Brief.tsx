@@ -109,7 +109,7 @@ const Brief = () => {
                 required
                 value={formData.companyName}
                 onChange={(e) => handleInputChange('companyName', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all text-gray-900"
                 placeholder="ООО 'Название компании'"
               />
             </div>
@@ -127,7 +127,7 @@ const Brief = () => {
                 rows={4}
                 value={formData.goal}
                 onChange={(e) => handleInputChange('goal', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all resize-none text-gray-900"
                 placeholder="Например: Создание первого корпоративного сайта компании..."
               />
             </div>
@@ -145,7 +145,7 @@ const Brief = () => {
                 rows={4}
                 value={formData.results}
                 onChange={(e) => handleInputChange('results', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all resize-none text-gray-900"
                 placeholder="Например: Увеличение входящих заявок на 30%, повышение узнаваемости бренда..."
               />
             </div>
@@ -163,7 +163,7 @@ const Brief = () => {
                 rows={5}
                 value={formData.businessArea}
                 onChange={(e) => handleInputChange('businessArea', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all resize-none text-gray-900"
                 placeholder="Например: Производство и продажа промышленного оборудования. Преимущества: 15 лет на рынке, собственное производство..."
               />
             </div>
@@ -181,7 +181,7 @@ const Brief = () => {
                 rows={4}
                 value={formData.clients}
                 onChange={(e) => handleInputChange('clients', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all resize-none text-gray-900"
                 placeholder="Например: Мужчины и женщины 30-50 лет, средний и высокий доход, руководители отделов закупок..."
               />
             </div>
@@ -198,7 +198,7 @@ const Brief = () => {
                 rows={4}
                 value={formData.likeSites}
                 onChange={(e) => handleInputChange('likeSites', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all resize-none text-gray-900"
                 placeholder="Например: example.com - нравится минималистичный дизайн и удобная навигация, но слишком мало информации о товарах..."
               />
             </div>
@@ -215,7 +215,7 @@ const Brief = () => {
                 rows={4}
                 value={formData.dislikeSites}
                 onChange={(e) => handleInputChange('dislikeSites', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all resize-none text-gray-900"
                 placeholder="Например: competitor.com - перегружен информацией, сложно найти нужное, устаревший дизайн..."
               />
             </div>
@@ -232,7 +232,7 @@ const Brief = () => {
                 rows={4}
                 value={formData.colorScheme}
                 onChange={(e) => handleInputChange('colorScheme', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all resize-none text-gray-900"
                 placeholder="Например: Есть фирменный логотип в синих тонах. Предпочтительны синий и белый цвета. Избегать красного и оранжевого..."
               />
             </div>
@@ -279,7 +279,7 @@ const Brief = () => {
                 rows={5}
                 value={formData.sections}
                 onChange={(e) => handleInputChange('sections', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all resize-none text-gray-900"
                 placeholder="Например: О компании, Каталог товаров (с фильтрами), Новости, Контакты, Калькулятор стоимости, Форма заказа..."
               />
             </div>
