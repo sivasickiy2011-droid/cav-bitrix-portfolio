@@ -41,17 +41,19 @@ const Brief = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://functions.poehali.dev/003b9991-d7d8-4f5d-8257-dee42fad0f91', {
+      const response = await fetch('https://functions.poehali.dev/28e36fe2-2513-4ae6-bf76-26a49b33c1bf', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          type: 'brief_form',
           ...formData,
           timestamp: new Date().toISOString()
         })
       });
 
-      if (!response.ok) throw new Error('Ошибка отправки');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Ошибка отправки');
+      }
 
       toast.success('Анкета успешно отправлена! Проверьте вашу почту или Telegram.');
       setFormData({

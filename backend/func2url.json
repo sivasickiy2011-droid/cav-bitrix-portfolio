@@ -1,4 +1,5 @@
 {
+  "brief-handler": "https://functions.poehali.dev/28e36fe2-2513-4ae6-bf76-26a49b33c1bf",
   "clear-secrets-cache": "https://functions.poehali.dev/f8daa3d3-22ba-4629-ac39-29eda98d18de",
   "copy-secrets-to-db": "https://functions.poehali.dev/961bcfd3-a4a3-4d7e-b238-7d19be6f98e1",
   "secure-settings": "https://functions.poehali.dev/fa56bf24-1e0b-4d49-8511-6befcd962d6f",
