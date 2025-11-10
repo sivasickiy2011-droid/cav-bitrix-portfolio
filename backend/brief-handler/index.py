@@ -208,14 +208,20 @@ Email: ivanickiy@centerai.tech
     
     msg.attach(MIMEText(body, 'plain', 'utf-8'))
     
+    pdf_buffer.seek(0)
     pdf_attachment = MIMEApplication(pdf_buffer.read(), _subtype='pdf')
     pdf_attachment.add_header('Content-Disposition', 'attachment', filename='anketa.pdf')
     msg.attach(pdf_attachment)
     
-    with smtplib.SMTP(smtp_host, smtp_port) as server:
+    server = smtplib.SMTP(smtp_host, smtp_port, timeout=10)
+    try:
+        server.ehlo()
         server.starttls()
+        server.ehlo()
         server.login(smtp_user, smtp_password)
         server.send_message(msg)
+    finally:
+        server.quit()
 
 
 def send_telegram_pdf(telegram_username: str, pdf_buffer: io.BytesIO, bot_token: str) -> None:
