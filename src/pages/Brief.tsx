@@ -297,7 +297,7 @@ const Brief = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-12 py-6 text-lg bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end text-white rounded-full hover:shadow-lg transition-all disabled:opacity-50"
+                className="px-12 py-6 text-lg bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end text-black rounded-full hover:shadow-lg transition-all disabled:opacity-50"
               >
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">
