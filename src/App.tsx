@@ -25,6 +25,7 @@ import PartnerLogosAdmin from "./pages/PartnerLogosAdmin";
 import TestS3Upload from "./pages/TestS3Upload";
 import PortfolioAdmin from "./pages/PortfolioAdmin";
 import ContentAdmin from "./pages/ContentAdmin";
+import Brief from "./pages/Brief";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/services" element={<OurServices />} />
+            <Route path="/brief" element={<Brief />} />
             <Route path="/tg" element={<TelegramMiniApp />} />
             <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
             <Route path="/admin/login" element={<AdminLogin />} />
