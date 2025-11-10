@@ -17,7 +17,10 @@ const Brief = () => {
     dislikeSites: '',
     colorScheme: '',
     designType: [] as string[],
-    sections: ''
+    sections: '',
+    deliveryMethod: 'email' as 'email' | 'telegram',
+    clientEmail: '',
+    clientTelegram: ''
   });
 
   const handleInputChange = (field: string, value: string) => {
@@ -50,7 +53,7 @@ const Brief = () => {
 
       if (!response.ok) throw new Error('Ошибка отправки');
 
-      toast.success('Анкета успешно отправлена! Мы свяжемся с вами в ближайшее время.');
+      toast.success('Анкета успешно отправлена! Проверьте вашу почту или Telegram.');
       setFormData({
         companyName: '',
         goal: '',
@@ -61,7 +64,10 @@ const Brief = () => {
         dislikeSites: '',
         colorScheme: '',
         designType: [],
-        sections: ''
+        sections: '',
+        deliveryMethod: 'email',
+        clientEmail: '',
+        clientTelegram: ''
       });
     } catch (error) {
       toast.error('Ошибка при отправке анкеты. Попробуйте позже.');
@@ -284,12 +290,83 @@ const Brief = () => {
               />
             </div>
 
+            <div className="bg-gradient-to-r from-gradient-start/10 to-gradient-mid/10 rounded-2xl p-6">
+              <label className="block text-lg font-semibold text-gray-900 mb-4">
+                Способ получения заполненной анкеты (PDF)
+              </label>
+              
+              <div className="space-y-4 mb-6">
+                <label className="flex items-center gap-3 cursor-pointer group">
+                  <input
+                    type="radio"
+                    name="deliveryMethod"
+                    value="email"
+                    checked={formData.deliveryMethod === 'email'}
+                    onChange={(e) => handleInputChange('deliveryMethod', e.target.value)}
+                    className="w-5 h-5 text-gradient-start focus:ring-gradient-start cursor-pointer"
+                  />
+                  <span className="text-gray-700 group-hover:text-gradient-start transition-colors font-medium">
+                    На электронную почту
+                  </span>
+                </label>
+
+                <label className="flex items-center gap-3 cursor-pointer group">
+                  <input
+                    type="radio"
+                    name="deliveryMethod"
+                    value="telegram"
+                    checked={formData.deliveryMethod === 'telegram'}
+                    onChange={(e) => handleInputChange('deliveryMethod', e.target.value)}
+                    className="w-5 h-5 text-gradient-start focus:ring-gradient-start cursor-pointer"
+                  />
+                  <span className="text-gray-700 group-hover:text-gradient-start transition-colors font-medium">
+                    В Telegram
+                  </span>
+                </label>
+              </div>
+
+              {formData.deliveryMethod === 'email' && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Ваш email *
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={formData.clientEmail}
+                    onChange={(e) => handleInputChange('clientEmail', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all text-gray-900"
+                    placeholder="example@mail.com"
+                  />
+                </div>
+              )}
+
+              {formData.deliveryMethod === 'telegram' && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Ваш Telegram (username или номер телефона) *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.clientTelegram}
+                    onChange={(e) => handleInputChange('clientTelegram', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gradient-start focus:border-transparent transition-all text-gray-900"
+                    placeholder="@username или +79991234567"
+                  />
+                  <p className="text-sm text-gray-500 mt-2">
+                    Убедитесь, что вы написали боту хотя бы один раз, чтобы он мог отправить вам файл
+                  </p>
+                </div>
+              )}
+            </div>
+
             <div className="bg-gradient-to-r from-gradient-start/10 to-gradient-mid/10 rounded-2xl p-6 text-center">
               <p className="text-gray-700 mb-4">
                 Спасибо за уделенное время!
               </p>
               <p className="text-sm text-gray-600">
-                После отправки анкеты мы свяжемся с вами в ближайшее время для обсуждения деталей проекта.
+                После отправки анкеты вы получите PDF-копию на указанный контакт, а мы свяжемся с вами в ближайшее время для обсуждения деталей проекта.
               </p>
             </div>
 
