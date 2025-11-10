@@ -188,6 +188,9 @@ def send_email_with_pdf(to_email: str, pdf_buffer: io.BytesIO, brief_data: Dict[
     smtp_user = os.environ.get('SMTP_USER')
     smtp_password = os.environ.get('SMTP_PASSWORD')
     
+    if not all([smtp_host, smtp_user, smtp_password]):
+        raise ValueError('SMTP credentials not configured')
+    
     msg = MIMEMultipart()
     msg['From'] = smtp_user
     msg['To'] = to_email
@@ -213,15 +216,25 @@ Email: ivanickiy@centerai.tech
     pdf_attachment.add_header('Content-Disposition', 'attachment', filename='anketa.pdf')
     msg.attach(pdf_attachment)
     
-    server = smtplib.SMTP(smtp_host, smtp_port, timeout=10)
+    server = None
     try:
+        server = smtplib.SMTP(smtp_host, smtp_port, timeout=30)
+        server.set_debuglevel(0)
         server.ehlo()
-        server.starttls()
-        server.ehlo()
+        if server.has_extn('STARTTLS'):
+            server.starttls()
+            server.ehlo()
         server.login(smtp_user, smtp_password)
         server.send_message(msg)
+    except Exception as e:
+        print(f'SMTP error details: {str(e)}')
+        raise
     finally:
-        server.quit()
+        if server:
+            try:
+                server.quit()
+            except Exception:
+                pass
 
 
 def send_telegram_pdf(telegram_username: str, pdf_buffer: io.BytesIO, bot_token: str) -> None:
