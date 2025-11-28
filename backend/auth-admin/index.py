@@ -100,9 +100,12 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     
     hash_bytes = hash_str.encode('utf-8')
     
+    print(f"Debug: Checking password against hash starting with: {hash_str[:10]}")
+    
     is_valid = False
     try:
         is_valid = bcrypt.checkpw(password_bytes, hash_bytes)
+        print(f"Debug: Password check result: {is_valid}")
     except Exception as e:
         print(f"Password check error: {e}")
     
