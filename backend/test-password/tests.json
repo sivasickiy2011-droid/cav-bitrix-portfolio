@@ -1,0 +1,16 @@
+{
+  "tests": [
+    {
+      "name": "Test password check",
+      "method": "POST",
+      "body": {
+        "password": "testpass123"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "password_length": 11
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
