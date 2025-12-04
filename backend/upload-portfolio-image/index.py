@@ -106,7 +106,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             ACL='public-read'
         )
         
-        image_url = f"https://{bucket_name}.ru1.storage.beget.cloud/{unique_filename}"
+        image_url = f"https://{bucket_name}.s3.ru1.storage.beget.cloud/{unique_filename}"
         
         return {
             'statusCode': 200,
