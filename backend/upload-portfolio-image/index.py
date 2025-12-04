@@ -73,14 +73,25 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         access_key = os.environ.get('AWS_ACCESS_KEY_ID')
         secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
         
+        print(f"[DEBUG] S3 Config: endpoint={s3_endpoint}, bucket={bucket_name}, has_access_key={bool(access_key)}, has_secret_key={bool(secret_key)}")
+        
         if not all([s3_endpoint, bucket_name, access_key, secret_key]):
+            missing = []
+            if not s3_endpoint: missing.append('S3_ENDPOINT_URL')
+            if not bucket_name: missing.append('S3_BUCKET_NAME')
+            if not access_key: missing.append('AWS_ACCESS_KEY_ID')
+            if not secret_key: missing.append('AWS_SECRET_ACCESS_KEY')
+            
             return {
                 'statusCode': 500,
                 'headers': {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
                 },
-                'body': json.dumps({'error': 'S3 credentials not configured'}),
+                'body': json.dumps({
+                    'error': 'S3 credentials not configured',
+                    'missing': missing
+                }),
                 'isBase64Encoded': False
             }
         
