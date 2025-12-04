@@ -34,15 +34,34 @@ export const SortableProject = ({ project, onEdit, onDelete, isSelected, onToggl
       style={style}
       className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
     >
-      <div className="aspect-video relative">
-        <img
-          src={project.image_url}
-          alt={project.title}
-          className="w-full h-full object-cover"
-        />
+      <div className="aspect-video relative bg-gray-100 dark:bg-gray-900">
+        {(project.preview_image_url || project.image_url || project.carousel_image_url) ? (
+          <img
+            src={project.preview_image_url || project.image_url || project.carousel_image_url}
+            alt={project.title}
+            className="w-full h-full object-cover"
+          />
+        ) : project.website_url ? (
+          <div className="w-full h-full flex items-center justify-center">
+            <div className="text-center p-4">
+              <Icon name="Globe" size={48} className="mx-auto mb-2 text-gray-400 dark:text-gray-500" />
+              <p className="text-xs text-gray-500 dark:text-gray-400">Iframe: {new URL(project.website_url).hostname}</p>
+            </div>
+          </div>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <Icon name="ImageOff" size={48} className="text-gray-300 dark:text-gray-600" />
+          </div>
+        )}
         {!project.is_active && (
-          <div className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
+          <div className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded shadow-lg">
             Скрыт
+          </div>
+        )}
+        {project.website_url && !(project.preview_image_url || project.image_url || project.carousel_image_url) && (
+          <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded shadow-lg flex items-center gap-1">
+            <Icon name="Monitor" size={12} />
+            iframe
           </div>
         )}
         <div

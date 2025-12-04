@@ -91,19 +91,23 @@ const Portfolio = () => {
                     className="inline-block flex-shrink-0 group"
                   >
                     <div className="w-80 h-64 rounded-2xl relative overflow-hidden border border-gray-200 dark:border-gray-700 backdrop-blur-sm transition-all duration-500 hover:scale-105 hover:shadow-2xl">
-                      {project.website_url && !project.preview_image_url ? (
-                        <iframe 
-                          src={project.website_url}
-                          title={project.title}
-                          className="w-full h-full object-cover pointer-events-none scale-50 origin-top-left"
-                          style={{ width: '200%', height: '200%' }}
-                        />
-                      ) : (
+                      {(project.preview_image_url || project.carousel_image_url || project.image_url) ? (
                         <img 
-                          src={project.preview_image_url || project.image_url} 
+                          src={project.preview_image_url || project.carousel_image_url || project.image_url} 
                           alt={project.title}
                           className="w-full h-full object-cover"
                         />
+                      ) : project.website_url ? (
+                        <iframe 
+                          src={project.website_url}
+                          title={project.title}
+                          className="w-full h-full pointer-events-none scale-50 origin-top-left"
+                          style={{ width: '200%', height: '200%' }}
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-800">
+                          <span className="text-gray-400">Нет изображения</span>
+                        </div>
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4">
@@ -134,19 +138,23 @@ const Portfolio = () => {
                     className="inline-block flex-shrink-0 group snap-center"
                   >
                     <div className="w-[calc(100vw-3rem)] max-w-[320px] h-64 rounded-2xl relative overflow-hidden border border-gray-200 dark:border-gray-700 backdrop-blur-sm transition-all duration-500 active:scale-95">
-                      {project.website_url && !project.preview_image_url ? (
-                        <iframe 
-                          src={project.website_url}
-                          title={project.title}
-                          className="w-full h-full object-cover pointer-events-none scale-50 origin-top-left"
-                          style={{ width: '200%', height: '200%' }}
-                        />
-                      ) : (
+                      {(project.preview_image_url || project.carousel_image_url || project.image_url) ? (
                         <img 
-                          src={project.preview_image_url || project.image_url} 
+                          src={project.preview_image_url || project.carousel_image_url || project.image_url} 
                           alt={project.title}
                           className="w-full h-full object-cover"
                         />
+                      ) : project.website_url ? (
+                        <iframe 
+                          src={project.website_url}
+                          title={project.title}
+                          className="w-full h-full pointer-events-none scale-50 origin-top-left"
+                          style={{ width: '200%', height: '200%' }}
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-800">
+                          <span className="text-gray-400">Нет изображения</span>
+                        </div>
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                       <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
@@ -190,19 +198,23 @@ const Portfolio = () => {
                         className="inline-block flex-shrink-0 group"
                       >
                         <div className="w-80 h-64 rounded-2xl relative overflow-hidden border border-gray-200 dark:border-gray-700 backdrop-blur-sm transition-all duration-500 hover:scale-105 hover:shadow-2xl">
-                          {project.website_url && !project.preview_image_url ? (
-                            <iframe 
-                              src={project.website_url}
-                              title={project.title}
-                              className="w-full h-full object-cover pointer-events-none scale-50 origin-top-left"
-                              style={{ width: '200%', height: '200%' }}
-                            />
-                          ) : (
+                          {(project.preview_image_url || project.carousel_image_url || project.image_url) ? (
                             <img 
-                              src={project.preview_image_url || project.image_url} 
+                              src={project.preview_image_url || project.carousel_image_url || project.image_url} 
                               alt={project.title}
                               className="w-full h-full object-cover"
                             />
+                          ) : project.website_url ? (
+                            <iframe 
+                              src={project.website_url}
+                              title={project.title}
+                              className="w-full h-full pointer-events-none scale-50 origin-top-left"
+                              style={{ width: '200%', height: '200%' }}
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-800">
+                              <span className="text-gray-400">Нет изображения</span>
+                            </div>
                           )}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                           <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4">
