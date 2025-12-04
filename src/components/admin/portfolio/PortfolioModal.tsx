@@ -4,6 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { PortfolioProject } from './types';
+import { uploadImage, uploadGalleryImage } from './PortfolioImageUploader';
+import { PortfolioMainImages } from './PortfolioMainImages';
+import { PortfolioGallery } from './PortfolioGallery';
+import { PortfolioPreview } from './PortfolioPreview';
 
 interface PortfolioModalProps {
   project: PortfolioProject;
@@ -20,129 +24,13 @@ export const PortfolioModal = ({ project, onClose, onSave, onChange }: Portfolio
   const [newImageUrl, setNewImageUrl] = useState('');
   
   const galleryImages = project.gallery_images || [];
-  
-  const getPreviewDimensions = () => {
-    switch (viewMode) {
-      case 'desktop': return { width: '100%', height: '500px' };
-      case 'tablet': return { width: '768px', height: '450px', margin: '0 auto' };
-      case 'mobile': return { width: '375px', height: '667px', margin: '0 auto' };
-    }
-  };
-  
-  const uploadImage = async (file: File, field: 'carousel_image_url' | 'preview_image_url' | 'image_url') => {
-    console.log('[PortfolioModal] Starting upload for field:', field);
-    console.log('[PortfolioModal] File info:', { name: file.name, size: file.size, type: file.type });
-    setIsUploading(true);
-    
-    try {
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        console.log('[PortfolioModal] File read complete');
-        const base64Full = reader.result as string;
-        const base64 = base64Full.split(',')[1];
-        console.log('[PortfolioModal] Base64 length:', base64.length);
-        
-        try {
-          const uploadUrl = 'https://functions.poehali.dev/03a840b4-25d2-4e89-95ef-743f0dc556b4';
-          console.log('[PortfolioModal] Uploading to:', uploadUrl);
-          
-          const response = await fetch(uploadUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ image: base64, filename: file.name })
-          });
-          
-          console.log('[PortfolioModal] Response status:', response.status);
-          const data = await response.json();
-          console.log('[PortfolioModal] Response data:', data);
-          
-          if (data.url) {
-            console.log('[PortfolioModal] Upload success, URL:', data.url);
-            onChange({ ...project, [field]: data.url });
-          } else {
-            console.error('[PortfolioModal] No URL in response');
-            alert('Ошибка: сервер не вернул URL');
-          }
-        } catch (error) {
-          console.error('[PortfolioModal] Upload failed:', error);
-          alert('Ошибка загрузки изображения');
-        } finally {
-          setIsUploading(false);
-        }
-      };
-      
-      reader.onerror = (error) => {
-        console.error('[PortfolioModal] FileReader error:', error);
-        setIsUploading(false);
-      };
-      
-      reader.readAsDataURL(file);
-    } catch (error) {
-      console.error('[PortfolioModal] File read error:', error);
-      setIsUploading(false);
-    }
+
+  const handleUploadImage = (file: File, field: 'carousel_image_url' | 'preview_image_url' | 'image_url') => {
+    uploadImage({ file, field, project, onChange, setIsUploading });
   };
 
-  const uploadGalleryImage = async (file: File) => {
-    if (galleryImages.length >= 5) {
-      alert('Максимум 5 изображений в галерее');
-      return;
-    }
-    
-    console.log('[PortfolioModal] Starting gallery upload');
-    console.log('[PortfolioModal] File info:', { name: file.name, size: file.size, type: file.type });
-    setIsUploading(true);
-    
-    try {
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        console.log('[PortfolioModal] Gallery file read complete');
-        const base64Full = reader.result as string;
-        const base64 = base64Full.split(',')[1];
-        console.log('[PortfolioModal] Base64 length:', base64.length);
-        
-        try {
-          const uploadUrl = 'https://functions.poehali.dev/03a840b4-25d2-4e89-95ef-743f0dc556b4';
-          console.log('[PortfolioModal] Uploading to:', uploadUrl);
-          
-          const response = await fetch(uploadUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ image: base64, filename: file.name })
-          });
-          
-          console.log('[PortfolioModal] Response status:', response.status);
-          const data = await response.json();
-          console.log('[PortfolioModal] Response data:', data);
-          
-          if (data.url) {
-            console.log('[PortfolioModal] Gallery upload success, URL:', data.url);
-            onChange({ 
-              ...project, 
-              gallery_images: [...galleryImages, data.url]
-            });
-          } else {
-            console.error('[PortfolioModal] No URL in response');
-            alert('Ошибка: сервер не вернул URL');
-          }
-        } catch (error) {
-          console.error('[PortfolioModal] Gallery upload failed:', error);
-          alert('Ошибка загрузки изображения');
-        } finally {
-          setIsUploading(false);
-        }
-      };
-      
-      reader.onerror = (error) => {
-        console.error('[PortfolioModal] Gallery FileReader error:', error);
-        setIsUploading(false);
-      };
-      
-      reader.readAsDataURL(file);
-    } catch (error) {
-      console.error('[PortfolioModal] Gallery file read error:', error);
-      setIsUploading(false);
-    }
+  const handleUploadGalleryImage = (file: File) => {
+    uploadGalleryImage({ file, project, galleryImages, onChange, setIsUploading });
   };
 
   const addImageByUrl = () => {
@@ -216,182 +104,23 @@ export const PortfolioModal = ({ project, onClose, onSave, onChange }: Portfolio
             />
           </div>
 
-          <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-gray-50 dark:bg-gray-900/50">
-            <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
-              <Icon name="Image" size={18} />
-              Основные изображения
-            </h4>
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-2 text-gray-900 dark:text-gray-100">
-                  1. Основное изображение <span className="text-red-500">*</span>
-                  <span className="text-xs text-gray-500 ml-2">Для карусели и карточек</span>
-                </label>
-                <div className="flex gap-2">
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    disabled={isUploading}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) uploadImage(file, 'image_url');
-                    }}
-                    className="flex-1"
-                  />
-                  {project.image_url && (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => removeImage('image_url')}
-                      className="text-red-600"
-                    >
-                      <Icon name="Trash2" size={16} />
-                    </Button>
-                  )}
-                </div>
-                {project.image_url && (
-                  <div className="mt-2 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative group">
-                    <img src={project.image_url} alt="Main" className="w-full h-40 object-cover" />
-                  </div>
-                )}
-              </div>
+          <PortfolioMainImages
+            project={project}
+            isUploading={isUploading}
+            onUploadImage={handleUploadImage}
+            onRemoveImage={removeImage}
+          />
 
-              <div>
-                <label className="block text-sm font-medium mb-2 text-gray-900 dark:text-gray-100">
-                  2. Превью (опционально)
-                  <span className="text-xs text-gray-500 ml-2">Для миниатюр</span>
-                </label>
-                <div className="flex gap-2">
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    disabled={isUploading}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) uploadImage(file, 'preview_image_url');
-                    }}
-                    className="flex-1"
-                  />
-                  {project.preview_image_url && (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => removeImage('preview_image_url')}
-                      className="text-red-600"
-                    >
-                      <Icon name="Trash2" size={16} />
-                    </Button>
-                  )}
-                </div>
-                {project.preview_image_url && (
-                  <div className="mt-2 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                    <img src={project.preview_image_url} alt="Preview" className="w-full h-24 object-cover" />
-                  </div>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-2 text-gray-900 dark:text-gray-100">
-                  3. Для карусели (опционально)
-                  <span className="text-xs text-gray-500 ml-2">Большое изображение</span>
-                </label>
-                <div className="flex gap-2">
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    disabled={isUploading}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) uploadImage(file, 'carousel_image_url');
-                    }}
-                    className="flex-1"
-                  />
-                  {project.carousel_image_url && (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => removeImage('carousel_image_url')}
-                      className="text-red-600"
-                    >
-                      <Icon name="Trash2" size={16} />
-                    </Button>
-                  )}
-                </div>
-                {project.carousel_image_url && (
-                  <div className="mt-2 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                    <img src={project.carousel_image_url} alt="Carousel" className="w-full h-48 object-cover" />
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className="border border-gradient-start/30 rounded-lg p-4 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
-            <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
-              <Icon name="Images" size={18} />
-              Галерея проекта (до 5 изображений)
-              <span className="text-xs text-gray-500 ml-2">
-                {galleryImages.length}/5
-              </span>
-            </h4>
-            
-            <div className="space-y-3">
-              <div className="flex gap-2">
-                <Input
-                  type="file"
-                  accept="image/*"
-                  disabled={isUploading || galleryImages.length >= 5}
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) uploadGalleryImage(file);
-                    e.target.value = '';
-                  }}
-                  className="flex-1"
-                />
-              </div>
-
-              <div className="flex gap-2">
-                <Input
-                  value={newImageUrl}
-                  onChange={(e) => setNewImageUrl(e.target.value)}
-                  placeholder="Или вставьте URL изображения"
-                  disabled={galleryImages.length >= 5}
-                  onKeyDown={(e) => e.key === 'Enter' && addImageByUrl()}
-                />
-                <Button
-                  type="button"
-                  onClick={addImageByUrl}
-                  disabled={!newImageUrl.trim() || galleryImages.length >= 5}
-                  size="sm"
-                >
-                  <Icon name="Plus" size={16} />
-                </Button>
-              </div>
-
-              {galleryImages.length > 0 && (
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-3">
-                  {galleryImages.map((url, index) => (
-                    <div key={index} className="relative group rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                      <img src={url} alt={`Gallery ${index + 1}`} className="w-full h-32 object-cover" />
-                      <button
-                        onClick={() => removeGalleryImage(index)}
-                        className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        <Icon name="X" size={16} />
-                      </button>
-                      <div className="absolute bottom-2 left-2 bg-black/60 text-white text-xs px-2 py-1 rounded">
-                        {index + 1}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
+          <PortfolioGallery
+            project={project}
+            galleryImages={galleryImages}
+            isUploading={isUploading}
+            newImageUrl={newImageUrl}
+            setNewImageUrl={setNewImageUrl}
+            onUploadGalleryImage={handleUploadGalleryImage}
+            onAddImageByUrl={addImageByUrl}
+            onRemoveGalleryImage={removeGalleryImage}
+          />
 
           <div>
             <label className="block text-sm font-medium mb-2 text-gray-900 dark:text-gray-100">
@@ -411,71 +140,11 @@ export const PortfolioModal = ({ project, onClose, onSave, onChange }: Portfolio
             )}
           </div>
           
-          <div className="border border-gradient-start/30 rounded-lg p-4 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                <Icon name="Eye" size={18} />
-                Предпросмотр
-              </h4>
-              <div className="flex gap-2">
-                <Button
-                  type="button"
-                  size="sm"
-                  variant={viewMode === 'desktop' ? 'default' : 'outline'}
-                  onClick={() => setViewMode('desktop')}
-                >
-                  <Icon name="Monitor" size={16} className="mr-1" />
-                  Desktop
-                </Button>
-                <Button
-                  type="button"
-                  size="sm"
-                  variant={viewMode === 'tablet' ? 'default' : 'outline'}
-                  onClick={() => setViewMode('tablet')}
-                >
-                  <Icon name="Tablet" size={16} className="mr-1" />
-                  Tablet
-                </Button>
-                <Button
-                  type="button"
-                  size="sm"
-                  variant={viewMode === 'mobile' ? 'default' : 'outline'}
-                  onClick={() => setViewMode('mobile')}
-                >
-                  <Icon name="Smartphone" size={16} className="mr-1" />
-                  Mobile
-                </Button>
-              </div>
-            </div>
-            
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 overflow-auto">
-              {(project.carousel_image_url || project.preview_image_url || project.image_url) ? (
-                <div style={getPreviewDimensions()} className="border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden">
-                  <img 
-                    src={project.carousel_image_url || project.image_url || project.preview_image_url}
-                    alt="Preview"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ) : project.website_url ? (
-                <div style={getPreviewDimensions()} className="border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden">
-                  <iframe
-                    src={project.website_url}
-                    title="Website Preview"
-                    className="w-full h-full"
-                    sandbox="allow-scripts allow-same-origin"
-                  />
-                </div>
-              ) : (
-                <div className="flex items-center justify-center h-64 text-gray-400 dark:text-gray-500">
-                  <div className="text-center">
-                    <Icon name="ImageOff" size={48} className="mx-auto mb-2 opacity-50" />
-                    <p>Загрузите изображение или укажите URL</p>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
+          <PortfolioPreview
+            project={project}
+            viewMode={viewMode}
+            setViewMode={setViewMode}
+          />
 
           <div className="flex items-center gap-2">
             <input
