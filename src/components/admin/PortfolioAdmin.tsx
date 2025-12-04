@@ -38,6 +38,7 @@ const PortfolioAdmin = () => {
     title: '',
     description: '',
     image_url: '',
+    gallery_images: [],
     website_url: '',
     display_order: 0,
     is_active: true,

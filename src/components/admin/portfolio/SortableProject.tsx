@@ -83,9 +83,17 @@ export const SortableProject = ({ project, onEdit, onDelete, isSelected, onToggl
         </div>
       </div>
       <div className="p-4">
-        <h3 className="font-bold text-lg mb-2 text-gray-900 dark:text-gray-100">
-          {project.title}
-        </h3>
+        <div className="flex items-start justify-between mb-2">
+          <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100">
+            {project.title}
+          </h3>
+          {project.gallery_images && project.gallery_images.length > 0 && (
+            <div className="flex items-center gap-1 text-xs bg-gradient-to-r from-gradient-start to-gradient-mid text-white px-2 py-1 rounded-full">
+              <Icon name="Images" size={12} />
+              <span>{project.gallery_images.length}</span>
+            </div>
+          )}
+        </div>
         {project.description && (
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
             {project.description}

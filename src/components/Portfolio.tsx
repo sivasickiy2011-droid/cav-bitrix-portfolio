@@ -8,6 +8,7 @@ interface PortfolioProject {
   image_url: string;
   carousel_image_url?: string;
   preview_image_url?: string;
+  gallery_images?: string[];
   website_url: string;
   display_order: number;
   is_active: boolean;
@@ -17,6 +18,13 @@ const Portfolio = () => {
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState<PortfolioProject | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  
+  useEffect(() => {
+    if (selectedProject) {
+      setCurrentSlide(0);
+    }
+  }, [selectedProject]);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -271,21 +279,83 @@ const Portfolio = () => {
               </div>
             )}
 
-            <div className="p-4 bg-gray-100 dark:bg-gray-900">
-              {selectedProject.carousel_image_url ? (
-                <img 
-                  src={selectedProject.carousel_image_url}
-                  alt={selectedProject.title}
-                  className="w-full h-[calc(90vh-240px)] object-contain rounded-lg"
-                />
-              ) : (
-                <iframe
-                  src={selectedProject.website_url}
-                  className="w-full h-[calc(90vh-240px)] rounded-lg border border-gray-300 dark:border-gray-600"
-                  title={selectedProject.title}
-                  sandbox="allow-scripts allow-same-origin"
-                />
-              )}
+            <div className="p-4 bg-gray-100 dark:bg-gray-900 relative">
+              {(() => {
+                const galleryImages = selectedProject.gallery_images || [];
+                const allImages = [
+                  selectedProject.carousel_image_url,
+                  selectedProject.image_url,
+                  ...galleryImages
+                ].filter(Boolean) as string[];
+                
+                if (allImages.length > 0) {
+                  return (
+                    <div className="space-y-4">
+                      <div className="relative">
+                        <div className="w-full h-[calc(90vh-320px)] rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-900">
+                          <img 
+                            src={allImages[currentSlide]}
+                            alt={`${selectedProject.title} - ${currentSlide + 1}`}
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                        
+                        {allImages.length > 1 && (
+                          <>
+                            <button
+                              onClick={() => setCurrentSlide((prev) => (prev - 1 + allImages.length) % allImages.length)}
+                              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-800 text-gray-800 dark:text-white p-3 rounded-full shadow-lg transition-all"
+                            >
+                              <Icon name="ChevronLeft" size={24} />
+                            </button>
+                            <button
+                              onClick={() => setCurrentSlide((prev) => (prev + 1) % allImages.length)}
+                              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-800 text-gray-800 dark:text-white p-3 rounded-full shadow-lg transition-all"
+                            >
+                              <Icon name="ChevronRight" size={24} />
+                            </button>
+                            
+                            <div className="absolute top-4 right-4 bg-black/60 text-white text-sm px-3 py-1.5 rounded-full">
+                              {currentSlide + 1} / {allImages.length}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      
+                      {allImages.length > 1 && (
+                        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+                          {allImages.map((img, index) => (
+                            <button
+                              key={index}
+                              onClick={() => setCurrentSlide(index)}
+                              className={`flex-shrink-0 w-24 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                                index === currentSlide
+                                  ? 'border-gradient-start scale-105 shadow-lg'
+                                  : 'border-gray-300 dark:border-gray-600 hover:border-gradient-start/50'
+                              }`}
+                            >
+                              <img 
+                                src={img}
+                                alt={`Thumb ${index + 1}`}
+                                className="w-full h-full object-cover"
+                              />
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+                
+                return (
+                  <iframe
+                    src={selectedProject.website_url}
+                    className="w-full h-[calc(90vh-240px)] rounded-lg border border-gray-300 dark:border-gray-600"
+                    title={selectedProject.title}
+                    sandbox="allow-scripts allow-same-origin"
+                  />
+                );
+              })()}
             </div>
 
             <div className="p-6 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-4">
