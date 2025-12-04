@@ -89,8 +89,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             endpoint_url=s3_endpoint,
             aws_access_key_id=access_key,
             aws_secret_access_key=secret_key,
-            region_name='us-east-1',
-            config=Config(signature_version='s3v4')
+            region_name='ru-1',
+            config=Config(
+                signature_version='s3v4',
+                s3={'addressing_style': 'virtual'}
+            )
         )
         
         unique_filename = f"portfolio/{uuid.uuid4()}.{file_ext}"
@@ -103,7 +106,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             ACL='public-read'
         )
         
-        image_url = f"{s3_endpoint}/{bucket_name}/{unique_filename}"
+        image_url = f"https://{bucket_name}.ru1.storage.beget.cloud/{unique_filename}"
         
         return {
             'statusCode': 200,
