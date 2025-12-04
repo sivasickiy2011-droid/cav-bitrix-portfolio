@@ -91,11 +91,20 @@ const Portfolio = () => {
                     className="inline-block flex-shrink-0 group"
                   >
                     <div className="w-80 h-64 rounded-2xl relative overflow-hidden border border-gray-200 dark:border-gray-700 backdrop-blur-sm transition-all duration-500 hover:scale-105 hover:shadow-2xl">
-                      <img 
-                        src={project.preview_image_url || project.image_url} 
-                        alt={project.title}
-                        className="w-full h-full object-cover"
-                      />
+                      {project.website_url && !project.preview_image_url ? (
+                        <iframe 
+                          src={project.website_url}
+                          title={project.title}
+                          className="w-full h-full object-cover pointer-events-none scale-50 origin-top-left"
+                          style={{ width: '200%', height: '200%' }}
+                        />
+                      ) : (
+                        <img 
+                          src={project.preview_image_url || project.image_url} 
+                          alt={project.title}
+                          className="w-full h-full object-cover"
+                        />
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4">
                         <div className="text-white text-xl font-bold mb-2 dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.8)]">
@@ -125,11 +134,20 @@ const Portfolio = () => {
                     className="inline-block flex-shrink-0 group snap-center"
                   >
                     <div className="w-[calc(100vw-3rem)] max-w-[320px] h-64 rounded-2xl relative overflow-hidden border border-gray-200 dark:border-gray-700 backdrop-blur-sm transition-all duration-500 active:scale-95">
-                      <img 
-                        src={project.preview_image_url || project.image_url} 
-                        alt={project.title}
-                        className="w-full h-full object-cover"
-                      />
+                      {project.website_url && !project.preview_image_url ? (
+                        <iframe 
+                          src={project.website_url}
+                          title={project.title}
+                          className="w-full h-full object-cover pointer-events-none scale-50 origin-top-left"
+                          style={{ width: '200%', height: '200%' }}
+                        />
+                      ) : (
+                        <img 
+                          src={project.preview_image_url || project.image_url} 
+                          alt={project.title}
+                          className="w-full h-full object-cover"
+                        />
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                       <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
                         <div className="text-white text-xl font-bold mb-2 dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.8)]">
@@ -172,11 +190,20 @@ const Portfolio = () => {
                         className="inline-block flex-shrink-0 group"
                       >
                         <div className="w-80 h-64 rounded-2xl relative overflow-hidden border border-gray-200 dark:border-gray-700 backdrop-blur-sm transition-all duration-500 hover:scale-105 hover:shadow-2xl">
-                          <img 
-                            src={project.preview_image_url || project.image_url} 
-                            alt={project.title}
-                            className="w-full h-full object-cover"
-                          />
+                          {project.website_url && !project.preview_image_url ? (
+                            <iframe 
+                              src={project.website_url}
+                              title={project.title}
+                              className="w-full h-full object-cover pointer-events-none scale-50 origin-top-left"
+                              style={{ width: '200%', height: '200%' }}
+                            />
+                          ) : (
+                            <img 
+                              src={project.preview_image_url || project.image_url} 
+                              alt={project.title}
+                              className="w-full h-full object-cover"
+                            />
+                          )}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                           <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4">
                             <div className="text-white text-xl font-bold mb-2 dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.8)]">

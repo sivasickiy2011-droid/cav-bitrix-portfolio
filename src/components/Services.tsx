@@ -40,8 +40,43 @@ const Services = () => {
               мы предоставляем
             </a>
             <h3 className="section-subtitle dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.4)]">
-              Сделаем чтобы продукт работал на Вас, а не вы на него!
+              Ваш сайт будет работать на вас 24/7 и приносить реальную прибыль
             </h3>
+            <div className="bg-white/60 dark:bg-white/10 backdrop-blur-md rounded-2xl p-6 border-2 border-gradient-start/30 mb-6">
+              <h4 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
+                <span className="text-2xl">🎯</span>
+                Наше уникальное предложение
+              </h4>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-[15px]">
+                <strong>Мы не просто создаем сайты — мы создаем инструменты для роста вашего бизнеса.</strong> Каждый проект проходит глубокий анализ вашей ниши, целевой аудитории и конкурентов. Результат: сайт, который привлекает клиентов, конвертирует посетителей в покупателей и окупается в первые месяцы работы.
+              </p>
+            </div>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-white text-xs font-bold">💰</span>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  <strong>Фиксированная стоимость</strong> — никаких скрытых платежей и доплат в процессе
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-white text-xs font-bold">⚡</span>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  <strong>Гарантия сроков</strong> — прописываем дедлайны в договоре и соблюдаем их
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-white text-xs font-bold">🛡️</span>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  <strong>Бесплатная поддержка 30 дней</strong> — исправим любые ошибки после запуска
+                </p>
+              </div>
+            </div>
             <button 
               onClick={() => setContactModalOpen(true)}
               className="btn bg-gradient-to-r from-gradient-start to-gradient-mid text-white px-8 py-4 rounded-full text-sm font-semibold hover:shadow-2xl transition-all duration-300"

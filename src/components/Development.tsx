@@ -133,10 +133,36 @@ const Development = () => {
               />
               наши услуги
             </a>
-            <h3 className="section-subtitle dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.4)]">Делаем любой сложности проекты</h3>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed dark:[text-shadow:0_1px_6px_rgba(0,0,0,0.3)]">
-              Мы предлагаем полный спектр услуг по разработке сайтов, которые помогут вашему бизнесу расти и развиваться в интернете. Наши решения — это сочетание современного дизайна, удобства и функциональности, адаптированные под ваши потребности и бюджет.
+            <h3 className="section-subtitle dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.4)]">Превращаем ваши идеи в работающие веб-решения</h3>
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed dark:[text-shadow:0_1px_6px_rgba(0,0,0,0.3)] text-[17px]">
+              Разрабатываем сайты любой сложности — от одностраничных лендингов до крупных корпоративных порталов и интернет-магазинов. <strong>Каждый проект создается с учетом ваших бизнес-целей</strong>: увеличение продаж, привлечение клиентов или повышение узнаваемости бренда.
             </p>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-gradient-start to-gradient-mid flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-white text-xs font-bold">✓</span>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  <strong>Быстрый запуск:</strong> Landing page за 7-10 дней, корпоративный сайт за 2-4 недели
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-gradient-start to-gradient-mid flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-white text-xs font-bold">✓</span>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  <strong>Современные технологии:</strong> React, TypeScript, адаптивная верстка и SEO-оптимизация
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-gradient-start to-gradient-mid flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-white text-xs font-bold">✓</span>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  <strong>Поддержка 24/7:</strong> Гарантия 30 дней + техническая поддержка после запуска
+                </p>
+              </div>
+            </div>
             <button 
               onClick={() => setContactModalOpen(true)}
               className="btn bg-gradient-to-r from-gradient-start to-gradient-mid text-white px-8 py-4 rounded-full text-sm font-semibold hover:shadow-2xl transition-all duration-300"

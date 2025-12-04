@@ -78,7 +78,36 @@ const Promotion = () => {
               />
               взлетаем
             </a>
-            <h3 className="section-subtitle dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.4)]">Сможем продвинуть любой ваш продукт или идею от А до Я</h3>
+            <h3 className="section-subtitle dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.4)]">Приводим целевых клиентов и растим ваш бизнес в интернете</h3>
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed dark:[text-shadow:0_1px_6px_rgba(0,0,0,0.3)] text-[17px]">
+              Комплексное digital-продвижение: SEO-оптимизация для поисковых систем, контекстная реклама (Яндекс.Директ, Google Ads), таргетированная реклама в социальных сетях и email-маркетинг. <strong>Работаем на результат</strong> — увеличение трафика, конверсии и продаж.
+            </p>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-white text-xs font-bold">✓</span>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  <strong>SEO-оптимизация:</strong> Выход в ТОП-10 Яндекс и Google за 2-6 месяцев
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-white text-xs font-bold">✓</span>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  <strong>Контекстная реклама:</strong> Настройка и ведение рекламных кампаний с ROI от 200%
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-white text-xs font-bold">✓</span>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  <strong>SMM и таргет:</strong> Привлечение клиентов из ВКонтакте, Telegram и других соцсетей
+                </p>
+              </div>
+            </div>
             <button 
               onClick={() => setContactModalOpen(true)}
               className="btn bg-gradient-to-r from-gradient-start to-gradient-mid text-white px-8 py-4 rounded-full text-sm font-semibold hover:shadow-2xl transition-all duration-300"

@@ -214,12 +214,48 @@ const AboutUs = () => {
               компания
             </p>
             <h3 className="section-subtitle dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.4)]">Создаем цифровые решения для вашего бизнеса</h3>
-            <p className="section-descr text-muted-foreground dark:text-gray-400 dark:[text-shadow:0_1px_6px_rgba(0,0,0,0.3)] mb-6">
-              Мы — команда профессионалов, которая превращает идеи в успешные веб-проекты. 
-              Наша главная цель — забота о клиенте и его продукте.
-            </p>
             
             <div className="space-y-4">
+              <div className="bg-white/60 dark:bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-gradient-start/20">
+                <h4 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2 flex items-center gap-2">
+                  <Icon name="History" size={18} className="text-gradient-start" />
+                  Наша история
+                </h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                  Pixel59 — это команда опытных разработчиков и дизайнеров, которые с 2018 года создают веб-решения для бизнеса. За это время мы реализовали <strong>более 150 проектов</strong> различной сложности — от корпоративных сайтов до крупных интернет-магазинов и SaaS-платформ.
+                </p>
+              </div>
+
+              <div className="bg-white/60 dark:bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-gradient-start/20">
+                <h4 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2 flex items-center gap-2">
+                  <Icon name="Users" size={18} className="text-gradient-mid" />
+                  Наша команда
+                </h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+                  Мы — это 12 специалистов, каждый из которых эксперт в своей области:
+                </p>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-gradient-start to-gradient-mid"></div>
+                    <span className="text-gray-700 dark:text-gray-300">Frontend-разработчики</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-gradient-mid to-gradient-end"></div>
+                    <span className="text-gray-700 dark:text-gray-300">Backend-разработчики</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-gradient-start to-gradient-end"></div>
+                    <span className="text-gray-700 dark:text-gray-300">UI/UX дизайнеры</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-gradient-end to-gradient-start"></div>
+                    <span className="text-gray-700 dark:text-gray-300">SEO-специалисты</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-3 pt-2">
               {services.map((service, index) => (
                 <div 
                   key={index}
@@ -236,7 +272,7 @@ const AboutUs = () => {
             
             <button 
               onClick={() => setContactModalOpen(true)}
-              className="btn bg-gradient-to-r from-gradient-start to-gradient-mid text-white px-8 py-4 rounded-full text-sm font-semibold hover:shadow-2xl transition-all duration-300 mt-8"
+              className="btn bg-gradient-to-r from-gradient-start to-gradient-mid text-white px-8 py-4 rounded-full text-sm font-semibold hover:shadow-2xl transition-all duration-300 mt-6"
             >
               Обсудить проект
             </button>
