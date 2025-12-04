@@ -92,7 +92,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             region_name='ru-1',
             config=Config(
                 signature_version='s3v4',
-                s3={'addressing_style': 'virtual'}
+                s3={'addressing_style': 'path'}
             )
         )
         
@@ -106,7 +106,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             ACL='public-read'
         )
         
-        image_url = f"https://{bucket_name}.s3.ru1.storage.beget.cloud/{unique_filename}"
+        image_url = f"{s3_endpoint}/{bucket_name}/{unique_filename}"
         
         return {
             'statusCode': 200,
