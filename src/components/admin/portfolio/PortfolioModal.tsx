@@ -30,31 +30,55 @@ export const PortfolioModal = ({ project, onClose, onSave, onChange }: Portfolio
   };
   
   const uploadImage = async (file: File, field: 'carousel_image_url' | 'preview_image_url' | 'image_url') => {
+    console.log('[PortfolioModal] Starting upload for field:', field);
+    console.log('[PortfolioModal] File info:', { name: file.name, size: file.size, type: file.type });
     setIsUploading(true);
+    
     try {
       const reader = new FileReader();
       reader.onloadend = async () => {
-        const base64 = reader.result as string;
+        console.log('[PortfolioModal] File read complete');
+        const base64Full = reader.result as string;
+        const base64 = base64Full.split(',')[1];
+        console.log('[PortfolioModal] Base64 length:', base64.length);
+        
         try {
-          const response = await fetch('https://functions.poehali.dev/a8a5e4db-ce2f-4430-931d-8b7e67ea6e9d', {
+          const uploadUrl = 'https://functions.poehali.dev/03a840b4-25d2-4e89-95ef-743f0dc556b4';
+          console.log('[PortfolioModal] Uploading to:', uploadUrl);
+          
+          const response = await fetch(uploadUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ image: base64, filename: file.name })
           });
+          
+          console.log('[PortfolioModal] Response status:', response.status);
           const data = await response.json();
+          console.log('[PortfolioModal] Response data:', data);
+          
           if (data.url) {
+            console.log('[PortfolioModal] Upload success, URL:', data.url);
             onChange({ ...project, [field]: data.url });
+          } else {
+            console.error('[PortfolioModal] No URL in response');
+            alert('Ошибка: сервер не вернул URL');
           }
         } catch (error) {
-          console.error('Upload failed:', error);
+          console.error('[PortfolioModal] Upload failed:', error);
           alert('Ошибка загрузки изображения');
         } finally {
           setIsUploading(false);
         }
       };
+      
+      reader.onerror = (error) => {
+        console.error('[PortfolioModal] FileReader error:', error);
+        setIsUploading(false);
+      };
+      
       reader.readAsDataURL(file);
     } catch (error) {
-      console.error('File read error:', error);
+      console.error('[PortfolioModal] File read error:', error);
       setIsUploading(false);
     }
   };
@@ -65,34 +89,58 @@ export const PortfolioModal = ({ project, onClose, onSave, onChange }: Portfolio
       return;
     }
     
+    console.log('[PortfolioModal] Starting gallery upload');
+    console.log('[PortfolioModal] File info:', { name: file.name, size: file.size, type: file.type });
     setIsUploading(true);
+    
     try {
       const reader = new FileReader();
       reader.onloadend = async () => {
-        const base64 = reader.result as string;
+        console.log('[PortfolioModal] Gallery file read complete');
+        const base64Full = reader.result as string;
+        const base64 = base64Full.split(',')[1];
+        console.log('[PortfolioModal] Base64 length:', base64.length);
+        
         try {
-          const response = await fetch('https://functions.poehali.dev/a8a5e4db-ce2f-4430-931d-8b7e67ea6e9d', {
+          const uploadUrl = 'https://functions.poehali.dev/03a840b4-25d2-4e89-95ef-743f0dc556b4';
+          console.log('[PortfolioModal] Uploading to:', uploadUrl);
+          
+          const response = await fetch(uploadUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ image: base64, filename: file.name })
           });
+          
+          console.log('[PortfolioModal] Response status:', response.status);
           const data = await response.json();
+          console.log('[PortfolioModal] Response data:', data);
+          
           if (data.url) {
+            console.log('[PortfolioModal] Gallery upload success, URL:', data.url);
             onChange({ 
               ...project, 
               gallery_images: [...galleryImages, data.url]
             });
+          } else {
+            console.error('[PortfolioModal] No URL in response');
+            alert('Ошибка: сервер не вернул URL');
           }
         } catch (error) {
-          console.error('Upload failed:', error);
+          console.error('[PortfolioModal] Gallery upload failed:', error);
           alert('Ошибка загрузки изображения');
         } finally {
           setIsUploading(false);
         }
       };
+      
+      reader.onerror = (error) => {
+        console.error('[PortfolioModal] Gallery FileReader error:', error);
+        setIsUploading(false);
+      };
+      
       reader.readAsDataURL(file);
     } catch (error) {
-      console.error('File read error:', error);
+      console.error('[PortfolioModal] Gallery file read error:', error);
       setIsUploading(false);
     }
   };
