@@ -1,6 +1,7 @@
 import json
 import os
 import boto3
+from botocore.config import Config
 import base64
 import uuid
 from typing import Dict, Any
@@ -71,7 +72,6 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         bucket_name = os.environ.get('S3_BUCKET_NAME')
         access_key = os.environ.get('AWS_ACCESS_KEY_ID')
         secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
-        s3_region = os.environ.get('S3_REGION', 'ru-1')
         
         if not all([s3_endpoint, bucket_name, access_key, secret_key]):
             return {
@@ -89,7 +89,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             endpoint_url=s3_endpoint,
             aws_access_key_id=access_key,
             aws_secret_access_key=secret_key,
-            region_name=s3_region
+            region_name='us-east-1',
+            config=Config(signature_version='s3v4')
         )
         
         unique_filename = f"portfolio/{uuid.uuid4()}.{file_ext}"
