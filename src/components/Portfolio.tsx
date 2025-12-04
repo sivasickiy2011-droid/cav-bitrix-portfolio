@@ -348,12 +348,22 @@ const Portfolio = () => {
                 }
                 
                 return (
-                  <iframe
-                    src={selectedProject.website_url}
-                    className="w-full h-[calc(90vh-240px)] rounded-lg border border-gray-300 dark:border-gray-600"
-                    title={selectedProject.title}
-                    sandbox="allow-scripts allow-same-origin"
-                  />
+                  <div className="flex flex-col items-center justify-center h-[calc(90vh-240px)] gap-6 text-center">
+                    <div className="text-gray-600 dark:text-gray-400">
+                      <Icon name="ExternalLink" size={64} className="mx-auto mb-4 opacity-50" />
+                      <p className="text-lg">Сайт нельзя отобразить во встроенном окне</p>
+                      <p className="text-sm mt-2">Нажмите кнопку ниже, чтобы открыть его в новой вкладке</p>
+                    </div>
+                    <a
+                      href={selectedProject.website_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-gradient-start to-gradient-mid text-white rounded-full hover:shadow-xl transition-all font-medium"
+                    >
+                      <Icon name="ExternalLink" size={20} />
+                      Открыть сайт
+                    </a>
+                  </div>
                 );
               })()}
             </div>
