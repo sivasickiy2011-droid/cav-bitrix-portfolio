@@ -23,7 +23,7 @@ export default function EmergencyReset() {
     setResult(null);
 
     try {
-      const response = await fetch('https://functions.poehali.dev/b4c0998b-86b6-442b-a6a2-dc10bb677c4d', {
+      const response = await fetch('https://functions.poehali.dev/61cea30d-6c36-4503-9459-7fc3e3379b35', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ new_password: password })
@@ -59,7 +59,7 @@ export default function EmergencyReset() {
     setTestResult(null);
 
     try {
-      const response = await fetch('https://functions.poehali.dev/b1e5431c-8985-470e-89fa-3dfadb906523', {
+      const response = await fetch('https://functions.poehali.dev/45e3b7e3-c323-49ba-8219-b3fb1f3fbb98', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password: testPassword })
