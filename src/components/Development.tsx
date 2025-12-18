@@ -87,12 +87,12 @@ const Development = () => {
   return (
     <section id="blok-dev" className="blok-dev bg-white dark:bg-gray-800">
       <div className="max-w-[1500px] w-full lg:px-[50px] px-4 mx-auto">
-        <div className="grid lg:grid-cols-2 gap-[76px] lg:gap-[76px] gap-12 items-start min-h-[600px]">
-          <div className="blok-dev-left space-y-8">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-[76px] items-start min-h-[400px] sm:min-h-[600px]">
+          <div className="blok-dev-left space-y-4 sm:space-y-6 lg:space-y-8">
             <h2 className="section-title">Разработка</h2>
-            <div className="w-full h-[520px] lg:h-[520px] h-[420px] bg-gradient-to-br from-blue-500/30 via-cyan-500/20 to-indigo-500/30 rounded-3xl relative overflow-hidden border border-gradient-start/20 backdrop-blur-sm">
-              <div className="absolute inset-0 flex items-center justify-center px-8 pt-12 pb-20 lg:px-12 lg:pt-16 lg:pb-24">
-                <div className="w-full max-w-[500px] lg:max-w-[500px] max-w-[320px] aspect-[4/3] relative">
+            <div className="w-full h-[280px] sm:h-[380px] lg:h-[520px] bg-gradient-to-br from-blue-500/30 via-cyan-500/20 to-indigo-500/30 rounded-2xl sm:rounded-3xl relative overflow-hidden border border-gradient-start/20 backdrop-blur-sm">
+              <div className="absolute inset-0 flex items-center justify-center px-4 py-8 sm:px-8 sm:py-12 lg:px-12 lg:py-16">
+                <div className="w-full max-w-[240px] sm:max-w-[320px] lg:max-w-[500px] aspect-[4/3] relative">
                   {developmentTypes.map((type, index) => (
                     <div
                       key={index}

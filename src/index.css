@@ -151,6 +151,38 @@
   img {
     max-width: 100%;
   }
+
+  /* Правильный перенос слов для мобильных устройств */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  /* Специальная адаптация для очень маленьких экранов (iPhone 5) */
+  @media (max-width: 360px) {
+    body {
+      font-size: 14px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      word-break: break-word;
+    }
+
+    .card-item,
+    .section-title,
+    .section-subtitle {
+      max-width: 100% !important;
+    }
+  }
 }
 
 @keyframes marquee {

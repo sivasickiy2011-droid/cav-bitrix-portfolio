@@ -12,20 +12,20 @@ const Services = () => {
   return (
     <section id="services" className="services bg-white dark:bg-gray-800">
       <div className="max-w-[1500px] w-full lg:px-[50px] px-4 mx-auto">
-        <div className="grid lg:grid-cols-2 gap-[76px] lg:gap-[76px] gap-12 items-start min-h-[600px]">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-[76px] items-start min-h-[400px] sm:min-h-[600px]">
           <div className="services-left">
             <h2 className="section-title">Услуги</h2>
-            <ul className="flex gap-[10px] list-none m-0 p-0 flex-wrap lg:flex-nowrap">
+            <ul className="flex gap-2 sm:gap-[10px] list-none m-0 p-0 flex-wrap">
               {services.map((service, index) => (
                 <li 
                   key={index}
-                  className="card-item max-w-[282px] lg:max-w-[282px] w-full lg:min-h-[321px] min-h-[240px] flex flex-col justify-end group cursor-pointer"
+                  className="card-item max-w-[155px] sm:max-w-[200px] lg:max-w-[282px] w-full min-h-[180px] sm:min-h-[220px] lg:min-h-[321px] flex flex-col justify-end group cursor-pointer"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className={`mb-4 w-16 h-16 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300`}>
-                    <Icon name={service.icon as any} size={32} className="text-white" />
+                  <div className={`mb-3 sm:mb-4 w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300`}>
+                    <Icon name={service.icon as any} size={24} className="text-white sm:w-7 sm:h-7 lg:w-8 lg:h-8" />
                   </div>
-                  <p className="text-[22px] font-semibold max-w-[190px] dark:text-gray-100">{service.title}</p>
+                  <p className="text-sm sm:text-base lg:text-[22px] font-semibold max-w-full break-words dark:text-gray-100 leading-tight">{service.title}</p>
                 </li>
               ))}
             </ul>

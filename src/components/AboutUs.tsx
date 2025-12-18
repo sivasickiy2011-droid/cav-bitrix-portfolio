@@ -70,7 +70,7 @@ const AboutUs = () => {
           <div className="about-us-left space-y-6 sm:space-y-8">
             <h2 className="section-title">О Нас</h2>
             <div 
-              className="w-full h-96 lg:h-96 h-72 bg-gradient-to-br from-gradient-start/30 via-gradient-mid/20 to-gradient-end/30 rounded-3xl relative overflow-hidden border border-gradient-start/20 backdrop-blur-sm"
+              className="w-full h-64 sm:h-80 lg:h-96 bg-gradient-to-br from-gradient-start/30 via-gradient-mid/20 to-gradient-end/30 rounded-2xl sm:rounded-3xl relative overflow-hidden border border-gradient-start/20 backdrop-blur-sm"
               onClick={(e) => {
                 if (e.target === e.currentTarget || (e.target as HTMLElement).closest('.grid-container')) {
                   setHoveredIndex(null);
@@ -82,7 +82,7 @@ const AboutUs = () => {
                 setIsLocked(false);
               }}
             >
-              <div className="absolute inset-0 p-8 lg:p-8 p-4 grid-container px-[30px]">
+              <div className="absolute inset-0 p-3 sm:p-6 lg:p-8 grid-container">
                 <div className="relative w-full h-full">
                   {gridBlocks.map((block, i) => {
                     const isHovered = hoveredIndex === i;
@@ -181,20 +181,20 @@ const AboutUs = () => {
                         }}
                       >
                         {isHovered ? (
-                          <div className="p-6 lg:p-8 p-4 text-left space-y-4 w-full h-full flex flex-col">
-                            <div className="flex items-start gap-3 lg:gap-4">
-                              <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-gradient-to-br from-gradient-start to-gradient-mid flex items-center justify-center shadow-lg flex-shrink-0">
-                                <Icon name={block.icon} size={24} className="text-white lg:w-7 lg:h-7" />
+                          <div className="p-3 sm:p-4 lg:p-6 xl:p-8 text-left space-y-2 sm:space-y-3 lg:space-y-4 w-full h-full flex flex-col">
+                            <div className="flex items-start gap-2 sm:gap-3 lg:gap-4">
+                              <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gradient-start to-gradient-mid flex items-center justify-center shadow-lg flex-shrink-0">
+                                <Icon name={block.icon} size={20} className="text-white sm:w-6 sm:h-6 lg:w-7 lg:h-7" />
                               </div>
-                              <h4 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white pt-1 lg:pt-2 leading-tight flex-1 break-words">{block.title}</h4>
+                              <h4 className="text-sm sm:text-base lg:text-lg xl:text-2xl font-bold text-gray-900 dark:text-white pt-1 leading-tight flex-1 break-words hyphens-auto">{block.title}</h4>
                             </div>
-                            <p className="text-sm lg:text-base text-gray-700 dark:text-gray-200 leading-relaxed flex-1">{block.description}</p>
+                            <p className="text-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-200 leading-relaxed flex-1 overflow-y-auto scrollbar-hide">{block.description}</p>
                           </div>
                         ) : (
                           <Icon 
                             name={block.icon} 
-                            size={hasHover ? 16 : 32} 
-                            className={`${hasHover ? 'w-4 h-4' : 'lg:w-8 lg:h-8 w-6 h-6'} text-gradient-start dark:text-white drop-shadow-lg transition-all duration-500`} 
+                            size={hasHover ? 12 : 24} 
+                            className={`${hasHover ? 'w-3 h-3 sm:w-4 sm:h-4' : 'w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8'} text-gradient-start dark:text-white drop-shadow-lg transition-all duration-500`} 
                           />
                         )}
                       </div>
