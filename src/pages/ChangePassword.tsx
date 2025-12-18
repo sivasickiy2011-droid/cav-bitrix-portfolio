@@ -40,7 +40,7 @@ const ChangePassword = ({ isEmbedded = false }: ChangePasswordProps) => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('https://functions.poehali.dev/1a4261f2-7b2d-489d-9aad-de7faea69c80', {
+      const response = await fetch('https://functions.poehali.dev/743e5e24-86d0-4a6a-90ac-c71d80a5b822?action=change', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

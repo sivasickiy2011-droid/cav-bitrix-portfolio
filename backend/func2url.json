@@ -1,12 +1,11 @@
 {
+  "password-manager": "https://functions.poehali.dev/743e5e24-86d0-4a6a-90ac-c71d80a5b822",
   "upload-image": "https://functions.poehali.dev/6f0735b1-7477-4660-b2b0-0b694b4f36ea",
   "test-password": "https://functions.poehali.dev/45e3b7e3-c323-49ba-8219-b3fb1f3fbb98",
-  "upload-portfolio-image": "https://functions.poehali.dev/03a840b4-25d2-4e89-95ef-743f0dc556b4",
   "emergency-reset-password": "https://functions.poehali.dev/61cea30d-6c36-4503-9459-7fc3e3379b35",
   "brief-handler": "https://functions.poehali.dev/28e36fe2-2513-4ae6-bf76-26a49b33c1bf",
   "secure-settings": "https://functions.poehali.dev/fa56bf24-1e0b-4d49-8511-6befcd962d6f",
   "contact-form": "https://functions.poehali.dev/003b9991-d7d8-4f5d-8257-dee42fad0f91",
-  "upload-logo": "https://functions.poehali.dev/37a07387-34ec-4fe2-b5c7-882c960a3b40",
   "seo-apply": "https://functions.poehali.dev/23efbca4-f3c3-48b8-afb7-a2e528bf68f9",
   "seo-analyze": "https://functions.poehali.dev/7127ce9f-37a5-4bde-97f7-12edc35f6ab5",
   "services-admin": "https://functions.poehali.dev/91a16400-6baa-4748-9387-c7cdad64ce9c",
