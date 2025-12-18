@@ -88,33 +88,33 @@ const Hero = () => {
       </div>
 
       <div className="relative max-w-[1500px] w-full lg:px-[50px] px-4 mx-auto py-8 flex-1 flex flex-col">
-        <div className="grid lg:grid-cols-2 gap-8 xl:gap-[76px] items-center flex-1">
-          <div className="header-left space-y-6 md:space-y-8 relative z-10 flex flex-col justify-center lg:mt-0 mt-[100px] sm:mt-[120px]">
-            <div className="header-bottom space-y-4 md:space-y-6">
-              <div className="space-y-3 md:space-y-4">
-                <h1 className="text-[clamp(48px,12vw,140px)] font-black leading-none m-0 bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end bg-clip-text text-transparent animate-gradient-shift bg-[length:200%_auto]">
+        <div className="grid lg:grid-cols-2 gap-6 xl:gap-12 2xl:gap-[76px] items-center flex-1">
+          <div className="header-left space-y-4 md:space-y-6 xl:space-y-8 relative z-10 flex flex-col justify-center lg:mt-0 mt-[100px] sm:mt-[120px]">
+            <div className="header-bottom space-y-3 md:space-y-4 xl:space-y-6">
+              <div className="space-y-2 md:space-y-3 xl:space-y-4">
+                <h1 className="text-[clamp(48px,10vw,140px)] font-black leading-[0.9] m-0 bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end bg-clip-text text-transparent animate-gradient-shift bg-[length:200%_auto]">
                   Pixel
                 </h1>
-                <p className="text-[clamp(18px,4vw,42px)] font-bold leading-tight text-gray-800 dark:text-gray-100 max-w-[600px]">
+                <p className="text-[clamp(18px,3.5vw,42px)] font-bold leading-tight text-gray-800 dark:text-gray-100 max-w-[600px]">
                   Разработка сайтов, которые приносят реальные результаты вашему бизнесу
                 </p>
               </div>
               
-              <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 items-stretch sm:items-center">
-                <a href="#contacts" className="btn bg-gradient-to-r from-gradient-start to-gradient-mid text-white px-8 sm:px-10 py-4 sm:py-5 rounded-full text-base sm:text-lg font-bold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 text-center">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 lg:gap-3 xl:gap-4 items-stretch sm:items-center">
+                <a href="#contacts" className="btn bg-gradient-to-r from-gradient-start to-gradient-mid text-white px-6 sm:px-8 lg:px-8 xl:px-10 py-3.5 sm:py-4 lg:py-4 xl:py-5 rounded-full text-sm sm:text-base lg:text-base xl:text-lg font-bold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 text-center">
                   Начать проект
                 </a>
-                <a href="#portfolio" className="btn bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-800 dark:text-white px-6 sm:px-8 py-4 sm:py-5 rounded-full text-base sm:text-lg font-semibold border-2 border-gradient-start/30 hover:border-gradient-start hover:shadow-xl transition-all duration-300 text-center">
+                <a href="#portfolio" className="btn bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-800 dark:text-white px-5 sm:px-6 lg:px-6 xl:px-8 py-3.5 sm:py-4 lg:py-4 xl:py-5 rounded-full text-sm sm:text-base lg:text-base xl:text-lg font-semibold border-2 border-gradient-start/30 hover:border-gradient-start hover:shadow-xl transition-all duration-300 text-center">
                   Посмотреть работы
                 </a>
               </div>
 
-              <div className="flex flex-wrap gap-5 sm:gap-6 pt-3 sm:pt-4">
-                <a href="#blok-dev" className="group relative nav-link-custom text-lg sm:text-xl font-semibold pb-2 hover:-translate-y-1 transition-all duration-300">
+              <div className="flex flex-wrap gap-4 sm:gap-5 lg:gap-4 xl:gap-6 pt-2 sm:pt-3 xl:pt-4">
+                <a href="#blok-dev" className="group relative nav-link-custom text-base sm:text-lg lg:text-lg xl:text-xl font-semibold pb-2 hover:-translate-y-1 transition-all duration-300">
                   <span className="relative z-10">Разработка</span>
                   <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-gradient-start to-gradient-mid transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                 </a>
-                <a href="#services" className="group relative nav-link-custom text-lg sm:text-xl font-semibold pb-2 hover:-translate-y-1 transition-all duration-300">
+                <a href="#services" className="group relative nav-link-custom text-base sm:text-lg lg:text-lg xl:text-xl font-semibold pb-2 hover:-translate-y-1 transition-all duration-300">
                   <span className="relative z-10">digital</span>
                   <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-gradient-mid to-gradient-end transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                 </a>

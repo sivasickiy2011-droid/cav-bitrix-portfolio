@@ -131,7 +131,7 @@ const Header = () => {
           Меню
         </button>
         
-        <div className={`${menuOpen ? 'flex' : 'hidden'} lg:flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-4 xl:gap-6 z-[999999] ${menuOpen ? 'absolute top-full right-0 bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl p-8 rounded-2xl shadow-2xl mt-4 border border-gradient-start/10 dark:border-gray-800/50' : ''}`}>
+        <div className={`${menuOpen ? 'flex' : 'hidden'} lg:flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-2 xl:gap-4 2xl:gap-6 z-[999999] ${menuOpen ? 'absolute top-full right-0 bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl p-8 rounded-2xl shadow-2xl mt-4 border border-gradient-start/10 dark:border-gray-800/50' : ''}`}>
           <a href="/#about-us" className="nav-link-custom relative group" onClick={() => setMenuOpen(false)}>
             О нас
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-gradient-start to-gradient-mid transition-all duration-300 group-hover:w-full" />
@@ -166,7 +166,7 @@ const Header = () => {
           </a>
           <button 
             onClick={() => setContactModalOpen(true)}
-            className="btn bg-gradient-to-r from-gradient-start to-gradient-mid text-white px-6 py-3 rounded-full text-sm font-semibold max-w-[181px] hover:shadow-xl transition-all duration-300"
+            className="btn bg-gradient-to-r from-gradient-start to-gradient-mid text-white px-4 lg:px-5 xl:px-6 py-2.5 lg:py-3 rounded-full text-xs lg:text-sm font-semibold whitespace-nowrap hover:shadow-xl transition-all duration-300"
           >
             Обсудить проект
           </button>
