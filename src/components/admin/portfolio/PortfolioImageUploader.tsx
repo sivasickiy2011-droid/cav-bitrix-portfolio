@@ -1,6 +1,6 @@
 import { PortfolioProject } from './types';
 
-const UPLOAD_URL = 'https://functions.poehali.dev/03a840b4-25d2-4e89-95ef-743f0dc556b4';
+const UPLOAD_URL = 'https://functions.poehali.dev/6f0735b1-7477-4660-b2b0-0b694b4f36ea';
 
 interface UploadImageParams {
   file: File;
@@ -43,7 +43,7 @@ export const uploadImage = async ({
         const response = await fetch(UPLOAD_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ image: base64, filename: file.name })
+          body: JSON.stringify({ image: base64, filename: file.name, storage_type: 's3', folder: 'portfolio' })
         });
         
         console.log('[PortfolioModal] Response status:', response.status);
@@ -107,7 +107,7 @@ export const uploadGalleryImage = async ({
         const response = await fetch(UPLOAD_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ image: base64, filename: file.name })
+          body: JSON.stringify({ image: base64, filename: file.name, storage_type: 's3', folder: 'portfolio' })
         });
         
         console.log('[PortfolioModal] Response status:', response.status);

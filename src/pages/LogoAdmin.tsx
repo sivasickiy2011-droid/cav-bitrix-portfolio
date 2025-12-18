@@ -66,14 +66,15 @@ const LogoAdmin = ({ isEmbedded = false }: LogoAdminProps) => {
         try {
           const base64String = reader.result as string;
           
-          const response = await fetch('https://functions.poehali.dev/37a07387-34ec-4fe2-b5c7-882c960a3b40', {
+          const response = await fetch('https://functions.poehali.dev/6f0735b1-7477-4660-b2b0-0b694b4f36ea', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
               image: base64String.split(',')[1], // Убираем префикс data:image/...;base64,
-              filename: file.name
+              filename: file.name,
+              storage_type: 'data_uri'
             }),
           });
 

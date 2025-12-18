@@ -8,11 +8,11 @@ from typing import Dict, Any
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     '''
-    Загрузка изображений портфолио в S3 Beget
-    Business: Загружает изображения проектов портфолио в облачное хранилище S3
-    Args: event - dict с httpMethod='POST', body содержит base64 изображение и filename
+    Загрузка изображений в S3 или Data URI
+    Business: Универсальная функция загрузки изображений для логотипов, портфолио и других файлов
+    Args: event - dict с httpMethod='POST', body содержит base64 изображение, filename и опциональный storage_type
           context - объект с request_id и другими атрибутами
-    Returns: HTTP response с публичным URL загруженного изображения
+    Returns: HTTP response с публичным URL или Data URI загруженного изображения
     '''
     method = event.get('httpMethod', 'POST')
     
@@ -43,7 +43,9 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     try:
         body = json.loads(event.get('body', '{}'))
         image_base64 = body.get('image')
-        filename = body.get('filename', 'image.jpg')
+        filename = body.get('filename', 'image.png')
+        storage_type = body.get('storage_type', 's3')  # 's3' или 'data_uri'
+        folder = body.get('folder', 'images')  # папка в S3 (portfolio, logos, etc)
         
         if not image_base64:
             return {
@@ -56,24 +58,41 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 'isBase64Encoded': False
             }
         
-        image_data = base64.b64decode(image_base64)
-        
-        file_ext = filename.rsplit('.', 1)[-1].lower() if '.' in filename else 'jpg'
+        # Определяем тип файла
+        file_ext = filename.rsplit('.', 1)[-1].lower() if '.' in filename else 'png'
         content_type_map = {
             'jpg': 'image/jpeg',
             'jpeg': 'image/jpeg',
             'png': 'image/png',
             'gif': 'image/gif',
-            'webp': 'image/webp'
+            'webp': 'image/webp',
+            'svg': 'image/svg+xml'
         }
-        content_type = content_type_map.get(file_ext, 'image/jpeg')
+        content_type = content_type_map.get(file_ext, 'image/png')
+        
+        # Data URI режим (для логотипов и встроенных изображений)
+        if storage_type == 'data_uri':
+            data_uri = f'data:{content_type};base64,{image_base64}'
+            return {
+                'statusCode': 200,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                'body': json.dumps({
+                    'url': data_uri,
+                    'type': 'data_uri'
+                }),
+                'isBase64Encoded': False
+            }
+        
+        # S3 режим (для портфолио и больших файлов)
+        image_data = base64.b64decode(image_base64)
         
         s3_endpoint = os.environ.get('S3_ENDPOINT_URL')
         bucket_name = os.environ.get('S3_BUCKET_NAME')
         access_key = os.environ.get('AWS_ACCESS_KEY_ID')
         secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
-        
-        print(f"[DEBUG] S3 Config: endpoint={s3_endpoint}, bucket={bucket_name}, has_access_key={bool(access_key)}, has_secret_key={bool(secret_key)}")
         
         if not all([s3_endpoint, bucket_name, access_key, secret_key]):
             missing = []
@@ -107,7 +126,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             )
         )
         
-        unique_filename = f"portfolio/{uuid.uuid4()}.{file_ext}"
+        unique_filename = f"{folder}/{uuid.uuid4()}.{file_ext}"
         
         s3_client.put_object(
             Bucket=bucket_name,
@@ -127,7 +146,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             },
             'body': json.dumps({
                 'url': image_url,
-                'filename': unique_filename
+                'filename': unique_filename,
+                'type': 's3'
             }),
             'isBase64Encoded': False
         }
