@@ -11,53 +11,75 @@ const Hero = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const [shouldAnimate, setShouldAnimate] = useState(true);
+
+  useEffect(() => {
+    // Определяем производительность устройства
+    const checkPerformance = () => {
+      const isLowEndDevice = 
+        window.innerWidth <= 1140 || // Узкие экраны
+        navigator.hardwareConcurrency <= 2 || // <= 2 ядер CPU
+        /Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent); // Мобильные устройства
+      
+      setShouldAnimate(!isLowEndDevice);
+    };
+
+    checkPerformance();
+    window.addEventListener('resize', checkPerformance);
+    return () => window.removeEventListener('resize', checkPerformance);
+  }, []);
+
   return (
     <header className="header relative overflow-hidden min-h-screen flex flex-col -mt-[1px] bg-white dark:bg-gray-800 rounded-b-[30px]">
-      <div className="absolute inset-0 animated-gradient-bg" />
+      <div className={`absolute inset-0 ${shouldAnimate ? 'animated-gradient-bg' : 'bg-gradient-to-br from-indigo-50 via-purple-50 to-cyan-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900'}`} />
       
-      <div className="absolute inset-0 opacity-20 dark:opacity-15">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
-                           radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.3) 0%, transparent 50%),
-                           radial-gradient(circle at 40% 20%, rgba(6, 182, 212, 0.3) 0%, transparent 50%)`,
-          animation: 'gradient-animation 20s ease infinite',
-        }} />
-      </div>
-
-      {/* Пролетающие макеты сайтов */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30 dark:opacity-20">
-        {[
-          { delay: '0s', duration: '25s', top: '10%', size: 'w-[280px] h-[180px]' },
-          { delay: '5s', duration: '30s', top: '40%', size: 'w-[320px] h-[200px]' },
-          { delay: '10s', duration: '28s', top: '70%', size: 'w-[300px] h-[190px]' },
-          { delay: '15s', duration: '32s', top: '25%', size: 'w-[260px] h-[170px]' },
-          { delay: '8s', duration: '27s', top: '55%', size: 'w-[290px] h-[185px]' },
-        ].map((mockup, idx) => (
-          <div
-            key={idx}
-            className={`absolute ${mockup.size} animate-float-horizontal`}
-            style={{
-              top: mockup.top,
-              left: '-350px',
-              animationDelay: mockup.delay,
-              animationDuration: mockup.duration,
-            }}
-          >
-            <div className="w-full h-full rounded-2xl bg-gradient-to-br from-gray-900/40 to-gray-700/30 dark:from-black/50 dark:to-gray-900/40 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.4)] backdrop-blur-sm border border-gray-400/20 dark:border-gray-600/30">
-              <div className="w-full h-8 bg-gradient-to-b from-gray-800/50 to-transparent dark:from-black/60 rounded-t-2xl flex items-center px-3 gap-1.5 border-b border-gray-500/20">
-                <div className="w-2.5 h-2.5 rounded-full bg-gray-600/60 dark:bg-gray-700/70"></div>
-                <div className="w-2.5 h-2.5 rounded-full bg-gray-600/60 dark:bg-gray-700/70"></div>
-                <div className="w-2.5 h-2.5 rounded-full bg-gray-600/60 dark:bg-gray-700/70"></div>
-              </div>
-              <div className="p-4 space-y-2">
-                <div className="h-3 w-3/4 bg-gradient-to-r from-gray-700/40 to-gray-600/30 dark:from-gray-800/60 dark:to-gray-700/50 rounded"></div>
-                <div className="h-3 w-1/2 bg-gradient-to-r from-gray-700/40 to-gray-600/30 dark:from-gray-800/60 dark:to-gray-700/50 rounded"></div>
-                <div className="mt-4 h-20 w-full bg-gradient-to-br from-gray-700/30 to-gray-600/20 dark:from-gray-800/50 dark:to-gray-700/40 rounded"></div>
-              </div>
-            </div>
+      {shouldAnimate && (
+        <>
+          <div className="absolute inset-0 opacity-20 dark:opacity-15">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
+                               radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.3) 0%, transparent 50%),
+                               radial-gradient(circle at 40% 20%, rgba(6, 182, 212, 0.3) 0%, transparent 50%)`,
+              animation: 'gradient-animation 20s ease infinite',
+            }} />
           </div>
-        ))}
-      </div>
+
+          {/* Пролетающие макеты сайтов - только на мощных устройствах */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30 dark:opacity-20">
+            {[
+              { delay: '0s', duration: '25s', top: '10%', size: 'w-[280px] h-[180px]' },
+              { delay: '5s', duration: '30s', top: '40%', size: 'w-[320px] h-[200px]' },
+              { delay: '10s', duration: '28s', top: '70%', size: 'w-[300px] h-[190px]' },
+              { delay: '15s', duration: '32s', top: '25%', size: 'w-[260px] h-[170px]' },
+              { delay: '8s', duration: '27s', top: '55%', size: 'w-[290px] h-[185px]' },
+            ].map((mockup, idx) => (
+              <div
+                key={idx}
+                className={`absolute ${mockup.size} animate-float-horizontal`}
+                style={{
+                  top: mockup.top,
+                  left: '-350px',
+                  animationDelay: mockup.delay,
+                  animationDuration: mockup.duration,
+                }}
+              >
+                <div className="w-full h-full rounded-2xl bg-gradient-to-br from-gray-900/40 to-gray-700/30 dark:from-black/50 dark:to-gray-900/40 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.4)] backdrop-blur-sm border border-gray-400/20 dark:border-gray-600/30">
+                  <div className="w-full h-8 bg-gradient-to-b from-gray-800/50 to-transparent dark:from-black/60 rounded-t-2xl flex items-center px-3 gap-1.5 border-b border-gray-500/20">
+                    <div className="w-2.5 h-2.5 rounded-full bg-gray-600/60 dark:bg-gray-700/70"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-gray-600/60 dark:bg-gray-700/70"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-gray-600/60 dark:bg-gray-700/70"></div>
+                  </div>
+                  <div className="p-4 space-y-2">
+                    <div className="h-3 w-3/4 bg-gradient-to-r from-gray-700/40 to-gray-600/30 dark:from-gray-800/60 dark:to-gray-700/50 rounded"></div>
+                    <div className="h-3 w-1/2 bg-gradient-to-r from-gray-700/40 to-gray-600/30 dark:from-gray-800/60 dark:to-gray-700/50 rounded"></div>
+                    <div className="mt-4 h-20 w-full bg-gradient-to-br from-gray-700/30 to-gray-600/20 dark:from-gray-800/50 dark:to-gray-700/40 rounded"></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
 
       <div className="fixed top-[10px] left-0 right-0 z-50">
         <div className="max-w-[1500px] w-full lg:px-[50px] px-4 mx-auto">
@@ -66,7 +88,7 @@ const Hero = () => {
       </div>
 
       <div className="relative max-w-[1500px] w-full lg:px-[50px] px-4 mx-auto py-8 flex-1 flex flex-col">
-        <div className="grid lg:grid-cols-2 gap-[76px] items-center flex-1">
+        <div className="grid lg:grid-cols-2 gap-8 xl:gap-[76px] items-center flex-1">
           <div className="header-left space-y-8 relative z-10 flex flex-col justify-center lg:mt-0 mt-[130px]">
             <div className="header-bottom space-y-6">
               <div className="space-y-4">
@@ -102,8 +124,8 @@ const Hero = () => {
 
           <div className="header-right space-y-8 relative z-10 flex flex-col justify-center">
             
-            <div className="header-img relative -translate-x-[39%] -translate-y-[9%] w-[144%] hidden lg:block">
-              <div className="relative h-[400px] flex items-center justify-end overflow-hidden" style={{ transform: `translateY(${scrollY * 0.05}px)` }}>
+            <div className="header-img relative xl:-translate-x-[39%] xl:-translate-y-[9%] xl:w-[144%] lg:w-full lg:translate-x-0 lg:translate-y-0 hidden lg:block">
+              <div className="relative h-[400px] flex items-center lg:justify-center xl:justify-end overflow-hidden" style={{ transform: shouldAnimate ? `translateY(${scrollY * 0.05}px)` : 'none' }}>
                 <div className="relative w-[350px] h-[350px] animate-float" style={{ transform: 'rotateX(10deg) rotateY(-10deg)', transformStyle: 'preserve-3d' }}>
                   <div className="grid grid-cols-10 gap-[2px]">
                     {Array.from({ length: 100 }).map((_, i) => {
