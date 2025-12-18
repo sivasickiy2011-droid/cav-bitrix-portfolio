@@ -63,7 +63,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         """)
         stats = cur.fetchone()
         
-        cur.execute("""
+        cur.execute(f"""
             SELECT 
                 id,
                 user_agent,
@@ -72,8 +72,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 created_at
             FROM bot_logs
             ORDER BY created_at DESC
-            LIMIT %s OFFSET %s
-        """, (limit, offset))
+            LIMIT {limit} OFFSET {offset}
+        """)
         
         logs = cur.fetchall()
         

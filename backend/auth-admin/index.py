@@ -12,9 +12,11 @@ def log_login_attempt(ip_address: str, user_agent: str, success: bool) -> None:
     conn = psycopg2.connect(database_url)
     cursor = conn.cursor()
     
+    ip_address_escaped = ip_address.replace("'", "''")
+    user_agent_escaped = user_agent.replace("'", "''")
+    
     cursor.execute(
-        "INSERT INTO admin_login_logs (ip_address, user_agent, success) VALUES (%s, %s, %s)",
-        (ip_address, user_agent, success)
+        f"INSERT INTO admin_login_logs (ip_address, user_agent, success) VALUES ('{ip_address_escaped}', '{user_agent_escaped}', {success})"
     )
     
     conn.commit()

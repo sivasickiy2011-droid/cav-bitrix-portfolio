@@ -88,9 +88,9 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             partner_id = query_params.get('id')
             
             if partner_id:
+                partner_id_int = int(partner_id)
                 cursor.execute(
-                    'SELECT id, login, name, discount_percent, is_active, created_at FROM partners WHERE id = %s',
-                    (partner_id,)
+                    f'SELECT id, login, name, discount_percent, is_active, created_at FROM partners WHERE id = {partner_id_int}'
                 )
                 row = cursor.fetchone()
                 if row:
@@ -162,9 +162,12 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                     'isBase64Encoded': False
                 }
             
+            login_escaped = login.replace("'", "''")
+            password_escaped = password.replace("'", "''")
+            name_escaped = name.replace("'", "''")
+            
             cursor.execute(
-                'INSERT INTO partners (login, password, name, discount_percent, is_active) VALUES (%s, %s, %s, %s, %s) RETURNING id',
-                (login, password, name, discount_percent, is_active)
+                f"INSERT INTO partners (login, password, name, discount_percent, is_active) VALUES ('{login_escaped}', '{password_escaped}', '{name_escaped}', {discount_percent}, {is_active}) RETURNING id"
             )
             partner_id = cursor.fetchone()[0]
             conn.commit()
@@ -197,31 +200,28 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 }
             
             update_fields = []
-            values = []
             
             if 'login' in body and body['login'].strip():
-                update_fields.append('login = %s')
-                values.append(body['login'].strip())
+                login_escaped = body['login'].strip().replace("'", "''")
+                update_fields.append(f"login = '{login_escaped}'")
             
             if 'password' in body and body['password'].strip():
-                update_fields.append('password = %s')
-                values.append(body['password'].strip())
+                password_escaped = body['password'].strip().replace("'", "''")
+                update_fields.append(f"password = '{password_escaped}'")
             
             if 'name' in body and body['name'].strip():
-                update_fields.append('name = %s')
-                values.append(body['name'].strip())
+                name_escaped = body['name'].strip().replace("'", "''")
+                update_fields.append(f"name = '{name_escaped}'")
             
             if 'discount_percent' in body:
-                update_fields.append('discount_percent = %s')
-                values.append(body['discount_percent'])
+                update_fields.append(f"discount_percent = {body['discount_percent']}")
             
             if 'is_active' in body:
-                update_fields.append('is_active = %s')
-                values.append(body['is_active'])
+                update_fields.append(f"is_active = {body['is_active']}")
             
             update_fields.append('updated_at = CURRENT_TIMESTAMP')
             
-            if not update_fields:
+            if len(update_fields) == 1:
                 conn.close()
                 return {
                     'statusCode': 400,
@@ -233,10 +233,10 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                     'isBase64Encoded': False
                 }
             
-            values.append(partner_id)
-            query = f"UPDATE partners SET {', '.join(update_fields)} WHERE id = %s"
+            partner_id_int = int(partner_id)
+            query = f"UPDATE partners SET {', '.join(update_fields)} WHERE id = {partner_id_int}"
             
-            cursor.execute(query, values)
+            cursor.execute(query)
             conn.commit()
             conn.close()
             
@@ -266,7 +266,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                     'isBase64Encoded': False
                 }
             
-            cursor.execute('DELETE FROM partners WHERE id = %s', (partner_id,))
+            partner_id_int = int(partner_id)
+            cursor.execute(f'DELETE FROM partners WHERE id = {partner_id_int}')
             conn.commit()
             conn.close()
             

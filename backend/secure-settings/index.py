@@ -59,9 +59,9 @@ def get_all_settings(category: Optional[str] = None) -> list:
     cur = conn.cursor(cursor_factory=RealDictCursor)
     
     if category:
+        category_escaped = category.replace("'", "''")
         cur.execute(
-            "SELECT id, key, encrypted_value, category, description, created_at, updated_at FROM secure_settings WHERE category = %s ORDER BY key",
-            (category,)
+            f"SELECT id, key, encrypted_value, category, description, created_at, updated_at FROM secure_settings WHERE category = '{category_escaped}' ORDER BY key"
         )
     else:
         cur.execute("SELECT id, key, encrypted_value, category, description, created_at, updated_at FROM secure_settings ORDER BY category, key")
@@ -89,9 +89,9 @@ def get_setting(key: str) -> Optional[Dict[str, Any]]:
     conn = get_db_connection()
     cur = conn.cursor(cursor_factory=RealDictCursor)
     
+    key_escaped = key.replace("'", "''")
     cur.execute(
-        "SELECT id, key, encrypted_value, category, description, created_at, updated_at FROM secure_settings WHERE key = %s",
-        (key,)
+        f"SELECT id, key, encrypted_value, category, description, created_at, updated_at FROM secure_settings WHERE key = '{key_escaped}'"
     )
     
     row = cur.fetchone()
@@ -118,18 +118,22 @@ def create_or_update_setting(setting: SecureSetting) -> Dict[str, Any]:
     
     encrypted = encrypt_value(setting.value)
     
+    key_escaped = setting.key.replace("'", "''")
+    encrypted_escaped = encrypted.replace("'", "''")
+    category_escaped = setting.category.replace("'", "''")
+    description_escaped = (setting.description or '').replace("'", "''")
+    
     cur.execute(
-        """
+        f"""
         INSERT INTO secure_settings (key, encrypted_value, category, description, updated_at)
-        VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP)
+        VALUES ('{key_escaped}', '{encrypted_escaped}', '{category_escaped}', '{description_escaped}', CURRENT_TIMESTAMP)
         ON CONFLICT (key) DO UPDATE SET
             encrypted_value = EXCLUDED.encrypted_value,
             category = EXCLUDED.category,
             description = EXCLUDED.description,
             updated_at = CURRENT_TIMESTAMP
         RETURNING id, key, category, description, created_at, updated_at
-        """,
-        (setting.key, encrypted, setting.category, setting.description)
+        """
     )
     
     row = cur.fetchone()
@@ -152,7 +156,8 @@ def delete_setting(key: str) -> bool:
     conn = get_db_connection()
     cur = conn.cursor()
     
-    cur.execute("DELETE FROM secure_settings WHERE key = %s", (key,))
+    key_escaped = key.replace("'", "''")
+    cur.execute(f"DELETE FROM secure_settings WHERE key = '{key_escaped}'")
     deleted = cur.rowcount > 0
     
     conn.commit()

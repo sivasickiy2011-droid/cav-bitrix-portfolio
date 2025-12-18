@@ -55,9 +55,12 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         conn = psycopg2.connect(database_url)
         cur = conn.cursor(cursor_factory=RealDictCursor)
         
+        user_agent_escaped = user_agent.replace("'", "''")
+        ip_address_escaped = ip_address.replace("'", "''")
+        timestamp = datetime.utcnow().isoformat()
+        
         cur.execute(
-            "INSERT INTO bot_logs (user_agent, is_blocked, ip_address, created_at) VALUES (%s, %s, %s, %s) RETURNING id",
-            (user_agent, is_blocked, ip_address, datetime.utcnow())
+            f"INSERT INTO bot_logs (user_agent, is_blocked, ip_address, created_at) VALUES ('{user_agent_escaped}', {is_blocked}, '{ip_address_escaped}', '{timestamp}') RETURNING id"
         )
         
         result = cur.fetchone()
