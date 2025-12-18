@@ -10,7 +10,7 @@ const Promotion = () => {
       <div className="max-w-[1500px] w-full lg:px-[50px] px-4 mx-auto">
         <div className="grid lg:grid-cols-2 gap-[76px] lg:gap-[76px] gap-12 items-start min-h-[600px]">
           <div className="promotion-left space-y-8">
-            <h2 className="section-title dark:[text-shadow:0_3px_12px_rgba(0,0,0,0.5)]">Продвижение</h2>
+            <h2 className="section-title">Продвижение</h2>
             <div className="w-full h-96 lg:h-96 h-72 bg-gradient-to-br from-purple-500/30 via-pink-500/20 to-rose-500/30 rounded-3xl relative overflow-hidden border border-gradient-start/20 backdrop-blur-sm group hover:scale-[1.02] transition-all duration-500">
               <div className="absolute inset-0">
                 <div className="absolute top-12 left-8 animate-float" style={{ animationDuration: '4s' }}>
@@ -78,8 +78,8 @@ const Promotion = () => {
               />
               взлетаем
             </a>
-            <h3 className="section-subtitle dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.4)]">Приводим целевых клиентов и растим ваш бизнес в интернете</h3>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed dark:[text-shadow:0_1px_6px_rgba(0,0,0,0.3)] text-[17px]">
+            <h3 className="section-subtitle">Приводим целевых клиентов и растим ваш бизнес в интернете</h3>
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-[17px]">
               Комплексное digital-продвижение: SEO-оптимизация для поисковых систем, контекстная реклама (Яндекс.Директ, Google Ads), таргетированная реклама в социальных сетях и email-маркетинг. <strong>Работаем на результат</strong> — увеличение трафика, конверсии и продаж.
             </p>
             <div className="space-y-3">

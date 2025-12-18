@@ -100,10 +100,10 @@ const News = () => {
       
       <div className="max-w-[1500px] mx-auto">
         <div className="text-center mb-16 space-y-4">
-          <h2 className="text-[clamp(40px,8vw,80px)] font-black bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end bg-clip-text text-transparent dark:[text-shadow:0_3px_12px_rgba(0,0,0,0.5)]">
+          <h2 className="text-[clamp(40px,8vw,80px)] font-black bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end bg-clip-text text-transparent">
             Новости
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto dark:[text-shadow:0_1px_6px_rgba(0,0,0,0.3)]">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Последние тренды и обновления из мира веб-разработки
           </p>
         </div>
@@ -182,11 +182,11 @@ const News = () => {
                           <span className="text-[11px]">{item.date}</span>
                         </div>
 
-                        <h3 className="font-bold text-gray-900 dark:text-gray-100 group-hover:text-gradient-start transition-colors line-clamp-3 text-base leading-snug dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.4)]">
+                        <h3 className="font-bold text-gray-900 dark:text-gray-100 group-hover:text-gradient-start transition-colors line-clamp-3 text-base leading-snug">
                           {item.title}
                         </h3>
 
-                        <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3 leading-relaxed dark:[text-shadow:0_1px_6px_rgba(0,0,0,0.3)]">
+                        <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3 leading-relaxed">
                           {cleanHtml(item.excerpt)}
                         </p>
                       </div>

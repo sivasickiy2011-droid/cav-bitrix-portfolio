@@ -89,7 +89,7 @@ const Development = () => {
       <div className="max-w-[1500px] w-full lg:px-[50px] px-4 mx-auto">
         <div className="grid lg:grid-cols-2 gap-[76px] lg:gap-[76px] gap-12 items-start min-h-[600px]">
           <div className="blok-dev-left space-y-8">
-            <h2 className="section-title dark:[text-shadow:0_3px_12px_rgba(0,0,0,0.5)]">Разработка</h2>
+            <h2 className="section-title">Разработка</h2>
             <div className="w-full h-[520px] lg:h-[520px] h-[420px] bg-gradient-to-br from-blue-500/30 via-cyan-500/20 to-indigo-500/30 rounded-3xl relative overflow-hidden border border-gradient-start/20 backdrop-blur-sm">
               <div className="absolute inset-0 flex items-center justify-center px-8 pt-12 pb-20 lg:px-12 lg:pt-16 lg:pb-24">
                 <div className="w-full max-w-[500px] lg:max-w-[500px] max-w-[320px] aspect-[4/3] relative">
@@ -133,8 +133,8 @@ const Development = () => {
               />
               наши услуги
             </a>
-            <h3 className="section-subtitle dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.4)]">Превращаем ваши идеи в работающие веб-решения</h3>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed dark:[text-shadow:0_1px_6px_rgba(0,0,0,0.3)] text-[17px]">
+            <h3 className="section-subtitle">Превращаем ваши идеи в работающие веб-решения</h3>
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-[17px]">
               Разрабатываем сайты любой сложности — от одностраничных лендингов до крупных корпоративных порталов и интернет-магазинов. <strong>Каждый проект создается с учетом ваших бизнес-целей</strong>: увеличение продаж, привлечение клиентов или повышение узнаваемости бренда.
             </p>
             <div className="space-y-3">

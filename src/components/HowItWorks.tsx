@@ -34,10 +34,10 @@ const HowItWorks = () => {
       
       <div className="max-w-[1500px] mx-auto">
         <div className="text-center mb-16 space-y-4">
-          <h2 className="text-[clamp(40px,8vw,80px)] font-black bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end bg-clip-text text-transparent dark:[text-shadow:0_3px_12px_rgba(0,0,0,0.5)]">
+          <h2 className="text-[clamp(40px,8vw,80px)] font-black bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end bg-clip-text text-transparent">
             Как мы работаем
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto dark:[text-shadow:0_1px_6px_rgba(0,0,0,0.3)]">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Простой процесс создания вашего идеального сайта за 4 шага
           </p>
         </div>
@@ -72,12 +72,12 @@ const HowItWorks = () => {
                   </div>
 
                   {/* Заголовок */}
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3 relative z-10 dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.4)]">
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3 relative z-10">
                     {step.title}
                   </h3>
 
                   {/* Описание */}
-                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed relative z-10 dark:[text-shadow:0_1px_6px_rgba(0,0,0,0.3)]">
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed relative z-10">
                     {step.description}
                   </p>
 

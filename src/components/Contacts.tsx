@@ -191,7 +191,7 @@ const Contacts = () => {
       <div className="max-w-[1500px] w-full lg:px-[50px] px-4 mx-auto">
         <div className="grid lg:grid-cols-2 gap-[76px] lg:gap-[76px] gap-12 items-center min-h-[600px]">
           <div className="contacts-content min-h-full z-[1] lg:p-5 p-0 content-center">
-            <h2 className="section-title dark:[text-shadow:0_3px_12px_rgba(0,0,0,0.5)]">Контакты</h2>
+            <h2 className="section-title">Контакты</h2>
             <form className="flex flex-col gap-12" onSubmit={handleSubmit}>
               <div className="relative group">
                 <input
@@ -219,7 +219,7 @@ const Contacts = () => {
               
               <button 
                 type="submit" 
-                className="btn bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end text-white py-6 lg:px-[132px] px-8 rounded-full lg:text-xl text-lg max-w-[521px] w-full min-h-[68px] font-semibold group relative overflow-hidden bg-[length:200%_auto] animate-gradient-shift disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end text-white py-4 sm:py-5 lg:py-6 px-6 sm:px-8 lg:px-[132px] rounded-full text-base sm:text-lg lg:text-xl max-w-[521px] w-full min-h-[56px] sm:min-h-[68px] font-semibold group relative overflow-hidden bg-[length:200%_auto] animate-gradient-shift disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={isSubmitting}
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">

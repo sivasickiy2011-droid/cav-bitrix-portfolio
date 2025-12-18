@@ -43,7 +43,7 @@ const FAQ = () => {
     <section id="faq" className="faq bg-gray-50 dark:bg-gray-700">
       <div className="max-w-[1500px] w-full lg:px-[50px] px-4 mx-auto">
         <div className="text-center mb-12">
-          <h2 className="section-title dark:[text-shadow:0_3px_12px_rgba(0,0,0,0.5)]">Часто задаваемые вопросы</h2>
+          <h2 className="section-title">Часто задаваемые вопросы</h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Ответы на самые популярные вопросы о разработке и продвижении сайтов
           </p>

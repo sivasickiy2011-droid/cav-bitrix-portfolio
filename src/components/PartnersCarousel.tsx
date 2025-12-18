@@ -42,7 +42,7 @@ const PartnersCarousel = () => {
   return (
     <div className="relative w-full py-8 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border-t border-gradient-start/10 dark:border-gradient-start/20 rounded-t-[30px] lg:mx-[50px] mx-4 lg:max-w-[calc(100%-100px)] max-w-[calc(100%-2rem)]">
       <div className="max-w-[1500px] mx-auto lg:px-[50px] px-4">
-        <h3 className="text-center text-sm font-semibold text-gray-500 dark:text-gray-300 mb-6 uppercase tracking-wider dark:[text-shadow:0_2px_8px_rgba(0,0,0,0.5)]">
+        <h3 className="text-center text-sm font-semibold text-gray-500 dark:text-gray-300 mb-6 uppercase tracking-wider">
           Наши партнёры
         </h3>
         

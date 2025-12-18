@@ -14,7 +14,7 @@ const Services = () => {
       <div className="max-w-[1500px] w-full lg:px-[50px] px-4 mx-auto">
         <div className="grid lg:grid-cols-2 gap-[76px] lg:gap-[76px] gap-12 items-start min-h-[600px]">
           <div className="services-left">
-            <h2 className="section-title dark:[text-shadow:0_3px_12px_rgba(0,0,0,0.5)]">Услуги</h2>
+            <h2 className="section-title">Услуги</h2>
             <ul className="flex gap-[10px] list-none m-0 p-0 flex-wrap lg:flex-nowrap">
               {services.map((service, index) => (
                 <li 
@@ -25,7 +25,7 @@ const Services = () => {
                   <div className={`mb-4 w-16 h-16 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300`}>
                     <Icon name={service.icon as any} size={32} className="text-white" />
                   </div>
-                  <p className="text-[22px] font-semibold max-w-[190px] dark:text-gray-100 dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.4)]">{service.title}</p>
+                  <p className="text-[22px] font-semibold max-w-[190px] dark:text-gray-100">{service.title}</p>
                 </li>
               ))}
             </ul>
@@ -39,7 +39,7 @@ const Services = () => {
               />
               мы предоставляем
             </a>
-            <h3 className="section-subtitle dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.4)]">
+            <h3 className="section-subtitle">
               Ваш сайт будет работать на вас 24/7 и приносить реальную прибыль
             </h3>
             <div className="bg-white/60 dark:bg-white/10 backdrop-blur-md rounded-2xl p-6 border-2 border-gradient-start/30 mb-6">

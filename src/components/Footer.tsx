@@ -51,36 +51,36 @@ const Footer = () => {
           </div>
           
           <nav className="flex flex-col md:flex-row gap-6 items-start md:items-center">
-            <a href="#" className="nav-link-custom relative group dark:[text-shadow:0_2px_8px_rgba(0,0,0,0.6)]">
+            <a href="#" className="nav-link-custom relative group">
               Новости
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-gradient-start to-gradient-mid transition-all duration-300 group-hover:w-full" />
             </a>
-            <a href="#blok-dev" className="nav-link-custom relative group dark:[text-shadow:0_2px_8px_rgba(0,0,0,0.6)]">
+            <a href="#blok-dev" className="nav-link-custom relative group">
               Разработка
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-gradient-start to-gradient-mid transition-all duration-300 group-hover:w-full" />
             </a>
-            <a href="#blok-prom" className="nav-link-custom relative group dark:[text-shadow:0_2px_8px_rgba(0,0,0,0.6)]">
+            <a href="#blok-prom" className="nav-link-custom relative group">
               Продвижение
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-gradient-start to-gradient-mid transition-all duration-300 group-hover:w-full" />
             </a>
-            <a href="#services" className="nav-link-custom relative group dark:[text-shadow:0_2px_8px_rgba(0,0,0,0.6)]">
+            <a href="#services" className="nav-link-custom relative group">
               Услуги
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-gradient-start to-gradient-mid transition-all duration-300 group-hover:w-full" />
             </a>
-            <button onClick={() => setCalcModalOpen(true)} className="nav-link-custom relative group dark:[text-shadow:0_2px_8px_rgba(0,0,0,0.6)] text-left">
+            <button onClick={() => setCalcModalOpen(true)} className="nav-link-custom relative group text-left">
               Калькулятор
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-gradient-start to-gradient-mid transition-all duration-300 group-hover:w-full" />
             </button>
-            <a href="#portfolio" className="nav-link-custom relative group dark:[text-shadow:0_2px_8px_rgba(0,0,0,0.6)]">
+            <a href="#portfolio" className="nav-link-custom relative group">
               Портфолио
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-gradient-start to-gradient-mid transition-all duration-300 group-hover:w-full" />
             </a>
-            <a href="#contacts" className="nav-link-custom relative group dark:[text-shadow:0_2px_8px_rgba(0,0,0,0.6)]">
+            <a href="#contacts" className="nav-link-custom relative group">
               Контакты
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-gradient-start to-gradient-mid transition-all duration-300 group-hover:w-full" />
             </a>
             {isAdmin && (
-              <a href="/admin/consents" className="nav-link-custom relative group text-xs opacity-50 hover:opacity-100 dark:[text-shadow:0_2px_8px_rgba(0,0,0,0.6)]">
+              <a href="/admin/consents" className="nav-link-custom relative group text-xs opacity-50 hover:opacity-100">
                 Admin
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-gradient-start to-gradient-mid transition-all duration-300 group-hover:w-full" />
               </a>
@@ -95,14 +95,14 @@ const Footer = () => {
         </div>
 
         <div className="pt-4 md:pt-6 flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400 dark:[text-shadow:0_1px_6px_rgba(0,0,0,0.5)]">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             © {new Date().getFullYear()} Pixel. Все права защищены.
           </p>
           <div className="flex flex-wrap gap-3 md:gap-6 items-center justify-center text-xs md:text-sm">
-            <a href="/terms" className="text-gray-500 dark:text-gray-400 hover:text-gradient-start transition-colors dark:[text-shadow:0_1px_6px_rgba(0,0,0,0.5)]">
+            <a href="/terms" className="text-gray-500 dark:text-gray-400 hover:text-gradient-start transition-colors">
               Пользовательское соглашение
             </a>
-            <a href="/privacy" className="text-gray-500 dark:text-gray-400 hover:text-gradient-start transition-colors dark:[text-shadow:0_1px_6px_rgba(0,0,0,0.5)]">
+            <a href="/privacy" className="text-gray-500 dark:text-gray-400 hover:text-gradient-start transition-colors">
               Политика конфиденциальности
             </a>
             <button
@@ -110,7 +110,7 @@ const Footer = () => {
                 localStorage.removeItem('cookieConsent');
                 window.location.reload();
               }}
-              className="text-gray-500 dark:text-gray-400 hover:text-gradient-start transition-colors underline dark:[text-shadow:0_1px_6px_rgba(0,0,0,0.5)]"
+              className="text-gray-500 dark:text-gray-400 hover:text-gradient-start transition-colors underline"
             >
               Настройки cookies
             </button>

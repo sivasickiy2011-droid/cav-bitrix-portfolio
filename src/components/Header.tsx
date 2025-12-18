@@ -76,7 +76,7 @@ const Header = () => {
             <img 
               src={logoUrl} 
               alt="Logo" 
-              className="w-16 h-16 object-contain drop-shadow-lg group-hover:drop-shadow-[0_0_15px_rgba(99,102,241,0.6)] transition-all duration-300"
+              className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 object-contain drop-shadow-lg group-hover:drop-shadow-[0_0_15px_rgba(99,102,241,0.6)] transition-all duration-300"
             />
           </button>
 
@@ -121,12 +121,12 @@ const Header = () => {
 
         <button 
           onClick={() => setMenuOpen(!menuOpen)}
-          className="lg:hidden flex items-center gap-2 text-sm font-semibold bg-gradient-to-r from-gradient-start to-gradient-mid text-white px-6 py-3 rounded-full hover:shadow-lg transition-all"
+          className="lg:hidden flex items-center gap-2 text-xs sm:text-sm font-semibold bg-gradient-to-r from-gradient-start to-gradient-mid text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-full hover:shadow-lg transition-all"
         >
           <div className="flex flex-col gap-1">
-            <span className={`w-5 h-0.5 bg-white transition-transform ${menuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
-            <span className={`w-5 h-0.5 bg-white transition-opacity ${menuOpen ? 'opacity-0' : ''}`}></span>
-            <span className={`w-5 h-0.5 bg-white transition-transform ${menuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
+            <span className={`w-4 sm:w-5 h-0.5 bg-white transition-transform ${menuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
+            <span className={`w-4 sm:w-5 h-0.5 bg-white transition-opacity ${menuOpen ? 'opacity-0' : ''}`}></span>
+            <span className={`w-4 sm:w-5 h-0.5 bg-white transition-transform ${menuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
           </div>
           Меню
         </button>

@@ -89,32 +89,32 @@ const Hero = () => {
 
       <div className="relative max-w-[1500px] w-full lg:px-[50px] px-4 mx-auto py-8 flex-1 flex flex-col">
         <div className="grid lg:grid-cols-2 gap-8 xl:gap-[76px] items-center flex-1">
-          <div className="header-left space-y-8 relative z-10 flex flex-col justify-center lg:mt-0 mt-[130px]">
-            <div className="header-bottom space-y-6">
-              <div className="space-y-4">
-                <h1 className="text-[clamp(60px,12vw,140px)] font-black leading-none m-0 bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end bg-clip-text text-transparent animate-gradient-shift bg-[length:200%_auto] [text-shadow:0_3px_12px_rgba(0,0,0,0.4)] dark:[text-shadow:0_4px_16px_rgba(0,0,0,0.7)]">
+          <div className="header-left space-y-6 md:space-y-8 relative z-10 flex flex-col justify-center lg:mt-0 mt-[100px] sm:mt-[120px]">
+            <div className="header-bottom space-y-4 md:space-y-6">
+              <div className="space-y-3 md:space-y-4">
+                <h1 className="text-[clamp(48px,12vw,140px)] font-black leading-none m-0 bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end bg-clip-text text-transparent animate-gradient-shift bg-[length:200%_auto]">
                   Pixel
                 </h1>
-                <p className="text-[clamp(24px,4vw,42px)] font-bold leading-tight text-gray-800 dark:text-gray-100 max-w-[600px] [text-shadow:0_2px_10px_rgba(0,0,0,0.3)] dark:[text-shadow:0_3px_12px_rgba(0,0,0,0.6)]">
+                <p className="text-[clamp(18px,4vw,42px)] font-bold leading-tight text-gray-800 dark:text-gray-100 max-w-[600px]">
                   Разработка сайтов, которые приносят реальные результаты вашему бизнесу
                 </p>
               </div>
               
-              <div className="flex flex-wrap gap-4 items-center">
-                <a href="#contacts" className="btn bg-gradient-to-r from-gradient-start to-gradient-mid text-white px-10 py-5 rounded-full text-lg font-bold hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 items-stretch sm:items-center">
+                <a href="#contacts" className="btn bg-gradient-to-r from-gradient-start to-gradient-mid text-white px-8 sm:px-10 py-4 sm:py-5 rounded-full text-base sm:text-lg font-bold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 text-center">
                   Начать проект
                 </a>
-                <a href="#portfolio" className="btn bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-800 dark:text-white px-8 py-5 rounded-full text-lg font-semibold border-2 border-gradient-start/30 hover:border-gradient-start hover:shadow-xl transition-all duration-300">
+                <a href="#portfolio" className="btn bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-800 dark:text-white px-6 sm:px-8 py-4 sm:py-5 rounded-full text-base sm:text-lg font-semibold border-2 border-gradient-start/30 hover:border-gradient-start hover:shadow-xl transition-all duration-300 text-center">
                   Посмотреть работы
                 </a>
               </div>
 
-              <div className="flex flex-wrap gap-6 pt-4">
-                <a href="#blok-dev" className="group relative nav-link-custom text-xl font-semibold pb-2 hover:-translate-y-1 transition-all duration-300 [text-shadow:0_2px_8px_rgba(0,0,0,0.3)] dark:[text-shadow:0_3px_10px_rgba(0,0,0,0.6)]">
+              <div className="flex flex-wrap gap-5 sm:gap-6 pt-3 sm:pt-4">
+                <a href="#blok-dev" className="group relative nav-link-custom text-lg sm:text-xl font-semibold pb-2 hover:-translate-y-1 transition-all duration-300">
                   <span className="relative z-10">Разработка</span>
                   <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-gradient-start to-gradient-mid transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                 </a>
-                <a href="#services" className="group relative nav-link-custom text-xl font-semibold pb-2 hover:-translate-y-1 transition-all duration-300 [text-shadow:0_2px_8px_rgba(0,0,0,0.3)] dark:[text-shadow:0_3px_10px_rgba(0,0,0,0.6)]">
+                <a href="#services" className="group relative nav-link-custom text-lg sm:text-xl font-semibold pb-2 hover:-translate-y-1 transition-all duration-300">
                   <span className="relative z-10">digital</span>
                   <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-gradient-mid to-gradient-end transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                 </a>

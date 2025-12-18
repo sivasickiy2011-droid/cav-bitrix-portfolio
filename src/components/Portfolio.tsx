@@ -49,7 +49,7 @@ const Portfolio = () => {
       <section id="portfolio" className="portfolio bg-white dark:bg-gray-800">
         <div className="max-w-[1500px] w-full px-[50px] mx-auto">
           <div className="w-[95%]">
-            <h2 className="section-title dark:[text-shadow:0_3px_12px_rgba(0,0,0,0.5)]">Портфолио</h2>
+            <h2 className="section-title">Портфолио</h2>
             <div className="text-center py-12 text-gray-500 dark:text-gray-400">
               <Icon name="Loader2" className="animate-spin inline-block mb-2" size={32} />
               <p>Загрузка проектов...</p>
@@ -65,7 +65,7 @@ const Portfolio = () => {
       <section id="portfolio" className="portfolio bg-white dark:bg-gray-800">
         <div className="max-w-[1500px] w-full px-[50px] mx-auto">
           <div className="w-[95%]">
-            <h2 className="section-title dark:[text-shadow:0_3px_12px_rgba(0,0,0,0.5)]">Портфолио</h2>
+            <h2 className="section-title">Портфолио</h2>
             <div className="text-center py-12 text-gray-500 dark:text-gray-400">
               <Icon name="FolderOpen" size={48} className="mx-auto mb-4 opacity-50" />
               <p>Проекты скоро появятся</p>
@@ -88,7 +88,7 @@ const Portfolio = () => {
       <section id="portfolio" className="portfolio bg-white dark:bg-gray-800">
         <div className="max-w-[1500px] w-full px-[50px] mx-auto">
           <div className="w-[95%]">
-            <h2 className="section-title dark:[text-shadow:0_3px_12px_rgba(0,0,0,0.5)]">Портфолио</h2>
+            <h2 className="section-title">Портфолио</h2>
             
             <div className="mb-8 overflow-hidden hidden md:block">
               <div className="flex gap-6 animate-marquee whitespace-nowrap">
@@ -119,11 +119,11 @@ const Portfolio = () => {
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4">
-                        <div className="text-white text-xl font-bold mb-2 dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.8)]">
+                        <div className="text-white text-xl font-bold mb-2">
                           {project.title}
                         </div>
                         {project.description && (
-                          <p className="text-white/90 text-sm text-center mb-3 dark:[text-shadow:0_1px_6px_rgba(0,0,0,0.6)] line-clamp-2">
+                          <p className="text-white/90 text-sm text-center mb-3 line-clamp-2">
                             {project.description}
                           </p>
                         )}
@@ -166,11 +166,11 @@ const Portfolio = () => {
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                       <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
-                        <div className="text-white text-xl font-bold mb-2 dark:[text-shadow:0_2px_10px_rgba(0,0,0,0.8)]">
+                        <div className="text-white text-xl font-bold mb-2">
                           {project.title}
                         </div>
                         {project.description && (
-                          <p className="text-white/90 text-sm text-center mb-3 dark:[text-shadow:0_1px_6px_rgba(0,0,0,0.6)] line-clamp-2">
+                          <p className="text-white/90 text-sm text-center mb-3 line-clamp-2">
                             {project.description}
                           </p>
                         )}

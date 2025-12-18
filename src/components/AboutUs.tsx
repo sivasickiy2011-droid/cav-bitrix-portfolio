@@ -66,9 +66,9 @@ const AboutUs = () => {
   return (
     <section id="about-us" className="about-us bg-gray-50 dark:bg-gray-700">
       <div className="max-w-[1500px] w-full lg:px-[50px] px-4 mx-auto">
-        <div className="grid lg:grid-cols-2 gap-[76px] lg:gap-[76px] gap-12 items-start min-h-[600px]">
-          <div className="about-us-left space-y-8">
-            <h2 className="section-title dark:[text-shadow:0_3px_12px_rgba(0,0,0,0.5)]">О Нас</h2>
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-[76px] items-start min-h-[400px] sm:min-h-[600px]">
+          <div className="about-us-left space-y-6 sm:space-y-8">
+            <h2 className="section-title">О Нас</h2>
             <div 
               className="w-full h-96 lg:h-96 h-72 bg-gradient-to-br from-gradient-start/30 via-gradient-mid/20 to-gradient-end/30 rounded-3xl relative overflow-hidden border border-gradient-start/20 backdrop-blur-sm"
               onClick={(e) => {
