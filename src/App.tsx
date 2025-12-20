@@ -2,10 +2,12 @@
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { PartnerProvider } from "@/contexts/PartnerContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { AnimationProvider } from "@/contexts/AnimationContext";
+import { useEffect } from "react";
+import { trackPageVisit } from "@/utils/analytics";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import BotProtection from "./components/BotProtection";
@@ -31,6 +33,16 @@ import EmergencyReset from "./pages/EmergencyReset";
 
 const queryClient = new QueryClient();
 
+function AnalyticsTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    trackPageVisit(location.pathname);
+  }, [location]);
+
+  return null;
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
@@ -40,6 +52,7 @@ const App = () => (
             <Toaster position="top-right" richColors />
             <BotProtection />
             <BrowserRouter>
+              <AnalyticsTracker />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/services" element={<OurServices />} />

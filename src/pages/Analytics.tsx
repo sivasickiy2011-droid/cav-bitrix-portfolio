@@ -5,6 +5,7 @@ import AdminLayout from '@/components/AdminLayout';
 import MetricsTab from '@/components/analytics/MetricsTab';
 import SeoTab from '@/components/analytics/SeoTab';
 import StatsTab from '@/components/analytics/StatsTab';
+import OwnStatsTab from '@/components/analytics/OwnStatsTab';
 import WebmasterTab from '@/components/analytics/WebmasterTab';
 import { useSecureSettings } from '@/hooks/useSecureSettings';
 
@@ -187,8 +188,12 @@ export default function Analytics() {
           <p className="text-gray-400">Управление метриками и SEO-оптимизацией</p>
         </div>
 
-        <Tabs defaultValue="metrics" className="w-full">
+        <Tabs defaultValue="own-stats" className="w-full">
           <TabsList className="bg-gray-800 border-gray-700">
+            <TabsTrigger value="own-stats" className="data-[state=active]:bg-blue-600">
+              <Icon name="BarChart3" size={16} className="mr-2" />
+              Статистика
+            </TabsTrigger>
             <TabsTrigger value="metrics" className="data-[state=active]:bg-blue-600">
               <Icon name="Activity" size={16} className="mr-2" />
               Метрики
@@ -199,13 +204,15 @@ export default function Analytics() {
             </TabsTrigger>
             <TabsTrigger value="stats" className="data-[state=active]:bg-blue-600">
               <Icon name="TrendingUp" size={16} className="mr-2" />
-              Посещаемость
+              Яндекс.Метрика
             </TabsTrigger>
             <TabsTrigger value="webmaster" className="data-[state=active]:bg-blue-600">
               <Icon name="FileSearch" size={16} className="mr-2" />
               Яндекс.Вебмастер
             </TabsTrigger>
           </TabsList>
+
+          <OwnStatsTab />
 
           <MetricsTab 
             settings={settings}
