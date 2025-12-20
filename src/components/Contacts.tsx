@@ -221,6 +221,7 @@ const Contacts = () => {
                   mask="+7 (999) 999-99-99"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  disabled={isSubmitting}
                 >
                   {((inputProps: any) => (
                     <input

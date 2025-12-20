@@ -169,6 +169,7 @@ export default function OrderModal({ isOpen, onClose, total, services }: OrderMo
               mask="+7 (999) 999-99-99"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              disabled={isSubmitting}
             >
               {((inputProps: any) => (
                 <Input
@@ -177,7 +178,6 @@ export default function OrderModal({ isOpen, onClose, total, services }: OrderMo
                   type="tel"
                   placeholder="+7 900 123-45-67"
                   required
-                  disabled={isSubmitting}
                 />
               )) as any}
             </InputMask>
