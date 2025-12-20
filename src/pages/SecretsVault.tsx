@@ -35,6 +35,7 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
   const [migrating, setMigrating] = useState(false);
   const [copyingSecrets, setCopyingSecrets] = useState(false);
   const [clearingCache, setClearingCache] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   
   const [formData, setFormData] = useState({
     key: '',
@@ -172,11 +173,18 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
   };
 
   const handleSave = async () => {
+    if (!formData.key || !formData.value) {
+      alert('Заполните все обязательные поля');
+      return;
+    }
+
     setSaving(true);
     try {
       const token = localStorage.getItem('admin_auth');
+      const method = editingId ? 'PUT' : 'POST';
+      
       const response = await fetch('https://functions.poehali.dev/fa56bf24-1e0b-4d49-8511-6befcd962d6f', {
-        method: 'POST',
+        method,
         headers: {
           'Content-Type': 'application/json',
           'X-Admin-Token': token || ''
@@ -189,9 +197,14 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
         setShowAddForm(false);
         setEditingId(null);
         await loadSettings();
+        alert(editingId ? 'Секрет успешно обновлён!' : 'Секрет успешно создан!');
+      } else {
+        const error = await response.json();
+        alert('Ошибка: ' + (error.error || 'Не удалось сохранить'));
       }
     } catch (error) {
       console.error('Failed to save setting:', error);
+      alert('Ошибка сохранения настройки');
     } finally {
       setSaving(false);
     }
@@ -226,6 +239,7 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
     });
     setEditingId(setting.id);
     setShowAddForm(true);
+    setShowPassword(true);
   };
 
   const content = (
@@ -299,6 +313,7 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
             onClick={() => {
               setShowAddForm(!showAddForm);
               setEditingId(null);
+              setShowPassword(false);
               setFormData({ key: '', value: '', category: 'webhooks', description: '' });
             }}
             className="bg-blue-600 hover:bg-blue-700"
@@ -350,13 +365,22 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
 
             <div className="space-y-2">
               <Label className="text-gray-300">Значение</Label>
-              <Input
-                type="password"
-                value={formData.value}
-                onChange={(e) => setFormData({ ...formData, value: e.target.value })}
-                placeholder="Введите значение"
-                className="bg-gray-900/50 border-gray-600 text-white"
-              />
+              <div className="relative">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  value={formData.value}
+                  onChange={(e) => setFormData({ ...formData, value: e.target.value })}
+                  placeholder="Введите значение"
+                  className="bg-gray-900/50 border-gray-600 text-white pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300"
+                >
+                  <Icon name={showPassword ? "EyeOff" : "Eye"} className="h-4 w-4" />
+                </button>
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -383,6 +407,7 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
                 onClick={() => {
                   setShowAddForm(false);
                   setEditingId(null);
+                  setShowPassword(false);
                   setFormData({ key: '', value: '', category: 'webhooks', description: '' });
                 }}
                 variant="outline"
