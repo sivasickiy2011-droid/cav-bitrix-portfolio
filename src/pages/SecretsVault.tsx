@@ -1,24 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import Icon from '@/components/ui/icon';
-import { Badge } from '@/components/ui/badge';
 import { migrateSettingsToVault, hasUnmigratedSettings } from '@/utils/migrateSettings';
-
-interface SecureSetting {
-  id: number;
-  key: string;
-  value: string;
-  category: string;
-  description: string | null;
-  created_at: string;
-  updated_at: string;
-}
+import { SecureSetting, SecretFormData } from '@/components/secrets/types';
+import SecretsVaultToolbar from '@/components/secrets/SecretsVaultToolbar';
+import SecretForm from '@/components/secrets/SecretForm';
+import SecretsList from '@/components/secrets/SecretsList';
 
 interface SecretsVaultProps {
   isEmbedded?: boolean;
@@ -37,32 +26,12 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
   const [clearingCache, setClearingCache] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<SecretFormData>({
     key: '',
     value: '',
     category: 'webhooks',
     description: ''
   });
-
-  const categories = [
-    { value: 'all', label: 'Все категории' },
-    { value: 'webhooks', label: 'Вебхуки' },
-    { value: 'analytics', label: 'Аналитика' },
-    { value: 'integrations', label: 'Интеграции' },
-    { value: 'api_keys', label: 'API ключи' },
-    { value: 'general', label: 'Общие' }
-  ];
-
-  const getCategoryColor = (category: string) => {
-    const colors: Record<string, string> = {
-      webhooks: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-      analytics: 'bg-green-500/20 text-green-300 border-green-500/30',
-      integrations: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
-      api_keys: 'bg-orange-500/20 text-orange-300 border-orange-500/30',
-      general: 'bg-gray-500/20 text-gray-300 border-gray-500/30'
-    };
-    return colors[category] || colors.general;
-  };
 
   const loadSettings = async () => {
     setLoading(true);
@@ -242,6 +211,20 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
     setShowPassword(true);
   };
 
+  const handleAddNew = () => {
+    setShowAddForm(!showAddForm);
+    setEditingId(null);
+    setShowPassword(false);
+    setFormData({ key: '', value: '', category: 'webhooks', description: '' });
+  };
+
+  const handleCancel = () => {
+    setShowAddForm(false);
+    setEditingId(null);
+    setShowPassword(false);
+    setFormData({ key: '', value: '', category: 'webhooks', description: '' });
+  };
+
   const content = (
     <div className="space-y-6">
       <Alert className="bg-blue-900/20 border-blue-500/30">
@@ -269,222 +252,36 @@ const SecretsVault = ({ isEmbedded = false }: SecretsVaultProps) => {
         </Alert>
       )}
       
-      <div className="flex justify-between items-center">
-        <div className="flex gap-4 items-center">
-          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-[200px] bg-gray-800/50 border-gray-700">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {categories.map(cat => (
-                <SelectItem key={cat.value} value={cat.value}>
-                  {cat.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <span className="text-sm text-gray-400">
-            {settings.length} {settings.length === 1 ? 'настройка' : 'настроек'}
-          </span>
-        </div>
-        
-        <div className="flex gap-2">
-          <Button
-            onClick={handleClearCache}
-            disabled={clearingCache}
-            variant="outline"
-            size="sm"
-            className="border-orange-600 text-orange-400 hover:bg-orange-950/30"
-            title="Применить изменения секретов мгновенно"
-          >
-            <Icon name="RefreshCw" className="h-4 w-4 mr-2" />
-            {clearingCache ? 'Очистка...' : 'Очистить кеш'}
-          </Button>
-          <Button
-            onClick={handleCopyProjectSecrets}
-            disabled={copyingSecrets}
-            variant="outline"
-            className="border-purple-600 text-purple-400 hover:bg-purple-950/30"
-          >
-            <Icon name="Download" className="h-4 w-4 mr-2" />
-            {copyingSecrets ? 'Копирую...' : 'Импорт из секретов'}
-          </Button>
-          <Button
-            onClick={() => {
-              setShowAddForm(!showAddForm);
-              setEditingId(null);
-              setShowPassword(false);
-              setFormData({ key: '', value: '', category: 'webhooks', description: '' });
-            }}
-            className="bg-blue-600 hover:bg-blue-700"
-          >
-            <Icon name="Plus" className="h-4 w-4 mr-2" />
-            Добавить
-          </Button>
-        </div>
-      </div>
+      <SecretsVaultToolbar
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        settingsCount={settings.length}
+        clearingCache={clearingCache}
+        copyingSecrets={copyingSecrets}
+        onClearCache={handleClearCache}
+        onCopyProjectSecrets={handleCopyProjectSecrets}
+        onAddNew={handleAddNew}
+      />
 
       {showAddForm && (
-        <Card className="bg-gray-800/50 border-gray-700">
-          <CardHeader>
-            <CardTitle className="text-white">
-              {editingId ? 'Редактировать настройку' : 'Новая настройка'}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-gray-300">Ключ</Label>
-                <Input
-                  value={formData.key}
-                  onChange={(e) => setFormData({ ...formData, key: e.target.value })}
-                  placeholder="telegram_bot_token"
-                  className="bg-gray-900/50 border-gray-600 text-white"
-                  disabled={!!editingId}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label className="text-gray-300">Категория</Label>
-                <Select 
-                  value={formData.category} 
-                  onValueChange={(value) => setFormData({ ...formData, category: value })}
-                >
-                  <SelectTrigger className="bg-gray-900/50 border-gray-600 text-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.filter(c => c.value !== 'all').map(cat => (
-                      <SelectItem key={cat.value} value={cat.value}>
-                        {cat.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-gray-300">Значение</Label>
-              <div className="relative">
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  value={formData.value}
-                  onChange={(e) => setFormData({ ...formData, value: e.target.value })}
-                  placeholder="Введите значение"
-                  className="bg-gray-900/50 border-gray-600 text-white pr-10"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300"
-                >
-                  <Icon name={showPassword ? "EyeOff" : "Eye"} className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-gray-300">Описание (опционально)</Label>
-              <Textarea
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                placeholder="Для чего используется эта настройка"
-                className="bg-gray-900/50 border-gray-600 text-white"
-                rows={2}
-              />
-            </div>
-
-            <div className="flex gap-2">
-              <Button
-                onClick={handleSave}
-                disabled={saving || !formData.key || !formData.value}
-                className="bg-blue-600 hover:bg-blue-700"
-              >
-                <Icon name="Save" className="h-4 w-4 mr-2" />
-                {saving ? 'Сохранение...' : 'Сохранить'}
-              </Button>
-              <Button
-                onClick={() => {
-                  setShowAddForm(false);
-                  setEditingId(null);
-                  setShowPassword(false);
-                  setFormData({ key: '', value: '', category: 'webhooks', description: '' });
-                }}
-                variant="outline"
-                className="border-gray-600 text-gray-300 hover:bg-gray-800"
-              >
-                Отмена
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        <SecretForm
+          formData={formData}
+          setFormData={setFormData}
+          editingId={editingId}
+          saving={saving}
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
+          onSave={handleSave}
+          onCancel={handleCancel}
+        />
       )}
 
-      {loading ? (
-        <div className="text-center py-12 text-gray-400">
-          <Icon name="Loader2" className="h-8 w-8 animate-spin mx-auto mb-4" />
-          Загрузка настроек...
-        </div>
-      ) : settings.length === 0 ? (
-        <Card className="bg-gray-800/50 border-gray-700">
-          <CardContent className="py-12 text-center">
-            <Icon name="Lock" className="h-12 w-12 mx-auto mb-4 text-gray-600" />
-            <p className="text-gray-400">Нет сохранённых настроек</p>
-            <p className="text-sm text-gray-500 mt-2">
-              Добавьте первую настройку для безопасного хранения
-            </p>
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="grid gap-4">
-          {settings.map((setting) => (
-            <Card key={setting.id} className="bg-gray-800/50 border-gray-700 hover:border-gray-600 transition-colors">
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1 space-y-3">
-                    <div className="flex items-center gap-3">
-                      <code className="text-lg font-mono text-blue-400 bg-gray-900/50 px-3 py-1 rounded">
-                        {setting.key}
-                      </code>
-                      <Badge className={getCategoryColor(setting.category)}>
-                        {categories.find(c => c.value === setting.category)?.label || setting.category}
-                      </Badge>
-                    </div>
-                    
-                    {setting.description && (
-                      <p className="text-sm text-gray-400">{setting.description}</p>
-                    )}
-                    
-                    <div className="flex gap-6 text-xs text-gray-500">
-                      <span>Создано: {new Date(setting.created_at).toLocaleString('ru-RU')}</span>
-                      <span>Обновлено: {new Date(setting.updated_at).toLocaleString('ru-RU')}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-2 ml-4">
-                    <Button
-                      onClick={() => handleEdit(setting)}
-                      size="sm"
-                      variant="ghost"
-                      className="text-gray-400 hover:text-white hover:bg-gray-700"
-                    >
-                      <Icon name="Pencil" className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      onClick={() => handleDelete(setting.key)}
-                      size="sm"
-                      variant="ghost"
-                      className="text-red-400 hover:text-red-300 hover:bg-red-950/30"
-                    >
-                      <Icon name="Trash2" className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
+      <SecretsList
+        settings={settings}
+        loading={loading}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
     </div>
   );
 
