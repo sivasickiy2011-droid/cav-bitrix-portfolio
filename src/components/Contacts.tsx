@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
+import { checkCookieConsent, showConsentMessage } from '@/utils/cookieConsent';
 
 const ContactInfo = () => {
   const [activeTab, setActiveTab] = useState<'contacts' | 'details'>('contacts');
@@ -150,6 +151,15 @@ const Contacts = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!checkCookieConsent()) {
+      toast.error('Требуется согласие', {
+        description: 'Для отправки заявки необходимо принять согласие на использование cookies'
+      });
+      showConsentMessage();
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
 

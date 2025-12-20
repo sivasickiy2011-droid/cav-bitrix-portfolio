@@ -17,6 +17,13 @@ const CookieConsent = () => {
     if (!consent) {
       setTimeout(() => setIsVisible(true), 1000);
     }
+
+    const handleShowConsent = () => {
+      setIsVisible(true);
+    };
+
+    window.addEventListener('showCookieConsent', handleShowConsent);
+    return () => window.removeEventListener('showCookieConsent', handleShowConsent);
   }, []);
 
   useEffect(() => {

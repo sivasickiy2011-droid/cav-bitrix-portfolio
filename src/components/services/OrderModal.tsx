@@ -11,6 +11,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Icon from '@/components/ui/icon';
 import { usePartner } from '@/contexts/PartnerContext';
+import { checkCookieConsent, showConsentMessage } from '@/utils/cookieConsent';
+import { toast } from 'sonner';
 
 interface OrderModalProps {
   isOpen: boolean;
@@ -34,6 +36,15 @@ export default function OrderModal({ isOpen, onClose, total, services }: OrderMo
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!checkCookieConsent()) {
+      toast.error('Требуется согласие', {
+        description: 'Для отправки заявки необходимо принять согласие на использование cookies'
+      });
+      showConsentMessage();
+      return;
+    }
+
     setIsSubmitting(true);
     setError('');
 
