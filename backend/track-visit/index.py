@@ -44,6 +44,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         referrer = body_data.get('referrer', '')
         user_agent = body_data.get('userAgent', '')
         session_id = body_data.get('sessionId', '')
+        is_admin = body_data.get('isAdmin', False)
         
         headers = event.get('headers', {})
         ip_address = headers.get('x-forwarded-for', headers.get('X-Forwarded-For', '')).split(',')[0].strip()
@@ -70,18 +71,19 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         
         cur.execute("""
             INSERT INTO site_visits 
-            (visit_date, page_path, user_agent, referrer, session_id, ip_address, device_type, browser)
-            VALUES (CURRENT_DATE, %s, %s, %s, %s, %s, %s, %s)
-        """, (page_path, user_agent, referrer, session_id, ip_address, device_type, browser))
+            (visit_date, page_path, user_agent, referrer, session_id, ip_address, device_type, browser, is_admin)
+            VALUES (CURRENT_DATE, %s, %s, %s, %s, %s, %s, %s, %s)
+        """, (page_path, user_agent, referrer, session_id, ip_address, device_type, browser, is_admin))
         
-        cur.execute("""
-            INSERT INTO daily_stats (stat_date, total_visits, page_views)
-            VALUES (CURRENT_DATE, 1, 1)
-            ON CONFLICT (stat_date) DO UPDATE
-            SET total_visits = daily_stats.total_visits + 1,
-                page_views = daily_stats.page_views + 1,
-                updated_at = CURRENT_TIMESTAMP
-        """)
+        if not is_admin:
+            cur.execute("""
+                INSERT INTO daily_stats (stat_date, total_visits, page_views)
+                VALUES (CURRENT_DATE, 1, 1)
+                ON CONFLICT (stat_date) DO UPDATE
+                SET total_visits = daily_stats.total_visits + 1,
+                    page_views = daily_stats.page_views + 1,
+                    updated_at = CURRENT_TIMESTAMP
+            """)
         
         conn.commit()
         cur.close()

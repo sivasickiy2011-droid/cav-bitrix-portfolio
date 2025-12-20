@@ -59,7 +59,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         cur.execute("""
             SELECT COUNT(*), COUNT(DISTINCT session_id)
             FROM site_visits
-            WHERE visit_date = CURRENT_DATE
+            WHERE visit_date = CURRENT_DATE AND is_admin = FALSE
         """)
         today_row = cur.fetchone()
         today_visits = today_row[0] if today_row else 0
@@ -68,7 +68,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         cur.execute("""
             SELECT page_path, COUNT(*) as count
             FROM site_visits
-            WHERE visit_date >= CURRENT_DATE - INTERVAL '%s days'
+            WHERE visit_date >= CURRENT_DATE - INTERVAL '%s days' AND is_admin = FALSE
             GROUP BY page_path
             ORDER BY count DESC
             LIMIT 10
@@ -80,7 +80,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         cur.execute("""
             SELECT device_type, COUNT(*) as count
             FROM site_visits
-            WHERE visit_date >= CURRENT_DATE - INTERVAL '%s days'
+            WHERE visit_date >= CURRENT_DATE - INTERVAL '%s days' AND is_admin = FALSE
             GROUP BY device_type
         """ % days)
         
@@ -90,7 +90,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         cur.execute("""
             SELECT browser, COUNT(*) as count
             FROM site_visits
-            WHERE visit_date >= CURRENT_DATE - INTERVAL '%s days'
+            WHERE visit_date >= CURRENT_DATE - INTERVAL '%s days' AND is_admin = FALSE
             GROUP BY browser
             ORDER BY count DESC
         """ % days)

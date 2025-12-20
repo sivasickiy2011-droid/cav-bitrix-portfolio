@@ -13,11 +13,14 @@ function getSessionId(): string {
 
 export async function trackPageVisit(page: string) {
   try {
+    const isAdmin = localStorage.getItem('admin_token') !== null;
+    
     const data = {
       page,
       referrer: document.referrer,
       userAgent: navigator.userAgent,
-      sessionId: getSessionId()
+      sessionId: getSessionId(),
+      isAdmin
     };
 
     await fetch('https://functions.poehali.dev/f4905f63-ce85-4850-9f3a-2677d35f7d16', {
