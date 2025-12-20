@@ -166,12 +166,6 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-float z-10">
-        <div className="w-6 h-10 border-2 border-gradient-start/40 rounded-full flex items-start justify-center p-2">
-          <div className="w-1.5 h-3 bg-gradient-to-b from-gradient-start to-transparent rounded-full animate-pulse" />
-        </div>
-      </div>
-
       <PartnersCarousel />
     </header>
   );
