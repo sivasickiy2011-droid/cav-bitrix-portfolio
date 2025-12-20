@@ -90,8 +90,8 @@ const Development = () => {
         <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-[76px] items-start min-h-[400px] sm:min-h-[600px]">
           <div className="blok-dev-left space-y-4 sm:space-y-6 lg:space-y-8">
             <h2 className="section-title">Разработка</h2>
-            <div className="w-full h-[280px] sm:h-[380px] lg:h-[520px] bg-gradient-to-br from-blue-500/30 via-cyan-500/20 to-indigo-500/30 rounded-2xl sm:rounded-3xl relative overflow-hidden border border-gradient-start/20 backdrop-blur-sm">
-              <div className="absolute inset-0 flex items-center justify-center px-4 py-8 sm:px-8 sm:py-12 lg:px-12 lg:py-16">
+            <div className="w-full bg-gradient-to-br from-blue-500/30 via-cyan-500/20 to-indigo-500/30 rounded-2xl sm:rounded-3xl border border-gradient-start/20 backdrop-blur-sm overflow-hidden">
+              <div className="w-full aspect-[4/3] relative px-4 py-8 sm:px-8 sm:py-12 lg:px-12 lg:py-16 flex items-center justify-center">
                 <div className="w-full max-w-[240px] sm:max-w-[320px] lg:max-w-[500px] aspect-[4/3] relative">
                   {developmentTypes.map((type, index) => (
                     <div
@@ -107,15 +107,15 @@ const Development = () => {
                   ))}
                 </div>
               </div>
-              <div className="absolute bottom-8 lg:bottom-8 bottom-4 left-1/2 -translate-x-1/2 flex gap-3 lg:gap-3 gap-2">
+              <div className="w-full flex justify-center gap-3 px-4 py-4 sm:py-6 lg:py-8">
                 {developmentTypes.map((type, index) => (
                   <button
                     key={index}
                     onClick={() => setActiveType(index)}
-                    className={`px-4 py-2 lg:px-4 lg:py-2 px-3 py-1.5 rounded-full text-xs lg:text-xs text-[10px] font-medium transition-all duration-300 ${
+                    className={`px-4 py-2 lg:px-6 lg:py-3 rounded-full text-xs lg:text-sm font-medium transition-all duration-300 whitespace-nowrap ${
                       index === activeType
                         ? 'bg-white dark:bg-gray-900 text-blue-600 dark:text-blue-400 shadow-lg scale-105'
-                        : 'bg-white/30 dark:bg-gray-900/30 text-white hover:bg-white/50 dark:hover:bg-gray-900/50'
+                        : 'bg-white/30 dark:bg-gray-900/30 text-gray-700 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-gray-900/50'
                     }`}
                   >
                     {type.title.split('\n')[0]}
