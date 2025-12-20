@@ -75,6 +75,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         'www.centerai.tech',
         'centerai-tech.web.app',
         'centerai-tech.firebaseapp.com',
+        'preview--cav-bitrix-portfolio.poehali.dev',
+        'poehali.dev',
         'localhost'
     ]
     
