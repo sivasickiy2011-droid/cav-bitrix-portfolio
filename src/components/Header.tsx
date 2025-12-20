@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import ContactModal from './ContactModal';
 import CalcModal from './CalcModal';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useAnimation } from '@/contexts/AnimationContext';
 import Icon from '@/components/ui/icon';
 
 const Header = () => {
@@ -12,6 +13,7 @@ const Header = () => {
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const [logoUrl, setLogoUrl] = useState('https://cdn.poehali.dev/files/5e53ea79-1c81-4c3f-847b-e8a82a5743c2.png');
   const { theme, setTheme } = useTheme();
+  const { animationEnabled, toggleAnimation } = useAnimation();
   const themeMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -83,7 +85,7 @@ const Header = () => {
           {themeMenuOpen && (
             <div className="absolute top-full left-0 mt-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl p-4 min-w-[220px] animate-fade-in z-[99999]">
               <div className="space-y-2">
-                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide px-3 mb-3">Выбор темы</p>
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide px-3 mb-3">Настройки</p>
                 
                 <button
                   onClick={() => {
@@ -114,6 +116,22 @@ const Header = () => {
                   <Icon name="Moon" size={18} />
                   <span className="font-medium">Темная тема</span>
                 </button>
+
+                <div className="border-t border-gray-200 dark:border-gray-700 my-2 pt-2">
+                  <button
+                    onClick={() => {
+                      toggleAnimation();
+                    }}
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all ${
+                      animationEnabled
+                        ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg'
+                        : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-300'
+                    }`}
+                  >
+                    <Icon name={animationEnabled ? "Zap" : "ZapOff"} size={18} />
+                    <span className="font-medium">{animationEnabled ? 'Анимация вкл.' : 'Анимация выкл.'}</span>
+                  </button>
+                </div>
               </div>
             </div>
           )}

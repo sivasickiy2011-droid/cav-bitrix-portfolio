@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import ContactModal from './ContactModal';
+import { useAnimation } from '@/contexts/AnimationContext';
 
 const Development = () => {
   const [activeType, setActiveType] = useState(0);
   const [contactModalOpen, setContactModalOpen] = useState(false);
+  const { animationEnabled } = useAnimation();
   
   const developmentTypes = [
     {
@@ -78,11 +80,13 @@ const Development = () => {
   ];
 
   useEffect(() => {
+    if (!animationEnabled) return;
+    
     const interval = setInterval(() => {
       setActiveType((prev) => (prev + 1) % developmentTypes.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [animationEnabled, developmentTypes.length]);
 
   return (
     <section id="blok-dev" className="blok-dev bg-white dark:bg-gray-800">

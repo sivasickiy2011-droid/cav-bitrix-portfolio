@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { PartnerProvider } from "@/contexts/PartnerContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { AnimationProvider } from "@/contexts/AnimationContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import BotProtection from "./components/BotProtection";
@@ -33,11 +34,12 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
-      <TooltipProvider>
-        <PartnerProvider>
-          <Toaster position="top-right" richColors />
-          <BotProtection />
-          <BrowserRouter>
+      <AnimationProvider>
+        <TooltipProvider>
+          <PartnerProvider>
+            <Toaster position="top-right" richColors />
+            <BotProtection />
+            <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/services" element={<OurServices />} />
@@ -63,8 +65,9 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
-        </PartnerProvider>
-      </TooltipProvider>
+          </PartnerProvider>
+        </TooltipProvider>
+      </AnimationProvider>
     </ThemeProvider>
   </QueryClientProvider>
 );

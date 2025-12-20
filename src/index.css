@@ -93,6 +93,17 @@
       color 0.3s ease;
   }
 
+  /* Глобальное отключение анимаций через класс */
+  body.no-animations *,
+  body.no-animations *::before,
+  body.no-animations *::after {
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    animation-delay: 0s !important;
+    transition-delay: 0s !important;
+  }
+
   /* Отключение анимаций для слабых устройств */
   @media (prefers-reduced-motion: reduce) {
     *,
