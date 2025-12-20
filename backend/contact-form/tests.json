@@ -11,6 +11,9 @@
       "name": "Submit contact form",
       "method": "POST",
       "path": "/",
+      "headers": {
+        "Origin": "https://centerai.tech"
+      },
       "body": {
         "name": "Иван Иванов",
         "phone": "+7 999 123-45-67",

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/icon';
+import InputMask from 'react-input-mask';
 
 const CookieConsent = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -184,8 +185,8 @@ const CookieConsent = () => {
                 <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Телефон
                 </label>
-                <input
-                  type="tel"
+                <InputMask
+                  mask="+7 (999) 999-99-99"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+7 (999) 123-45-67"

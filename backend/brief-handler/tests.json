@@ -4,6 +4,9 @@
       "name": "Test brief form submission with email delivery",
       "method": "POST",
       "path": "/",
+      "headers": {
+        "Origin": "https://centerai.tech"
+      },
       "body": {
         "companyName": "ООО Тестовая компания",
         "goal": "Создание корпоративного сайта",

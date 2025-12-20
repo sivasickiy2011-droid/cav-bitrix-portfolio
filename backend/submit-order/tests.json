@@ -4,6 +4,9 @@
       "name": "Test order submission",
       "method": "POST",
       "path": "/",
+      "headers": {
+        "Origin": "https://centerai.tech"
+      },
       "body": {
         "total": 150000,
         "services": [

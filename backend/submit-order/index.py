@@ -66,6 +66,34 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             'body': json.dumps({'error': 'Method not allowed'})
         }
     
+    headers = event.get('headers', {})
+    origin = headers.get('origin', headers.get('Origin', ''))
+    referer = headers.get('referer', headers.get('Referer', ''))
+    
+    allowed_domains = [
+        'centerai.tech',
+        'www.centerai.tech',
+        'centerai-tech.web.app',
+        'centerai-tech.firebaseapp.com',
+        'localhost'
+    ]
+    
+    is_allowed = False
+    for domain in allowed_domains:
+        if domain in origin or domain in referer:
+            is_allowed = True
+            break
+    
+    if not is_allowed:
+        return {
+            'statusCode': 403,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps({'error': 'Forbidden: Invalid origin'})
+        }
+    
     body_data = json.loads(event.get('body', '{}'))
     
     total: float = body_data.get('total', 0)

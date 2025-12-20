@@ -7,6 +7,7 @@ import Icon from '@/components/ui/icon';
 import { usePartner } from '@/contexts/PartnerContext';
 import { toast } from 'sonner';
 import { checkCookieConsent, showConsentMessage } from '@/utils/cookieConsent';
+import InputMask from 'react-input-mask';
 
 interface ContactModalProps {
   open: boolean;
@@ -124,13 +125,20 @@ export default function ContactModal({ open, onOpenChange }: ContactModalProps) 
               <label className="text-sm font-medium mb-1.5 block dark:text-gray-300">
                 Телефон <span className="text-red-500 dark:text-red-400">*</span>
               </label>
-              <Input
-                required
-                type="tel"
-                placeholder="+7 (999) 123-45-67"
+              <InputMask
+                mask="+7 (999) 999-99-99"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              />
+              >
+                {((inputProps: any) => (
+                  <Input
+                    {...inputProps}
+                    required
+                    type="tel"
+                    placeholder="+7 (999) 123-45-67"
+                  />
+                )) as any}
+              </InputMask>
             </div>
 
             <div>

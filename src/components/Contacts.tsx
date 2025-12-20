@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
 import { checkCookieConsent, showConsentMessage } from '@/utils/cookieConsent';
+import InputMask from 'react-input-mask';
 
 const ContactInfo = () => {
   const [activeTab, setActiveTab] = useState<'contacts' | 'details'>('contacts');
@@ -216,14 +217,21 @@ const Contacts = () => {
               </div>
               
               <div className="relative group">
-                <input
-                  type="tel"
-                  placeholder="Телефон"
-                  className="form-input-custom peer"
+                <InputMask
+                  mask="+7 (999) 999-99-99"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  required
-                />
+                >
+                  {((inputProps: any) => (
+                    <input
+                      {...inputProps}
+                      type="tel"
+                      placeholder="Телефон"
+                      className="form-input-custom peer"
+                      required
+                    />
+                  )) as any}
+                </InputMask>
                 <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-gradient-mid to-gradient-end scale-x-0 peer-focus:scale-x-100 transition-transform duration-300" />
               </div>
               

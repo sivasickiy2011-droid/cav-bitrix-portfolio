@@ -13,6 +13,7 @@ import Icon from '@/components/ui/icon';
 import { usePartner } from '@/contexts/PartnerContext';
 import { checkCookieConsent, showConsentMessage } from '@/utils/cookieConsent';
 import { toast } from 'sonner';
+import InputMask from 'react-input-mask';
 
 interface OrderModalProps {
   isOpen: boolean;
@@ -164,15 +165,22 @@ export default function OrderModal({ isOpen, onClose, total, services }: OrderMo
 
           <div className="space-y-2">
             <Label htmlFor="phone">Телефон *</Label>
-            <Input
-              id="phone"
-              type="tel"
-              placeholder="+7 900 123-45-67"
+            <InputMask
+              mask="+7 (999) 999-99-99"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              required
-              disabled={isSubmitting}
-            />
+            >
+              {((inputProps: any) => (
+                <Input
+                  {...inputProps}
+                  id="phone"
+                  type="tel"
+                  placeholder="+7 900 123-45-67"
+                  required
+                  disabled={isSubmitting}
+                />
+              )) as any}
+            </InputMask>
           </div>
 
           <div className="space-y-2">
